@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    padding: 10px; 
+    color: #333; 
+    background-color: transparent;
+  }
+  #searchBar { 
+    width: 100%; 
+    padding: 14px; 
+    font-size: 16px; 
+    border: 2px solid #ddd; 
+    border-radius: 8px; 
+    margin-bottom: 20px; 
+    box-sizing: border-box; 
+    outline: none;
+  }
+  #searchBar:focus {
+    border-color: #00b9ff;
+  }
+  .reply-card { 
+    border: 1px solid #eee; 
+    border-radius: 8px; 
+    margin-bottom: 12px; 
+    background: #fff; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02); 
+  }
+  
+  /* Flexbox applied here to keep the title left and button right */
+  .reply-title { 
+    margin: 0; 
+    color: #2e3135; 
+    font-size: 16px; 
+    padding: 12px 40px 12px 16px; /* Extra right padding for the +/- icon */
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none; 
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  .reply-title::-webkit-details-marker { display: none; }
+  
+  /* Positions the +/- icon perfectly on the far right */
+  .reply-title::after {
+    content: '+';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: #00b9ff;
+    font-weight: 300;
+  }
+  .reply-card[open] .reply-title::after { content: '−'; }
+  .reply-card[open] .reply-title { border-bottom: 1px solid #f0f0f0; }
+  
+  .title-text {
+    flex: 1;
+    padding-right: 15px;
+    line-height: 1.4;
+  }
+
+  .reply-content { padding: 16px; }
+  
+  .text-box { 
+    background: #f9f9f9; 
+    padding: 16px; 
+    border-radius: 6px; 
+    font-size: 14px; 
+    line-height: 1.6;
+    border: 1px solid #eee;
+  }
+  .text-box p { margin-top: 0; margin-bottom: 10px; }
+  .text-box p:last-child { margin-bottom: 0; }
+  .text-box ul, .text-box ol { margin-top: 0; margin-bottom: 10px; padding-left: 20px; }
+  
+  .internal-note {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    font-size: 12px;
+    border-left: 4px solid #c62828;
+  }
+  
+  /* Adjusted copy button for the top header */
+  .copy-btn { 
+    background: #00b9ff; 
+    color: white; 
+    border: none; 
+    padding: 8px 16px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    font-size: 13px;
+    white-space: nowrap;
+    margin-right: 15px; /* Pushes it away from the +/- icon */
+    z-index: 2; /* Ensures it is clickable */
+  }
+  .copy-btn:hover { background: #0095cc; }
+  .copy-btn.copied { background: #4caf50; }
+</style>
+</head>
+<body>
+
+<input type="text" id="searchBar" placeholder="Search by QR Name..." autocomplete="off">
+<div id="results"></div>
+
+<script>
+  // ADD YOUR DATA HERE
+  const quickReplies = [
+    {
+      title: "Duplicate Account - Unidentified Duplicate",
+      thai: `
+        <p>สวัสดี<br>ขอบคุณสำหรับการติดต่อเข้ามา</p>
+        <p>จากการตรวจสอบ พบว่าท่านได้ลงทะเบียนบัญชี Wise กับเรามาก่อน โดยใช้อีเมลดังต่อไปนี้:<br>[ระบุอีเมล]</p>
+        <p>รบกวนเข้าสู่ระบบด้วยบัญชีดังกล่าว หากลืมรหัสผ่าน สามารถ คลิกที่นี่ เพื่อตั้งค่ารหัสผ่านใหม่ได้</p>
+        <p>หากไม่สามารถเข้าใช้งานอีเมลดังกล่าวได้ ท่านสามารถเปลี่ยนอีเมลที่ผูกกับบัญชีได้ด้วยตนเอง โดยมีขั้นตอนดังนี้<br>เริ่มต้นการเปลี่ยนอีเมลโดย คลิกที่นี่ จากนั้น:</p>
+        <ul>
+          <li>กรอกหมายเลขโทรศัพท์ที่ลงทะเบียนไว้กับบัญชี Wise</li>
+          <li>กรอกรหัส OTP ที่ได้รับทางข้อความ SMS และระบุอีเมลใหม่ที่ต้องการใช้งาน</li>
+          <li>ตรวจสอบกล่องจดหมายของอีเมลใหม่ และยืนยันอีเมลผ่านลิงก์ที่เราได้ส่งให้</li>
+          <li>อัปโหลดภาพถ่ายเซลฟี่พร้อมถือเอกสารยืนยันตัวตน (ID)</li>
+        </ul>
+        <p>เมื่อดำเนินการครบทุกขั้นตอนแล้ว ระบบจะเปลี่ยนอีเมลให้โดยอัตโนมัติ ซึ่งอาจใช้เวลาประมาณ 10 นาที ถึง 1 วันทำการ</p>
+        <p>หากไม่สามารถเปลี่ยนอีเมลด้วยตนเองได้ กรุณาติดต่อเราทางโทรศัพท์</p>
+        <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติม สามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ<br>ขอแสดงความนับถือ</p>
+      `
+    },
+    {
+      title: "Duplicate Account - Phone Number Already In Use",
+      thai: `
+        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้เฉพาะในกรณีที่หมายเลขเป็นของลูกค้ารายอื่นซึ่งไม่ใช่สมาชิกในครอบครัว</div>
+        <p>สวัสดี [ ค่ะ/ครับ ]<br>ขอบคุณสำหรับการติดต่อเข้ามานะคะ/ครับ</p>
+        <p>จากการตรวจสอบในระบบของทางเรา ดูเหมือนว่าหมายเลขโทรศัพท์เดียวกันนี้เคยถูกใช้งานมาก่อน ทางเราได้ทำการปรับเปลี่ยนบางอย่างในระบบของทางเราแล้ว ดังนั้นคุณลูกค้าน่าจะสามารถใช้งานเบอร์โทรศัพท์นี้ได้แล้วในขณะนี้</p>
+        <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติม สามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการค่ะ/ครับ<br>ขอแสดงความนับถือ</p>
+      `
+    },
+    {
+      title: "Email Change - Lost Access to Email",
+      thai: `
+        <p>สวัสดี<br>ขอบคุณสำหรับการติดต่อเข้ามา</p>
+        <p>จากการตรวจสอบบัญชีที่ใช้งานอยู่ของคุณลูกค้า ณ ปัจจุบัน ลงทะเบียนด้วยที่อยู่อีเมล [แสดงอีเมลโดยซ่อนตัวอักษรตรงกลาง เช่น s********p@gmail.com]</p>
+        <p>หากคุณลูกค้าไม่สามารถเข้าถึงที่อยู่อีเมลนี้ได้ คุณลูกค้าสามารถเปลี่ยนได้จากบัญชี Wise ของคุณลูกค้า<br>หากต้องการเปลี่ยนที่อยู่อีเมล กรุณาคลิกที่นี่เพื่อเปลี่ยนด้วยตัวคุณเอง</p>
+        <p>จากนั้น กรุณา:</p>
+        <ol>
+          <li>ป้อนหมายเลขโทรศัพท์ของคุณลูกค้า</li>
+          <li>พิมพ์รหัสที่เราส่งให้คุณลูกค้า</li>
+          <li>ป้อนอีเมลใหม่ของคุณลูกค้า</li>
+          <li>ยืนยันที่อยู่อีเมลใหม่จากอีเมลที่เราส่งให้คุณลูกค้า</li>
+          <li>อัปโหลดรูปเซลฟี่พร้อมบัตรประจำตัว</li>
+        </ol>
+        <p>เมื่อคุณลูกค้าดำเนินการตามขั้นตอนเหล่านี้แล้ว ทางเราจะดำเนินการเปลี่ยนที่อยู่อีเมลของคุณลูกค้า โดยปกติจะใช้เวลาประมาณ 10 นาที แต่ในบางครั้งอาจใช้เวลาถึง 1 วันทำการ</p>
+        <p>หากคุณต้องการความช่วยเหลือในการเปลี่ยนที่อยู่อีเมลโดยเจ้าหน้าที่ กรุณาติดต่อหาทางเรา ทางเรายินดีให้ความช่วยเหลือเพิ่มเติมทางโทรศัพท์</p>
+        <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติม สามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ<br>ขอแสดงความนับถือ</p>
+      `
+    },
+    {
+      title: "Email Linked to Another Account / No Customer Found",
+      thai: `
+        <p>เรียน คุณ \${name},<br>ขอบคุณสำหรับการติดต่อเข้ามา</p>
+        <p>ทางเราเข้าใจว่าคำถามของท่านคือ [describe the customer's issue in your own words] และท่านต้องการ [describe the customer request in your own words].</p>
+        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: USE SCENARIO ONLY IF APPLICABLE TO CST'S ISSUE.</div>
+        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: SCENARIO 1: CUSTOMER'S EMAIL IS LINKED TO ANOTHER WISE ACCOUNT</div>
+        <p>โปรดส่งอีเมลถึงเราจากอีเมลที่เชื่อมโยงกับบัญชี Wise ของท่าน เนื่องจากทางเราสามารถให้ข้อมูลเกี่ยวกับรายละเอียดบัญชีได้ก็ต่อเมื่อท่านติดต่อมาจากอีเมลดังกล่าวเท่านั้น</p>
+        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: SCENARIO 2: CUSTOMER'S EMAIL ISN'T LINKED TO ANY WISE ACCOUNT</div>
+        <p>ดูเหมือนว่าอีเมลที่ท่านใช้อยู่จะไม่ได้เชื่อมโยงกับบัญชี Wise ใด ๆ เป็นไปได้ว่าท่านอาจเคยใช้งานด้วยอีเมลอื่นมาสมัครก่อน โปรดตรวจสอบอีเมลบัญชีอื่น ๆ ของท่าน หรือค้นหาอีเมลเก่าที่เคยได้รับจากเรา</p>
+        <p>คลิกที่นี่ หากท่านจำรหัสผ่านไม่ได้</p>
+        <p>หากท่านไม่พบอีเมลใด ๆ จากเรา โปรดส่งข้อมูลด้านล่างให้เราเพื่อให้เราช่วยตรวจสอบได้:</p>
+        <ul>
+          <li>ชื่อ-นามสกุลเต็มเป็นภาษาอังกฤษ (รวมชื่อกลาง หากมี)</li>
+          <li>เอกสารยืนยันตัวตน</li>
+          <li>หมายเลขโทรศัพท์ที่ท่านเคยใช้ พร้อมรหัสประเทศ (เช่น +66)</li>
+          <li>อีเมลอื่น ๆ ที่คุณอาจเคยใช้สมัครบัญชีกับเรา</li>
+        </ul>
+        <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติม สามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ<br>ขอแสดงความนับถือ</p>
+      `
+    },
+    {
+      title: "Reactivate Account / Reopen Account",
+      thai: `
+        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้เฉพาะในกรณีที่บัญชีลูกค้าถูกปิดแต่ลูกค้าติดต่อเราผ่านทางอีเมล</div>
+        <p>สวัสดี [ค่ะ/ครับ ]<br>ขอบคุณสำหรับการติดต่อเข้ามานะคะ/ครับ</p>
+        <p>เนื่องด้วยเหตุผลด้านความปลอดภัย ทางเราไม่สามารถดำเนินการเปิดบัญชี Wise ของคุณลูกค้าอีกครั้งผ่านทางอีเมลได้ค่ะ / ครับ</p>
+        <p>ดังนั้น รบกวนคุณลูกค้ากรุณาติดต่อหาทางเรานะคะ / ครับ เจ้าหน้าที่ของเรายินดีเป็นอย่างยิ่งที่จะช่วยเหลือคุณลูกค้าในการเข้าถึงบัญชีอีกครั้งทางโทรศัพท์ค่ะ / ครับ</p>
+        <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติม สามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการค่ะ/ครับ<br>ขอแสดงความนับถือ</p>
+        <hr>
+        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้เฉพาะในกรณีที่ต้องการยืนยันว่าเราได้เปิดบัญชีให้อีกครั้ง</div>
+        <p>สวัสดี [ค่ะ/ครับ ]<br>ขอบคุณสำหรับการติดต่อเข้ามานะคะ/ครับ</p>
+        <p>ดิฉัน / ผมได้ทำการเปิดบัญชี Wise ของคุณอีกครั้งเรียบร้อยแล้ว คุณลูกค้าจึงควรจะสามารถเข้าสู่ระบบได้อีกครั้งนะคะ / ครับ</p>
+        <p>หากคุณลูกค้าลืมรหัสผ่าน กรุณาคลิกที่นี่เพื่อรีเซ็ต<br>(กรณีลูกค้ามีบัตร Wise) และหากคุณลูกค้าต้องการกลับมาใช้บัตร Wise อีกครั้ง คุณลูกค้าสามารถดูวิธีปลดล็อคบัตรได้ที่นี่</p>
+        <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติม สามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการค่ะ/ครับ<br>ขอแสดงความนับถือ</p>
+      `
+    }
+  ];
+
+  const resultsDiv = document.getElementById('results');
+  const searchBar = document.getElementById('searchBar');
+
+  // Visually formats the internal notes for the UI
+  function formatForDisplay(text) {
+    const regex = /<div class="internal-note">.*?<\/div>/gs;
+    // We already styled the notes natively in the string, no replacement needed for visual display here.
+    return text;
+  }
+
+  // Renders the list based on search
+  function renderCards(filterText = '') {
+    resultsDiv.innerHTML = '';
+    const lowerFilter = filterText.toLowerCase();
+
+    quickReplies.forEach((reply, index) => {
+      if (reply.title.toLowerCase().includes(lowerFilter)) {
+        
+        const isOpen = filterText.length > 0 ? 'open' : '';
+        const card = document.createElement('details');
+        card.className = 'reply-card';
+        if (isOpen) card.setAttribute('open', '');
+        
+        card.innerHTML = `
+          <summary class="reply-title">
+            <span class="title-text">${reply.title}</span>
+            <button class="copy-btn" id="btn-${index}" onclick="copyRichText(event, ${index}, 'btn-${index}')">Copy</button>
+          </summary>
+          <div class="reply-content">
+            <div class="text-box">${formatForDisplay(reply.thai)}</div>
+          </div>
+        `;
+        resultsDiv.appendChild(card);
+      }
+    });
+  }
+
+  // NEW COPY FUNCTION: Grabs native HTML formatting to paste as Rich Text
+  function copyRichText(event, dataIndex, btnId) {
+    // Prevent the accordion from opening/closing when we click the button
+    event.stopPropagation();
+    event.preventDefault();
+
+    let htmlContent = quickReplies[dataIndex].thai;
+    
+    // Strip out the internal notes completely using regex so it doesn't copy to the customer
+    const removeNotesRegex = /<div class="internal-note">.*?<\/div>/gs;
+    htmlContent = htmlContent.replace(removeNotesRegex, '').trim();
+
+    // The Sandbox Bypass: Create an invisible DIV
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlContent;
+    tempDiv.style.position = "absolute";
+    tempDiv.style.left = "-9999px";
+    
+    document.body.appendChild(tempDiv);
+
+    // Select the rich text contents inside the div
+    const range = document.createRange();
+    range.selectNodeContents(tempDiv);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+      // Execute standard copy command
+      document.execCommand('copy');
+      
+      // Visual success confirmation
+      const btn = document.getElementById(btnId);
+      const originalText = btn.innerText;
+      btn.innerText = "✓ Copied!";
+      btn.classList.add("copied");
+      
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.classList.remove("copied");
+      }, 1500);
+    } catch (err) {
+      alert("Copy failed. Your browser may be blocking scripts in Google Sites.");
+    }
+
+    // Cleanup selection and delete the invisible div
+    selection.removeAllRanges();
+    document.body.removeChild(tempDiv);
+  }
+
+  // Search event listener
+  searchBar.addEventListener('input', (e) => {
+    renderCards(e.target.value);
+  });
+
+  // Load everything on start
+  renderCards();
+</script>
+
+</body>
+</html>
