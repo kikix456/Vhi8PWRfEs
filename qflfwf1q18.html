@@ -2568,51 +2568,54 @@
         }
       ]
     },
-   {
-      title: "Replacing a Card — Card Lost / Damaged / Stolen",
-      intro: `
-        <p>หากต้องการสั่งบัตรใหม่ สามารถทำตามขั้นตอนดังนี้</p>
-        <p><strong>บนแอป:</strong></p>
-        <ol>
-          <li>ไปที่แท็บ Card</li>
-          <li>แตะ Replace card</li>
-          <li>เลือก [I lost my card / My card isn’t working / My card was stolen]</li>
-          <li>แตะ Replacement card</li>
-        </ol>
-        <p><strong>บนเว็บ:</strong></p>
-        <ol>
-          <li>คลิก Cards ที่แถบด้านซ้าย</li>
-          <li>เลือก Replace card</li>
-          <li>เลือก [I lost my card / My card isn’t working / My card was stolen]</li>
-        </ol>
-      `,
-      outro: `
-        <p><a href="https://wise.com/help/articles/2935763/what-if-my-wise-card-hasnt-arrived">เรียนรู้เพิ่มเติมเกี่ยวกับระยะเวลาในการจัดส่งบัตร</a></p>
-        <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
-      `,
-      options: [
-        {
-          label: "OPTION 1: THE CARD WAS LOST",
-          text: `
-            <p>ทางเราได้ทำการระงับการใช้งานบัตรของท่าน (freeze) ไว้แล้วเพื่อความปลอดภัย ท่านสามารถยกเลิกการระงับ (unfreeze) ได้เสมอผ่านเว็บไซต์หรือแอป นอกจากนี้โปรดตรวจสอบรายการทำธุรกรรมที่ไม่ได้รับอนุญาตและสามารถยื่นปฏิเสธรายการธุรกรรม (dispute) ได้ โดยกดที่เครื่องหมายคำถาม (?) ในหน้ารายละเอียดธุรกรรมนั้น</p>
-            <p>เมื่อท่านเลือก <strong>I lost my card</strong> บัตรของท่านจะถูกบล็อกและยกเลิกทันที จากนั้นท่านสามารถ<a href="https://wise.com/help/articles/2935787/how-do-i-replace-or-cancel-my-wise-card">สั่งบัตรใหม่</a>ได้</p>
-          `
-        },
-        {
-          label: "OPTION 2: THE CARD ISN'T WORKING",
-          text: `
-            <p>หากท่านเลือก <strong>My card isn’t working</strong> ท่านยังสามารถใช้บัตรเดิมได้จนกว่าบัตรใหม่จะมาถึง โดยบัตรเดิมจะถูกบล็อกและยกเลิกเมื่อท่านทำการเปิดใช้งานบัตรใบใหม่เท่านั้น</p>
-          `
-        },
-        {
-          label: "OPTION 3: THE CARD WAS STOLEN",
-          text: `
-            <p>ทางเราได้ทำการระงับการใช้งานบัตรของท่าน (freeze) ไว้แล้วเพื่อความปลอดภัย ท่านสามารถยกเลิกการระงับ (unfreeze) ได้เสมอผ่านเว็บไซต์หรือแอป นอกจากนี้โปรดตรวจสอบรายการทำธุรกรรมที่ไม่ได้รับอนุญาตและสามารถยื่นปฏิเสธรายการธุรกรรม (dispute) ได้ โดยกดที่เครื่องหมายคำถาม (?) ในหน้ารายละเอียดธุรกรรมนั้น</p>
-            <p>เมื่อท่านเลือก <strong>My card was stolen</strong> บัตรของท่านจะถูกบล็อกและยกเลิกทันที จากนั้นท่านจะสามารถ<a href="https://wise.com/help/articles/2935787/how-do-i-replace-or-cancel-my-wise-card">สั่งบัตรใหม่</a>ได้</p>
-          `
-        }
-      ]
+{
+  title: "Replacing a Card — Card Lost / Damaged / Stolen",
+  // 1. New property to hold the optional text
+  optionalMessage: `
+    <p>ทางเราได้ทำการระงับการใช้งานบัตรของท่าน (freeze) ไว้แล้วเพื่อความปลอดภัย ท่านสามารถยกเลิกการระงับ (unfreeze) ได้เสมอผ่านเว็บไซต์หรือแอป นอกจากนี้โปรดตรวจสอบรายการทำธุรกรรมที่ไม่ได้รับอนุญาตและสามารถยื่นปฏิเสธรายการธุรกรรม (dispute) ได้ โดยกดที่เครื่องหมายคำถาม (?) ในหน้ารายละเอียดธุรกรรมนั้น</p>
+  `,
+  // 2. Intro is now strictly the instructions
+  intro: `
+    <p>หากต้องการสั่งบัตรใหม่ สามารถทำตามขั้นตอนดังนี้</p>
+    <p><strong>บนแอป:</strong></p>
+    <ol>
+      <li>ไปที่แท็บ Card</li>
+      <li>แตะ Replace card</li>
+      <li>เลือก [I lost my card / My card isn’t working / My card was stolen]</li>
+      <li>แตะ Replacement card</li>
+    </ol>
+    <p><strong>บนเว็บ:</strong></p>
+    <ol>
+      <li>คลิก Cards ที่แถบด้านซ้าย</li>
+      <li>เลือก Replace card</li>
+      <li>เลือก [I lost my card / My card isn’t working / My card was stolen]</li>
+    </ol>
+  `,
+  outro: `
+    <p><a href="https://wise.com/help/articles/2935763/what-if-my-wise-card-hasnt-arrived">เรียนรู้เพิ่มเติมเกี่ยวกับระยะเวลาในการจัดส่งบัตร</a></p>
+    <p>หากคุณลูกค้าต้องการสอบถามข้อมูลเพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
+  `,
+  options: [
+    {
+      label: "OPTION 1: THE CARD WAS LOST",
+      text: `
+        <p>เมื่อท่านเลือก <strong>I lost my card</strong> บัตรของท่านจะถูกบล็อกและยกเลิกทันที จากนั้นท่านสามารถ<a href="https://wise.com/help/articles/2935787/how-do-i-replace-or-cancel-my-wise-card">สั่งบัตรใหม่</a>ได้</p>
+      `
     },
+    {
+      label: "OPTION 2: THE CARD ISN'T WORKING",
+      text: `
+        <p>หากท่านเลือก <strong>My card isn’t working</strong> ท่านยังสามารถใช้บัตรเดิมได้จนกว่าบัตรใหม่จะมาถึง โดยบัตรเดิมจะถูกบล็อกและยกเลิกเมื่อท่านทำการเปิดใช้งานบัตรใบใหม่เท่านั้น</p>
+      `
+    },
+    {
+      label: "OPTION 3: THE CARD WAS STOLEN",
+      text: `
+        <p>เมื่อท่านเลือก <strong>My card was stolen</strong> บัตรของท่านจะถูกบล็อกและยกเลิกทันที จากนั้นท่านจะสามารถ<a href="https://wise.com/help/articles/2935787/how-do-i-replace-or-cancel-my-wise-card">สั่งบัตรใหม่</a>ได้</p>
+      `
+    }
+  ]
+},
     {
       title: "Replacing a Card — Expired",
       thai: `
