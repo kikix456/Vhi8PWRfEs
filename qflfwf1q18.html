@@ -127,21 +127,32 @@
   // ==========================================
   // 1. TRACKER NAME RETRIEVAL ENGINE (PASTE HERE)
   // ==========================================
-  function getUserName() {
-    let savedName = localStorage.getItem("tracker_name");
+function getUserName() {
+  let savedName = localStorage.getItem("tracker_name");
+  
+  // Keep looping and prompting as long as there is no valid name saved
+  while (!savedName || savedName.trim() === "" || savedName === "Anonymous Team Member") {
+    const newName = prompt("Please enter your first name (This is required to use the tool - You will only need to do this once):");
     
-    // If no name is saved in this browser yet, prompt them for it
-    if (!savedName) {
-      const newName = prompt("Please enter your name or initials for the copy tracker (You will only need to do this once):");
-      
-// Fallback if they click cancel, leave it blank, or close the prompt window
-    savedName = (newName && newName.trim() !== "") ? newName.trim() : "Fill out your first name";
-      
-      localStorage.setItem("tracker_name", savedName);
+    // If they hit Cancel or close the prompt window (newName is null)
+    if (newName === null) {
+      alert("You must enter your name.");
+      continue; // Restarts the loop immediately
     }
     
-    return savedName;
+    // If they just hit OK with a blank box or spaces
+    if (newName.trim() === "") {
+      alert("Name cannot be left blank. Please enter your first name.");
+      continue; // Restarts the loop immediately
+    }
+    
+    // If it passes both checks, save it permanently!
+    savedName = newName.trim();
+    localStorage.setItem("tracker_name", savedName);
   }
+  
+  return savedName;
+}
   // ==========================================
   // DATA ARRAY (BATCH 1 + BATCH 2)
   // ==========================================
