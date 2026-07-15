@@ -4482,14 +4482,14 @@
       btn.innerText = "✓ Copied!";
       btn.classList.add("copied");
       // This sends a silent message up to Google Apps Script to log the spreadsheet entry
-window.parent.postMessage({ type: "logCopy", title: quickReplies[index].title }, "*");
-      
-      setTimeout(() => {
-        btn.innerText = originalText;
-        btn.classList.remove("copied");
-      }, 1500);
+window.parent.postMessage({ 
+        type: "logCopy", 
+        title: quickReplies[index].title,
+        user: getUserName() 
+      }, "*");
+
     } catch (err) {
-      alert("Copy failed. Your browser may be blocking scripts in Google Sites.");
+      alert("Copy failed.");
     }
 
     selection.removeAllRanges();
