@@ -2571,7 +2571,7 @@
 {
       title: "Replacing a Card — Card Lost / Damaged / Stolen",
       intro: `
-        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: [REMOVE IF "CARD ISN'T WORKING" SCENARIO] ลบข้อความย่อหน้าด้านล่างออก หากลูกค้าเลือก "My card isn't working"</div>
+        <div class="internal-note">⚠️ INTERNAL INSTRUCTION: อย่าลืมตรวจสอบว่า เราได้ระงับบัตรลูกค้าหรือยัง หากไม่ได้ระงับ ให้ลบข้อความที่ไม่จำเป็นออก</div>
         <p>[ลบออก หากไม่ได้ระงับบัตรลูกค้า] ทางเราได้ทำการระงับการใช้งานบัตรของท่าน (freeze) ไว้แล้วเพื่อความปลอดภัย ท่านสามารถยกเลิกการระงับ (unfreeze) ได้เสมอผ่านเว็บไซต์หรือแอป นอกจากนี้โปรดตรวจสอบรายการทำธุรกรรมที่ไม่ได้รับอนุญาตและสามารถยื่นปฏิเสธรายการธุรกรรม (dispute) ได้ โดยกดที่เครื่องหมายคำถาม (?) ในหน้ารายละเอียดธุรกรรมนั้น</p>
         <p>หากต้องการสั่งบัตรใหม่ สามารถทำตามขั้นตอนดังนี้</p>
         <p><strong>บนแอป:</strong></p>
@@ -2676,8 +2676,8 @@
         <p><strong>หรือ</strong></p>
         <ol>
           <li>เปิดรายการธุรกรรมที่ท่านไม่ได้เป็นผู้ดำเนินการ</li>
-          <li>เลือก Get help with this transaction</li>
-          <li>เลือก I think this payment was fraudulent</li>
+          <li>คลิกที่ไอคอน "?"</li>
+          <li>เลือก ฉันจะรายงานการชำระเงินที่เป็นการฉ้อโกงได้อย่างไร (I think this payment was fraudulent)</li>
         </ol>
         <p>โปรดให้รายละเอียดให้มากที่สุดเท่าที่ทำได้ เพื่อช่วยให้ทีมของเราตรวจสอบได้อย่างมีประสิทธิภาพมากขึ้น</p>
         <p>โดยปกติทีมของเราจะเริ่มตรวจสอบภายใน <strong>[insert ETA (<a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2497382240">check here</a>)]</strong> วันทำการ แต่อาจใช้เวลานานกว่านั้นในบางกรณี อย่างไรก็ตามทางทีมจะพยายามจะติดต่อกลับหาท่านโดยเร็วที่สุด</p>
@@ -2851,7 +2851,7 @@
         {
           label: "Scenario: What's needed for high-value transfers",
           text: `
-            <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Scenario: Customer wants to know what's needed for high-value transfers</div>
+            <div class="internal-note">⚠️ Scenario: Customer wants to know what's needed for high-value transfers</div>
             <p>เมื่อคุณโอนเงินจำนวนมาก ทางเราอาจขอข้อมูลหรือเอกสารเพิ่มเติมเพื่อให้เป็นไปตามข้อกำหนดด้านการตรวจสอบและการปฏิบัติตามกฎระเบียบ</p>
             <p>ตัวอย่างข้อมูลหรือเอกสารที่เราอาจขอ ได้แก่:</p>
             <ul>
@@ -2865,18 +2865,18 @@
         {
           label: "Scenario: How much will it cost (Provided info)",
           text: `
-            <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Scenario: The customer wants to know how much will it cost<br>Option 1: the customer provided information on the source and target currency and the pay-in method and location of the account. For more check High-Volume Transfers for Non-Total Service Customers</div>
+            <div class="internal-note">⚠️ Scenario: The customer wants to know how much will it cost<br>Option 1: the customer provided information on the source and target currency and the pay-in method and location of the account. For more check <a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2634810685/How+to+Escalate+High+Amount+Transfer+HAT+Cases#High-Volume-Transfers-for-Non-Total-Service-Customers">High-Volume Transfers for Non-Total Service Customers>/a></div>
             <p>ทางเราได้นำข้อมูลที่คุณให้มาไปตรวจสอบผ่าน<a href="https://wise.com/gb/pricing/">หน้าค่าธรรมเนียม (Pricing Page)</a> เรียบร้อยแล้ว</p>
             <p>จากข้อมูลดังกล่าว ค่าธรรมเนียมโดยประมาณสำหรับรายการโอนนี้อยู่ที่ <strong>[enter amount shown]</strong></p>
             <p>ทั้งนี้ คุณจะเห็นค่าธรรมเนียมที่ถูกต้องและเป็นปัจจุบันอีกครั้งในระหว่างการตั้งค่ารายการโอนและกรอกรายละเอียดผู้รับเงิน</p>
-            <div class="internal-note">⚠️ INTERNAL INSTRUCTION: [If it’s a Swift pay-out transfer]</div>
-            <p>หากรายการโอนนี้เป็นการโอนเงินออกผ่านเครือข่าย SWIFT ไปยังบัญชีที่ไม่ได้อยู่ในประเทศของสกุลเงินปลายทาง อาจมีค่าธรรมเนียมเพิ่มเติมจากเครือข่าย SWIFT ซึ่งจะแสดงให้คุณทราบก่อนยืนยันรายการ</p>
+            <div class="internal-note">⚠️ INTERNAL INSTRUCTION: If it’s a Swift pay-out transfer</div>
+            <p>[ลบออก หากไม่ใช่ Swift] หากรายการโอนนี้เป็นการโอนเงินออกผ่านเครือข่าย SWIFT ไปยังบัญชีที่ไม่ได้อยู่ในประเทศของสกุลเงินปลายทาง อาจมีค่าธรรมเนียมเพิ่มเติมจากเครือข่าย SWIFT ซึ่งจะแสดงให้คุณทราบก่อนยืนยันรายการ</p>
           `
         },
         {
           label: "Scenario: How long will it take (Provided info)",
           text: `
-            <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Scenario: The customer wants to know how long will the transfer take<br>Option 1: the customer provided information on the source and target currency and the pay-in method and location of the account.</div>
+            <div class="internal-note">⚠️ Scenario: The customer wants to know how long will the transfer take<br>Option 1: the customer provided information on the source and target currency and the pay-in method and location of the account.</div>
             <p>เนื่องจากคุณเลือกชำระเงินผ่าน <strong>[customer’s transfer method]</strong> เงินของคุณอาจใช้เวลาประมาณ <strong>[add pay-in timeframes]</strong> ในการส่งถึงเรา</p>
             <p>เมื่อเราได้รับเงินเรียบร้อยแล้ว ทางเราจะดำเนินการส่งต่อไปยังผู้รับของคุณ ซึ่งอาจใช้เวลาเพิ่มเติมสูงสุด <strong>[add payout times]</strong></p>
             <p>ทั้งนี้ การประมวลผลการชำระเงินอาจใช้เวลาสูงสุด 2 วันทำการ แต่โดยส่วนใหญ่มักใช้เวลาน้อยกว่านั้น</p>
@@ -2886,7 +2886,7 @@
         {
           label: "Scenario: Cost / Timelines (No info provided)",
           text: `
-            <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Option 2: the customer didn’t provide information on the transfer or provides partial information. Customise accordingly.</div>
+            <div class="internal-note">⚠️ Option 2: the customer didn’t provide information on the transfer or provides partial information. Customise accordingly.</div>
             <p>จากข้อมูลที่คุณแจ้งว่าต้องการโอน <strong>[enter amount currency]</strong> ผ่าน <strong>[payment method]</strong> ไปยัง <strong>[target currency]</strong> ทางเราประเมินว่าค่าธรรมเนียมจะอยู่ที่ประมาณ <strong>[enter estimated fees]</strong></p>
             <p>อย่างไรก็ตาม ค่าธรรมเนียมอาจแตกต่างกันไปตามรายละเอียดของรายการโอน เพื่อให้เราสามารถประเมินค่าใช้จ่ายได้แม่นยำยิ่งขึ้น กรุณาแจ้งข้อมูลเพิ่มเติมดังต่อไปนี้:</p>
             <ul>
