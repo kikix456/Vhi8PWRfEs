@@ -134,8 +134,8 @@
     if (!savedName) {
       const newName = prompt("Please enter your name or initials for the copy tracker (You will only need to do this once):");
       
-      // Fallback if they click cancel or leave it blank
-      savedName = newName ? newName.trim() : "Anonymous Team Member"; 
+// Fallback if they click cancel, leave it blank, or close the prompt window
+    savedName = (newName && newName.trim() !== "") ? newName.trim() : "Fill out your first name";
       
       localStorage.setItem("tracker_name", savedName);
     }
@@ -4500,7 +4500,8 @@ window.parent.postMessage({
     renderCards(e.target.value);
   });
 
-  renderCards();
+getUserName();
+renderCards();
 </script>
 
 </body>
