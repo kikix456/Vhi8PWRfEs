@@ -128,30 +128,40 @@
   // 1. TRACKER NAME RETRIEVAL ENGINE (PASTE HERE)
   // ==========================================
 function getUserName() {
-  let savedName = localStorage.getItem("tracker_name");
+  // Helper function to read a cookie inside an iframe
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  }
+
+  let savedName = getCookie("tracker_name");
   
-  // Keep looping and prompting as long as there is no valid name saved
-  while (!savedName || savedName.trim() === "" || savedName === "Anonymous Team Member") {
-    const newName = prompt("Please enter your first name (This is required to use the tool - You will only need to do this once):");
+  // Keep looping as long as no valid cookie name exists
+  while (!savedName || savedName.trim() === "" || savedName === "Anonymous Team Member" || savedName === "Fill out your first name") {
+    const newName = prompt("Please enter your first name for the tracker (This is required to use the tool and it's required only once):");
     
-    // If they hit Cancel or close the prompt window (newName is null)
     if (newName === null) {
-      alert("You must enter your name.");
-      continue; // Restarts the loop immediately
+      alert("You must enter your first name proceed.");
+      continue;
     }
     
-    // If they just hit OK with a blank box or spaces
-    if (newName.trim() === "") {
-      alert("Name cannot be left blank. Please enter your first name.");
-      continue; // Restarts the loop immediately
+    if (newName.trim() === "" || newName.trim() === "Fill out your first name") {
+      alert("Invalid input. Please enter your first name.");
+      continue;
     }
     
-    // If it passes both checks, save it permanently!
     savedName = newName.trim();
-    localStorage.setItem("tracker_name", savedName);
+    
+    // Save as a secure, cross-site cookie that expires in 1 year
+    const expires = new Date();
+    expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
+    document.cookie = `tracker_name=${encodeURIComponent(savedName)}; expires=${expires.toUTCString()}; path=/; SameSite=None; Secure`;
   }
   
-  return savedName;
+  return decodeURIComponent(savedName);
+}
 }
   // ==========================================
   // DATA ARRAY (BATCH 1 + BATCH 2)
