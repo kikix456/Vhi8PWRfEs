@@ -4456,15 +4456,21 @@
     selection.removeAllRanges();
     selection.addRange(range);
 
-    try {
+try {
       document.execCommand('copy');
       
       const btn = document.getElementById(btnId);
       const originalText = btn.innerText;
       btn.innerText = "✓ Copied!";
       btn.classList.add("copied");
-      // This sends a silent message up to Google Apps Script to log the spreadsheet entry
-window.parent.postMessage({ type: "logCopy", title: quickReplies[index].title }, "*");
+      
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.classList.remove("copied");
+      }, 1500);
+
+      // 👇 CHANGE THIS LINE TO AN INTERNAL CALL TO THE GOOGLE CONTAINER 👇
+      google.script.run.logAction(activeUser, quickReplies[index].title);
 
     } catch (err) {
       alert("Copy failed.");
