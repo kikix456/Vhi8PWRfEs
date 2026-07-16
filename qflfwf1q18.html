@@ -4440,10 +4440,10 @@
     }
     
     while (!sessionUserName || sessionUserName.trim() === "" || sessionUserName === "Anonymous Team Member") {
-      const newName = prompt("Please enter your name or initials for the copy tracker:");
+      const newName = prompt("Please enter your first name for tracker:");
       
       if (newName === null) {
-        alert("You must enter a name or initials to proceed.");
+        alert("You must enter your first name to proceed.");
         continue;
       }
       if (newName.trim() === "") {
