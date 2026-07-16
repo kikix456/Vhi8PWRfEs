@@ -4500,7 +4500,8 @@
       }, "*");
 
     } catch (err) {
-      alert("Copy failed.");
+      alert("Copy failed: " + err.message);
+      console.error("Clipboard Error:", err);
     }
 
     selection.removeAllRanges();
