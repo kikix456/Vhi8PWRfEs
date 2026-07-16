@@ -4431,15 +4431,38 @@
     });
   }
 
+// 1. Session Memory Vault (Bypasses all browser security blocks!)
+  let sessionUserName = ""; 
+
+  function getUserName() {
+    if (sessionUserName && sessionUserName.trim() !== "") {
+      return sessionUserName;
+    }
+    
+    while (!sessionUserName || sessionUserName.trim() === "" || sessionUserName === "Anonymous Team Member") {
+      const newName = prompt("Please enter your name or initials for the copy tracker:");
+      
+      if (newName === null) {
+        alert("You must enter a name or initials to proceed.");
+        continue;
+      }
+      if (newName.trim() === "") {
+        alert("Name cannot be left blank.");
+        continue;
+      }
+      sessionUserName = newName.trim();
+    }
+    return sessionUserName;
+  }
+
+  // 2. Copy Function with Cross-Domain Messaging
   function copyRichText(event, index, btnId) {
     event.stopPropagation();
     event.preventDefault();
 
-    // Grab the current HTML directly from the displayed text box
     const textBox = document.getElementById(`text-box-${index}`);
     let htmlContent = textBox.innerHTML;
     
-    // Strip out the internal notes completely using regex
     const removeNotesRegex = /<div class="internal-note">.*?<\/div>/gs;
     htmlContent = htmlContent.replace(removeNotesRegex, '').trim();
 
@@ -4456,7 +4479,7 @@
     selection.removeAllRanges();
     selection.addRange(range);
 
-try {
+    try {
       document.execCommand('copy');
       
       const btn = document.getElementById(btnId);
@@ -4469,8 +4492,12 @@ try {
         btn.classList.remove("copied");
       }, 1500);
 
-      // 👇 CHANGE THIS LINE TO AN INTERNAL CALL TO THE GOOGLE CONTAINER 👇
-      google.script.run.logAction(activeUser, quickReplies[index].title);
+      // 👇 THIS SENDS THE DATA SAFELY UP TO GOOGLE APPS SCRIPT 👇
+      window.parent.postMessage({ 
+        type: "logCopy", 
+        title: quickReplies[index].title,
+        user: getUserName() 
+      }, "*");
 
     } catch (err) {
       alert("Copy failed.");
@@ -4484,7 +4511,9 @@ try {
     renderCards(e.target.value);
   });
 
-renderCards();
+  // 3. Fire the prompt and load the cards immediately
+  getUserName();
+  renderCards();
 </script>
 
 </body>
