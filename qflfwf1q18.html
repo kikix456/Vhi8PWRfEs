@@ -4432,29 +4432,34 @@
   }
 
 // 1. Session Memory Vault (Bypasses all browser security blocks!)
-  let sessionUserName = ""; 
+const USER_NAME_KEY = "thQrUserName";
 
-  function getUserName() {
-    if (sessionUserName && sessionUserName.trim() !== "") {
-      return sessionUserName;
-    }
-    
-    while (!sessionUserName || sessionUserName.trim() === "" || sessionUserName === "Anonymous Team Member") {
-      const newName = prompt("Please enter your first name for tracker:");
-      
-      if (newName === null) {
-        alert("You must enter your first name to proceed.");
-        continue;
-      }
-      if (newName.trim() === "") {
-        alert("Name cannot be left blank.");
-        continue;
-      }
-      sessionUserName = newName.trim();
-    }
-    return sessionUserName;
+function getUserName() {
+  let savedName = localStorage.getItem(USER_NAME_KEY);
+
+  if (savedName && savedName.trim() !== "") {
+    return savedName.trim();
   }
 
+  while (true) {
+    const newName = prompt("Please enter your first name for tracker:");
+
+    if (newName === null) {
+      alert("You must enter your first name to proceed.");
+      continue;
+    }
+
+    const cleanName = newName.trim();
+
+    if (cleanName === "") {
+      alert("Name cannot be left blank.");
+      continue;
+    }
+
+    localStorage.setItem(USER_NAME_KEY, cleanName);
+    return cleanName;
+  }
+}
   // 2. Copy Function with Cross-Domain Messaging
   function copyRichText(event, index, btnId) {
     event.stopPropagation();
