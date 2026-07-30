@@ -4390,14 +4390,49 @@
     resultsDiv.innerHTML = '';
     const lowerFilter = filterText.toLowerCase();
 
-    quickReplies.forEach((reply, index) => {
-      // Build search string combining title, basic text, intro, options, and outro
-      let searchTarget = reply.title + " " + (reply.thai || '') + " " + (reply.intro || '') + " " + (reply.outro || '');
-      if (reply.options) {
-        reply.options.forEach(opt => searchTarget += " " + opt.text + " " + opt.label);
-      }
-      
-      if (searchTarget.toLowerCase().includes(lowerFilter)) {
+const matchedReplies = quickReplies
+  .map((reply, index) => {
+    const titleText = reply.title.toLowerCase();
+
+    let messageText =
+      (reply.thai || '') + " " +
+      (reply.intro || '') + " " +
+      (reply.outro || '');
+
+    if (reply.options) {
+      reply.options.forEach(opt => {
+        messageText += " " + opt.text + " " + opt.label;
+      });
+    }
+
+    messageText = messageText.toLowerCase();
+
+    let matchPriority = 999;
+
+    if (titleText.startsWith(lowerFilter)) {
+      matchPriority = 1;
+    } else if (titleText.includes(lowerFilter)) {
+      matchPriority = 2;
+    } else if (messageText.includes(lowerFilter)) {
+      matchPriority = 3;
+    }
+
+    return {
+      reply,
+      index,
+      matchPriority
+    };
+  })
+  .filter(item => item.matchPriority !== 999)
+  .sort((a, b) => {
+    if (a.matchPriority !== b.matchPriority) {
+      return a.matchPriority - b.matchPriority;
+    }
+
+    return a.reply.title.localeCompare(b.reply.title);
+  });
+
+matchedReplies.forEach(({ reply, index }) => {
         
         const card = document.createElement('details');
         card.className = 'reply-card';
@@ -4437,9 +4472,8 @@
           </div>
         `;
         resultsDiv.appendChild(card);
-      }
     });
-  }
+}
 
 // 1. Session Memory Vault (Bypasses all browser security blocks!)
 const USER_NAME_KEY = "thQrUserName";
