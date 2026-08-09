@@ -4654,10 +4654,42 @@ function getUserName() {
   getUserName();
   renderCards();
   
-// 86,400,000 milliseconds = 24 hours
-  setTimeout(function() {
-    location.reload();
-  }, 28800000);
+const REFRESH_INTERVAL = 8 * 60 * 60 * 1000;
+const LAST_REFRESH_KEY = "qrToolLastRefresh";
+
+function checkForRefresh() {
+  const now = Date.now();
+  const lastRefresh = Number(localStorage.getItem(LAST_REFRESH_KEY)) || now;
+
+  // First visit: remember when this version was loaded
+  if (!localStorage.getItem(LAST_REFRESH_KEY)) {
+    localStorage.setItem(LAST_REFRESH_KEY, now);
+    return;
+  }
+
+  // More than 8 real-world hours have passed
+  if (now - lastRefresh >= REFRESH_INTERVAL) {
+    localStorage.setItem(LAST_REFRESH_KEY, now);
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("_refresh", now);
+    window.location.href = url.toString();
+  }
+}
+
+// Check occasionally while the page is open
+setInterval(checkForRefresh, 5 * 60 * 1000);
+
+// Also check immediately when the user returns to the tab
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    checkForRefresh();
+  }
+});
+
+// Check once on initial load
+checkForRefresh();
+  
 </script>
 
 </body>
