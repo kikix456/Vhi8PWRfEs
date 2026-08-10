@@ -18,6 +18,7 @@
     box-sizing: border-box; 
     outline: none;
   }
+  
   #searchBar:focus { border-color: #00b9ff; }
   .search-container {
   position: sticky;
@@ -26,6 +27,25 @@
   background: #f7f9fc;
   padding-top: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+  .search-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+#clearSearch {
+  padding: 0 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+#clearSearch:hover {
+  background: #f5f5f5;
 }
   
   .reply-card { 
@@ -129,7 +149,10 @@
 <body>
 
 <div class="search-container">
-  <input type="text" id="searchBar" placeholder="Search by QR Name..." autocomplete="off">
+  <div class="search-row">
+    <input type="text" id="searchBar" placeholder="Search by QR Name..." autocomplete="off">
+    <button type="button" id="clearSearch">Clear</button>
+  </div>
 </div>
 <div id="results"></div>
 
@@ -4649,6 +4672,11 @@ function getUserName() {
   searchBar.addEventListener('input', (e) => {
     renderCards(e.target.value);
   });
+  document.getElementById('clearSearch').addEventListener('click', () => {
+  searchBar.value = '';
+  renderCards();
+  searchBar.focus();
+});
 
   // 3. Fire the prompt and load the cards immediately
   getUserName();
