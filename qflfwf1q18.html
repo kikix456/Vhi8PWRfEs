@@ -4684,41 +4684,48 @@ function getUserName() {
   getUserName();
   renderCards();
   
-const REFRESH_INTERVAL = 8 * 60 * 60 * 1000;
-const LAST_REFRESH_KEY = "qrToolLastRefresh";
+// Auto-refresh every 15 minutes while active,
+// or immediately after returning from sleep/background if 15+ minutes passed
+
+const REFRESH_INTERVAL = 15 * 60 * 1000;
+const PAGE_LOADED_AT = Date.now();
+
+function refreshTHQR() {
+  const url = new URL(window.location.href);
+
+  // Cache-buster to request the latest GitHub version
+  url.searchParams.set("_refresh", Date.now());
+
+  window.location.replace(url.toString());
+}
 
 function checkForRefresh() {
   const now = Date.now();
-  const lastRefresh = Number(localStorage.getItem(LAST_REFRESH_KEY)) || now;
 
-  // First visit: remember when this version was loaded
-  if (!localStorage.getItem(LAST_REFRESH_KEY)) {
-    localStorage.setItem(LAST_REFRESH_KEY, now);
-    return;
-  }
-
-  // More than 8 real-world hours have passed
-  if (now - lastRefresh >= REFRESH_INTERVAL) {
-    localStorage.setItem(LAST_REFRESH_KEY, now);
-
-    const url = new URL(window.location.href);
-    url.searchParams.set("_refresh", now);
-    window.location.href = url.toString();
+  if (now - PAGE_LOADED_AT >= REFRESH_INTERVAL) {
+    refreshTHQR();
   }
 }
 
-// Check occasionally while the page is open
-setInterval(checkForRefresh, 5 * 60 * 1000);
+// Check once per minute while the page is open
+setInterval(() => {
+  if (!document.hidden) {
+    checkForRefresh();
+  }
+}, 60 * 1000);
 
-// Also check immediately when the user returns to the tab
+// Check immediately when the user returns to the tab
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     checkForRefresh();
   }
 });
 
-// Check once on initial load
-checkForRefresh();
+// Also check when the browser/window regains focus
+window.addEventListener("focus", checkForRefresh);
+
+// Covers cases where Chrome restores the page
+window.addEventListener("pageshow", checkForRefresh);
   
 </script>
 
