@@ -34,6 +34,23 @@
   gap: 8px;
   align-items: stretch;
 }
+  #topicFilter {
+  width: 150px;
+  flex-shrink: 0;
+  padding: 0 12px;
+  font-size: 14px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+#topicFilter:focus {
+  border-color: #00b9ff;
+}
 
 #clearSearch {
   width: 120px;
@@ -49,6 +66,81 @@
 
 #clearSearch:hover {
   background: #f5f5f5;
+}
+  .category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.category-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Wise card */
+.category-wise-card {
+  background: #E8E2FF;
+  color: #4C3C8C;
+}
+
+/* Receive */
+.category-receive {
+  background: #DDF4FF;
+  color: #176B87;
+}
+
+/* Pay-in */
+.category-pay-in {
+  background: #DDF7E8;
+  color: #247A4D;
+}
+
+/* Pay-out */
+.category-pay-out {
+  background: #FFF0D9;
+  color: #A15C00;
+}
+
+/* Guide */
+.category-guide {
+  background: #E8F0FE;
+  color: #3559A6;
+}
+
+/* Holding money */
+.category-hold {
+  background: #F3EBDD;
+  color: #755A32;
+}
+
+/* Fraud */
+.category-fraud {
+  background: #FFE1E1;
+  color: #A33A3A;
+}
+
+/* Verification */
+.category-verification {
+  background: #E0F5F1;
+  color: #27756B;
+}
+
+/* Account */
+.category-account {
+  background: #EEEEF1;
+  color: #555B66;
+}
+
+/* Transfer status */
+.category-transfer-status {
+  background: #F5E3F6;
+  color: #854A88;
 }
   
   .reply-card { 
@@ -88,6 +180,11 @@
   .reply-card[open] .reply-title { border-bottom: 1px solid #f0f0f0; }
   
   .title-text { flex: 1; padding-right: 15px; line-height: 1.4; }
+
+  .title-area {
+  flex: 1;
+  padding-right: 15px;
+}
 
   /* Options Selector UI */
   .options-container {
@@ -153,8 +250,30 @@
 
 <div class="search-container">
   <div class="search-row">
-    <input type="text" id="searchBar" placeholder="Search by QR Name..." autocomplete="off">
+
+  <select id="topicFilter">
+    <option value="all" selected>All topics</option>
+    <option value="Account">Account</option>
+    <option value="Fraud">Fraud</option>
+    <option value="Guide">Guide</option>
+    <option value="Hold">Hold</option>
+    <option value="Pay-in">Pay-in</option>
+    <option value="Pay-out">Pay-out</option>
+    <option value="Receive">Receive</option>
+    <option value="Transfer status">Transfer status</option>
+    <option value="Verification">Verification</option>
+    <option value="Wise card">Wise card</option>
+  </select>
+
+    <input
+      type="text"
+      id="searchBar"
+      placeholder="Search by QR Name..."
+      autocomplete="off"
+    >
+
     <button type="button" id="clearSearch">Clear</button>
+
   </div>
 </div>
 <div id="results"></div>
@@ -167,6 +286,7 @@
     // --- FROM BATCH 1 ---
     {
       title: "Duplicate Account - Unidentified Duplicate",
+      categories: ["Account"],
       thai: `
         <p>จากการตรวจสอบ พบว่าท่านได้ลงทะเบียนบัญชี Wise กับเรามาก่อน โดยใช้อีเมลดังต่อไปนี้: <strong>[ระบุอีเมล]</strong></p>
         <p>รบกวนเข้าสู่ระบบด้วยบัญชีดังกล่าว หากลืมรหัสผ่าน สามารถ <a href="https://wise.com/login/forgot-password">คลิกที่นี่</a> เพื่อตั้งค่ารหัสผ่านใหม่ได้</p>
@@ -187,6 +307,7 @@
     },
     {
       title: "Duplicate Account - Deactivated Duplicate",
+      categories: ["Account"],
       thai: `
         <p>จากการตรวจสอบ ทางเราพบว่ามีการเปิดบัญชี Wise ซ้ำซ้อนกับข้อมูลของท่าน ตามข้อกำหนดและนโยบายของบริษัท ผู้ใช้งานสามารถมีบัญชี Wise ได้เพียง 1 บัญชี เท่านั้น ดังนั้น ทางเราจึงได้ปิดบัญชีที่เปิดซ้ำ และขอแนะนำให้ใช้งานบัญชีเดิมที่ลงทะเบียนไว้ด้วยอีเมลด้านล่าง<br><strong>[ระบุอีเมล]</strong></p>
         <p>หากท่านลืมรหัสผ่านของบัญชีดังกล่าว สามารถ <a href="https://wise.com/login/forgot-password">คลิกที่นี่</a> เพื่อตั้งค่ารหัสผ่านใหม่ได้</p>
@@ -201,6 +322,7 @@
     },
     {
       title: "Duplicate Account - Fixed",
+      categories: ["Account"],
       thai: `
         <p>ขอบคุณที่ติดต่อ Wise เกี่ยวกับปัญหาบัญชีซ้ำซ้อน</p>
         <p>จากการตรวจสอบ ทางเราได้ดำเนินการแก้ไขปัญหาดังกล่าวเรียบร้อยแล้ว ขณะนี้ท่านสามารถลงทะเบียนบัญชี Wise ใหม่ได้ตามปกติ</p>
@@ -209,6 +331,7 @@
     },
     {
       title: "Duplicate Account - False Duplicate ID Request",
+      categories: ["Account"],
       thai: `
         <p>ทางเราต้องการขอข้อมูลเพิ่มเติมเกี่ยวกับบัญชี Wise ของท่าน</p>
         <p>จากการตรวจสอบ พบว่ามีบัญชี Wise อีกบัญชีหนึ่งที่ใช้ข้อมูลส่วนบุคคลใกล้เคียงกับข้อมูลของท่าน เนื่องจากผู้ใช้งานสามารถมีบัญชี Wise ที่ใช้งานได้เพียง 1 บัญชี ทางเราจึงจำเป็นต้องตรวจสอบว่าบัญชีทั้งสองได้รับการตั้งค่าอย่างถูกต้อง และเป็นของคนละบุคคล</p>
@@ -224,6 +347,7 @@
     },
     {
       title: "Duplicate Account - No Access",
+      categories: ["Account"],
       thai: `
         <p>เพื่อความปลอดภัยของบัญชี ทางเราสามารถดำเนินการในส่วนนี้ได้ทางโทรศัพท์เท่านั้น</p>
         <p><a href="https://wise.com/th/help/contact/channels?flowId=trouble-logging-in&flowType=logged-out&optionId=change-phone-number&issue=general-logged-out-login&topic=general-logged-out&contactReason=logging_in&supportLanguage=th">กรุณาติดต่อทีมงานของเราทางโทรศัพท์</a> โดยเจ้าหน้าที่จะช่วยเปลี่ยนอีเมลของบัญชีเดิมให้ท่าน ทั้งนี้ เพื่อช่วยให้การดำเนินการเป็นไปอย่างราบรื่น เราแนะนำให้ท่านเตรียมข้อมูลส่วนตัวและรายละเอียดของบัญชีไว้ให้ครบก่อนติดต่อ</p>
@@ -233,6 +357,7 @@
     },
     {
       title: "Duplicate Account - Phone Number Already In Use",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้เฉพาะในกรณีที่เบอร์เป็นของลูกค้ารายอื่น ซึ่งไม่ใช่สมาชิกในครอบครัว</div>
         <p>จากการตรวจสอบในระบบของทางเรา ดูเหมือนว่าหมายเลขโทรศัพท์เดียวกันนี้เคยถูกใช้งานมาก่อน ทางเราได้ทำการอัปเดตข้อมูลในระบบของทางเราแล้ว ดังนั้น ท่านสามารถใช้งานเบอร์โทรศัพท์นี้ในบัญชี Wise ได้ตามปกติ</p>
@@ -241,6 +366,7 @@
     },
     {
       title: "Email Change - Lost Access to Email",
+      categories: ["Account"],
       thai: `
         <p>จากการตรวจสอบ บัญชี Wise ที่ใช้งานอยู่ของท่านลงทะเบียนด้วยอีเมลดังต่อไปนี้<br><strong>[Redacted email]</strong></p>
         <p>หากไม่สามารถเข้าถึงอีเมลดังกล่าว ท่านสามารถเปลี่ยนอีเมลด้วยตนเอง<br>กรุณา <a href="https://wise.com/login/change-email#/phone-number">คลิกที่นี่เพื่อเริ่มต้นขั้นตอนการเปลี่ยนอีเมล</a></p>
@@ -259,6 +385,7 @@
     },
     {
       title: "Email Linked to Another Account / No Customer Found",
+      categories: ["Account"],
       intro: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: USE SCENARIO ONLY IF APPLICABLE TO CST'S ISSUE</div>
       `,
@@ -293,6 +420,7 @@
     },
     {
       title: "Transfer Status — Transfer Completed",
+      categories: ["Transfer status"],
       intro: `
         <p>ทางเราได้ดำเนินการส่งเงินสำหรับรายการโอนของท่านเรียบร้อยแล้วเมื่อวันที่ <strong>[date]</strong></p>
         <p>โดยปกติ การโอนเงินสกุล <strong>[Currency]</strong> จะใช้เวลาประมาณ <strong>[ETA]</strong> วันทำการในการส่งถึงบัญชีผู้รับ อย่างไรก็ตาม ธนาคารบางแห่งอาจใช้เวลาเพิ่มเติมในการดำเนินการรับเงินเข้าบัญชี</p>
@@ -334,6 +462,7 @@
     },
     {
       title: "Transfer Status — Recall",
+      categories: ["Transfer status"],
       intro: ``, 
       outro: `
         <p>หากท่านมีคำถามอื่น ๆ เพิ่มเติม สามารถติดต่อเราได้ทุกเมื่อ ทางเรายินดีให้บริการ</p>
@@ -382,6 +511,7 @@
     },
     {
       title: "Phishing - Phishing / Smishing / Vishing",
+      categories: ["Fraud"],
       intro: `
         <p>ขอบคุณที่ติดต่อเข้ามา ทางเรารู้สึกเสียใจเป็นอย่างยิ่งที่ทราบว่า <strong>[สรุปปัญหาของลูกค้า]</strong></p>
       `,
@@ -429,6 +559,7 @@
     },
     {
       title: "Delivery — Card Hasn't Arrived (Standard Delivery)",
+      categories: ["Wise card"],
       intro: `
         <p>ขออภัยที่ท่านยังไม่ได้รับบัตรของท่าน ทางเราได้ตรวจสอบคำสั่งซื้อบัตรแล้วและพบข้อมูลดังนี้:</p>
       `,
@@ -479,6 +610,7 @@
     },
     {
       title: "Receive — Customer Received Less Money Due to Swift / USD wire",
+      categories: ["Receive"],
       intro: ``,
       outro: `
         <p>ท่านสามารถศึกษาข้อมูลเพิ่มเติมเกี่ยวกับค่าธรรมเนียมการรับเงินได้จาก<a href="https://wise.com/gb/pricing/receive?targetAmount=1000&payInMethod=BANK_TRANSFER&track=false">บทความนี้</a></p>
@@ -504,6 +636,7 @@
     },
     {
       title: "Transfer Status — Delay Due to Bank Holiday / Weekend",
+      categories: ["Transfer status"],
       intro: ``,
       outro: `
         <p><a href="https://wise.com/help/articles/2941900/when-will-my-money-arrive">อ่านเพิ่มเติมเกี่ยวกับระยะเวลาที่เงินของท่านจะถึงบัญชีปลายทางได้ที่นี่</a></p>
@@ -531,6 +664,7 @@
     // --- FROM BATCH 2 ---
     {
       title: "Email Change - Typo in the Email",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: USE ONLY IF CUSTOMER MADE A TYPO IN THEIR EMAIL NAME (in front of @)</div>
         <p>หากต้องการแก้ไขข้อผิดพลาดในอีเมลของท่าน กรุณา <a href="https://wise.com/login/change-email#/phone-number">คลิกที่นี่</a></p>
@@ -549,6 +683,7 @@
     },
     {
       title: "Password - Reset",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้เฉพาะในกรณีที่ลูกค้าติดต่อเราก่อนทำการรีเซ็ตรหัสผ่านด้วยตนเองเท่านั้น หากลูกค้าไม่ได้รับอีเมลรีเซ็ตรหัสผ่าน ให้ใช้ QR "STEPS TO ALLOWLIST WISE EMAIL DOMAIN"</div>
         <p>หากต้องการตั้งรหัสผ่านใหม่ กรุณาทำตามขั้นตอนดังต่อไปนี้</p>
@@ -565,6 +700,7 @@
     },
     {
       title: "Password — Multiple Password Reset Attempts",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: USE THIS QUICK REPLY ONLY IF THE CUSTOMER ALREADY RESET THEIR PASSWORD AND STILL GET 'PASSWORD INCORRECT'</div>
         <p>ทางเข้าใจดีว่าท่านได้ทำการรีเซ็ตรหัสผ่านแล้ว แต่ยังคงไม่สามารถ [ระบุการดำเนินการที่ลูกค้ากำลังพยายามทำ เช่น เข้าสู่ระบบ อนุมัติการโอนเงิน หรือดูรายละเอียดบัตร] ได้</p>
@@ -580,6 +716,7 @@
     },
     {
       title: "Phone Number — Reuse by Carrier",
+      categories: ["Account"],
       thai: `
         <p>ดูเหมือนว่าหมายเลขโทรศัพท์ที่ท่านกำลังพยายามลงทะเบียนได้ผูกไว้กับบัญชี Wise ของลูกค้ารายอื่นแล้ว</p>
         <p>กรณีนี้มักเกิดขึ้นเมื่อหมายเลขดังกล่าวเป็นของสมาชิกในครอบครัว เป็นหมายเลขที่ใช้ร่วมกันระหว่างพนักงานในบริษัท หรือเมื่อผู้ให้บริการเครือข่ายโทรศัพท์มือถือนำหมายเลขเดิมมาออกให้กับผู้ใช้บริการรายใหม่</p>
@@ -596,6 +733,7 @@
     },
 {
       title: "Phone Number Change — Customer Can't Log In",
+      categories: ["Account"],
       intro: ``,
       outro: `
         <p>หลังจากอัปเดตหมายเลขโทรศัพท์เรียบร้อยและสามารถเข้าสู่ระบบได้อีกครั้ง ทางเราขอแนะนำให้ตั้งค่า <a href="https://wise.com/help/articles/2932125/how-do-i-add-change-or-remove-my-step-verification-settings?origin=related-article-2960083&id=2932125&slug=how-do-i-set-up-2-step-login">แอป Wise</a> เป็นวิธียืนยันการเข้าสู่ระบบ เนื่องจากสามารถใช้งานได้ผ่านการเชื่อมต่ออินเทอร์เน็ต โดยไม่ต้องพึ่งการรับรหัสผ่านทาง SMS จึงสะดวกมากขึ้นเมื่อต้องเปลี่ยนซิมการ์ดหรือเดินทางไปต่างประเทศ</p>
@@ -639,6 +777,7 @@
     },
     {
       title: "Reactivate Account / Reopen Account",
+      categories: ["Account"],
       intro: ``,
       outro: `
         <p>หากมีข้อสงสัยหรือต้องการความช่วยเหลือเพิ่มเติม สามารถตอบกลับอีเมลฉบับนี้ได้ทุกเมื่อ ทางเรายินดีให้ความช่วยเหลือ</p>
@@ -664,6 +803,7 @@
     },
     {
       title: "Social Login - Disconnect From Social",
+      categories: ["Account"],
       thai: `
         <p>ทางเราเข้าใจว่าท่านกำลังประสบปัญหาในการเข้าสู่ระบบบัญชี Wise</p>
         <p>จากการตรวจสอบ มีความเป็นไปได้ว่าบัญชี Wise ของท่านได้เชื่อมต่อกับบัญชีโซเชียลมีเดีย เช่น Google, Facebook หรือ Apple ID<br>หากลงทะเบียนด้วยวิธีดังกล่าว บัญชี Wise จะเชื่อมโยงกับบัญชีโซเชียลมีเดียที่ใช้สมัคร ซึ่งหมายความว่า ไม่จำเป็นต้องป้อนอีเมลและรหัสผ่าน เพื่อเข้าสู่ระบบ</p>
@@ -684,6 +824,7 @@
     },
     {
       title: "2FA-Change Push Notification Device",
+      categories: ["Account"],
       thai: `
         <p>หากต้องการใช้งานบัญชี Wise บนอุปกรณ์เครื่องใหม่ และยังสามารถใช้งานหมายเลขโทรศัพท์เดิมได้ กรุณาทำตามขั้นตอนดังต่อไปนี้</p>
         <p><strong>ขั้นตอนที่ 1: เข้าสู่ระบบบนอุปกรณ์ใหม่</strong></p>
@@ -718,6 +859,7 @@
     },
     {
       title: "2FA-Change SMS to Push Notification",
+      categories: ["Account"],
       thai: `
         <p>การยืนยันแบบ 2 ขั้นตอน (2-step verification) เป็นระบบรักษาความปลอดภัยที่ช่วยปกป้องบัญชี Wise ของท่าน โดยนอกจากการใช้รหัสผ่านแล้ว จะต้องยืนยันตัวตนเพิ่มเติมก่อนเข้าสู่ระบบ</p>
         <p>โดยปกติ ระบบจะส่งรหัสยืนยันไปยังหมายเลขโทรศัพท์ที่ลงทะเบียนไว้ อย่างไรก็ตาม หากกำลังเดินทางหรือไม่สามารถรับข้อความ (SMS) ได้ ทางเราแนะนำให้เปลี่ยนมาใช้ แอป Wise เป็นวิธีการยืนยันตัวตน เนื่องจากสามารถอนุมัติการเข้าสู่ระบบผ่านแอปได้โดยตรง เพียงเชื่อมต่ออินเทอร์เน็ต</p>
@@ -743,6 +885,7 @@
     },
 {
       title: "2FA-Passive Authentication",
+  categories: ["Account"],
       thai: `
         <p>ทางเราได้ปรับปรุงระบบการเข้าสู่ระบบของ Wise ให้สะดวกและปลอดภัยยิ่งขึ้น</p>
         <p>นับจากนี้ เมื่อท่านเข้าสู่ระบบจากอุปกรณ์ที่ระบบรู้จักและสามารถยืนยันตัวตนได้ ระบบอาจไม่ขอให้กรอกรหัสยืนยันที่ส่งทาง SMS หรืออนุมัติการเข้าสู่ระบบผ่านแอป Wise</p>
@@ -752,6 +895,7 @@
     },
     {
       title: "2FA-Troubleshooting",
+      categories: ["Account"],
       intro: ``,
       outro: `
         <p>หากยังไม่สามารถเข้าสู่ระบบได้หลังจากลองทำตามขั้นตอนข้างต้น กรุณาตอบกลับอีเมลฉบับนี้ ทางเรายินดีตรวจสอบและให้ความช่วยเหลือเพิ่มเติม</p>
@@ -789,6 +933,7 @@
     },
     {
       title: "2FA-Why and How",
+      categories: ["Account"],
       thai: `
         <p>การยืนยันแบบ 2 ขั้นตอน (2-step verification) เป็นระบบรักษาความปลอดภัยที่ช่วยเพิ่มการปกป้องบัญชี Wise โดยนอกจากการใช้รหัสผ่านแล้ว จะต้องยืนยันตัวตนเพิ่มเติมก่อนเข้าสู่ระบบหรือดำเนินการบางรายการ</p>
         <p>แม้อาจต้องใช้เวลาเพิ่มขึ้นเล็กน้อย แต่การยืนยันแบบ 2 ขั้นตอนมีข้อดีดังต่อไปนี้</p>
@@ -815,6 +960,7 @@
     },
     {
       title: "2FA-Use The Same Internet Connection Error",
+      categories: ["Account"],
       thai: `
         <p>ขออภัยที่ท่านประสบปัญหาระหว่างการอนุมัติอุปกรณ์ใหม่สำหรับบัญชี Wise</p>
         <p>การอนุมัติอุปกรณ์ใหม่เป็นขั้นตอนด้านความปลอดภัยที่ช่วยยืนยันว่าทางเรากำลังสื่อสารกับเจ้าของบัญชี เพื่อปกป้องบัญชีและข้อมูลของท่าน</p>
@@ -846,6 +992,7 @@
     },
     {
       title: "Address Change - Completed",
+      categories: ["Account", "Verification"],
       thai: `
         <p>ขอบคุณสำหรับเอกสารและข้อมูลที่ส่งเข้ามา</p>
         <p>ทางเราได้ดำเนินการอัปเดตที่อยู่ในบัญชี Wise ของท่านเรียบร้อยแล้ว</p>
@@ -856,6 +1003,7 @@
     },
     {
       title: "Address Change - Japan",
+      categories: ["Account", "Verification"],
       intro: ``,
       outro: `
         <p>หากมีข้อสงสัยหรือต้องการความช่วยเหลือเพิ่มเติม สามารถตอบกลับอีเมลฉบับนี้ได้ทุกเมื่อ ทางเรายินดีให้ความช่วยเหลือ</p>
@@ -931,6 +1079,7 @@
     },
     {
       title: "Address Change - Proof of Address (POA) Needed",
+      categories: ["Account", "Verification"],
       intro: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR ในกรณีที่เราต้องการให้ลูกค้าอัปโหลด POA เพื่อเปลี่ยนที่อยู่เท่านั้น ในกรณีที่ ที่อยู่ไม่ตรงกับโปรไฟล์ (ADDRESS MISMATCH) ให้ทำตามขั้นตอนในวิกินี้ <a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2432436998">ADDRESS MISMATCH PROCEDURES WIKI</a></div>
         <p>หากต้องการอัปเดตที่อยู่ในบัญชี Wise กรุณาส่งเอกสารยืนยันที่อยู่เพื่อให้ทางเราดำเนินการตรวจสอบ</p>
@@ -971,6 +1120,7 @@
     },
     {
       title: "Address Change - Self-Service",
+      categories: ["Account", "Verification"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้สำหรับลูกค้าที่ไม่ได้อาศัยอยู่ในประเทศญี่ปุ่น สำหรับลูกค้าที่ต้องการเปลี่ยนที่อยู่ไปยังประเทศญี่ปุ่นให้อ้างอิงที่ QR ADDRESS CHANGE - JAPAN</div>
         <p>ท่านสามารถอัปเดตที่อยู่ในบัญชี Wise ได้ด้วยตนเองผ่านทางเว็บไซต์หรือแอป Wise</p>
@@ -996,6 +1146,7 @@
     },
 {
       title: "Deactivate Account / Close Account",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ก่อนจะใช้ QR นี้ทำความเข้าใจก่อนว่าทำไมลูกค้าถึงอยากปิดบัญชี หากลูกค้ามีปัญหาติดต่อมาด้วยเรื่องอื่น ให้ช่วยแก้ปัญหานั้นๆก่อน</div>
         <p>ทางเราเสียใจที่ทราบว่าท่านต้องการปิดบัญชี Wise</p>
@@ -1018,6 +1169,7 @@
     },
     {
       title: "Email Change - Logged In",
+      categories: ["Account"],
       thai: `
         <p>ท่านสามารถเปลี่ยนอีเมลที่ใช้กับบัญชี Wise ได้ด้วยตนเองผ่านทางเว็บไซต์หรือแอป Wise</p>
         <p><strong>วิธีเปลี่ยนอีเมล</strong></p>
@@ -1034,6 +1186,7 @@
     },
     {
       title: "Joint Account Request",
+      categories: ["Account", "Verification"],
       thai: `
         <p>ตามข้อกำหนดในการใช้งานของ Wise ผู้ใช้งานแต่ละรายสามารถเปิดบัญชี Wise ได้เฉพาะบัญชีส่วนบุคคลภายใต้ชื่อตนเองเท่านั้น จึงไม่สามารถเปิดบัญชีร่วมกับบุคคลอื่นได้</p>
         <p>อย่างไรก็ตาม ท่านสามารถโอนเงินจาก<a href="https://wise.com/help/articles/2549410/how-do-you-verify-my-joint-account">บัญชีธนาคารแบบบัญชีร่วม</a>มายังบัญชี Wise ได้ โดยมีเงื่อนไขดังต่อไปนี้</p>
@@ -1047,6 +1200,7 @@
     },
     {
       title: "Manage - Primary Accounts",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Adding new Primary Accounts is permanently disabled. More information: <a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2640808655/Primary+Accounts">Wiki</a></div>
         <p>ทางเราเข้าใจว่าท่านมีคำถามเกี่ยวกับการรับเงินผ่าน บัญชีหลัก (Primary Account)</p>
@@ -1072,6 +1226,7 @@
     },
     {
       title: "Manage - Recipients",
+      categories: ["Account"],
       thai: `
         <p>หากได้บันทึกข้อมูลผู้รับไว้ในบัญชี Wise แล้ว จะไม่สามารถแก้ไขรายละเอียดของผู้รับได้<br>หากต้องการเปลี่ยนแปลงข้อมูลผู้รับ กรุณาลบข้อมูลผู้รับเดิม แล้วสร้างข้อมูลผู้รับใหม่แทน</p>
         <p><strong>วิธีลบข้อมูลผู้รับ</strong></p>
@@ -1098,6 +1253,7 @@
     },
     {
       title: "Name Change",
+      categories: ["Account", "Verification"],
       thai: `
         <p>หากไม่สามารถแก้ไขชื่อ-นามสกุลในบัญชี Wise ได้ด้วยตนเอง กรุณาส่งเอกสารดังต่อไปนี้เพื่อให้ทางเราดำเนินการตรวจสอบ</p>
         <ul>
@@ -1127,13 +1283,14 @@
     },
     {
       title: "Phone Number Change - Customer Can Log In",
+      categories: ["Account"],
       thai: `
         <p>ท่านสามารถเปลี่ยนหมายเลขโทรศัพท์ที่ผูกกับบัญชี Wise ได้ด้วยตนเอง โดยทำตามขั้นตอนดังต่อไปนี้</p>
         <ol>
           <li>เลือกไอคอนโปรไฟล์</li>
-          <li>ไปที่ ข้อมูลส่วนตัว (Personal details)</li>
-          <li>เลือก หมายเลขโทรศัพท์ (Mobile number)</li>
-          <li>เลือก เปลี่ยนหมายเลขโทรศัพท์ (Change mobile number)</li>
+          <li>ไปที่ "ข้อมูลส่วนตัว (Personal details)"</li>
+          <li>เลือก "หมายเลขโทรศัพท์ (Mobile number)"</li>
+          <li>เลือก "เปลี่ยนหมายเลขโทรศัพท์ (Change mobile number)"</li>
           <li>ทำตามคำแนะนำบนหน้าจอ</li>
         </ol>
         <p>เมื่อกรอกหมายเลขโทรศัพท์ใหม่แล้ว ทางระบบจะส่งรหัสยืนยันทางข้อความ (SMS) ไปยังหมายเลขดังกล่าว กรุณาป้อนรหัสที่ได้รับเพื่อยืนยันการเปลี่ยนหมายเลขโทรศัพท์ให้เสร็จสมบูรณ์</p>
@@ -1142,6 +1299,7 @@
     },
     {
       title: "Membership Number",
+      categories: ["Account"],
       thai: `
         <p>หมายเลขสมาชิก (Membership Number) คือรหัสประจำตัวที่ระบบสร้างให้เมื่อท่านเปิดบัญชี Wise โดยสามารถตรวจสอบได้ตามขั้นตอนดังต่อไปนี้</p>
         <p><strong>ตรวจสอบผ่านเว็บไซต์</strong></p>
@@ -1161,6 +1319,7 @@
     },
     {
       title: "Deactivation - Appeals Self-Service",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้เฉพาะในกรณีที่บัญชีของลูกค้าถูกปิดโดยทีม COMPLIANCE และสามารถยื่นอุทธรณ์ Appeal ได้ด้วยตนเอง</div>
         <p>ทางเราเสียใจที่ทราบว่าบัญชี Wise ของท่านถูกปิด</p>
@@ -1180,6 +1339,7 @@
     },
     {
       title: "Deactivation - Proactive Appeals (Self-Service Not Available)",
+      categories: ["Account"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้ในกรณีที่ลูกค้าไม่สามารถยื่นอุทธรณ์ได้ด้วยตนเอง<br>ตรวจสอบให้แน่ใจว่าลูกค้าสามารใช้ <a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2832336329/Compliance+Appeals#Appeals-self-service">self-service</a> ตรวจสอบ ในกรณีที่<a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2593787014">บัญชีถูกปิด</a> โดยทีมอื่น ๆ ที่ไม่ใช่ ทีม compliance ว่าเราสามารถระบุเหตุผลในการปิดบัญชีกับลูกค้าได้หรือไม่ และเราสามารถแก้ไขปัญหาของลูกค้าได้หรือเปล่า<br>หากลูกค้าสามารถยื่นอุทธรณ์ได้ด้วยตนเองให้ใช้ QR Deactivation — Appeals Self-Service แทน</div>
         <p>ทางเราเสียใจที่ทราบว่าบัญชี Wise ของท่านถูกปิด</p>
@@ -1199,6 +1359,7 @@
     },
     {
       title: "Fraud-Blocklisted Recipient",
+      categories: ["Fraud"],
       thai: `
         <p>ทางเราได้ตรวจสอบปัญหาที่แจ้งเข้ามาเรียบร้อยแล้ว และพบว่าเราไม่สามารถดำเนินธุรกรรมไปยังรายละเอียดบัญชีที่ท่านระบุได้</p>
         <p>ขออภัยที่ไม่สามารถให้ข้อมูลเพิ่มเติมเกี่ยวกับการตัดสินใจดังกล่าวได้ เนื่องจากทางเราจำเป็นต้องปฏิบัติตามข้อกำหนดและกฎระเบียบที่เกี่ยวข้องในแต่ละประเทศหรือภูมิภาค ซึ่งในบางกรณีอาจทำให้เราไม่สามารถดำเนินธุรกรรมได้</p>
@@ -1208,6 +1369,7 @@
     },
 {
       title: "Fraud-Scam Reported Self-service",
+      categories: ["Fraud"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้ เฉพาะในกรณีที่ลูกค้า Wise เป็นเหยื่อหรือถูกหลอกให้ทำธุรกรรม ห้ามใช้ QR นี้หากลูกค้าไม่แน่ใจว่าถูกหลอกหรือแค่ต้องการคำแนะนำ<br>ถ้าลูกค้าไม่สามารถส่งreportด้วยตนเองหรือปฏิเสธที่จะส่ง report ด้วยตนเองให้ใช้ QR SCAM INFORMATION REQUEST (SELF-SERVICE DIDN'T WORK)<br>ถ้าลูกค้าต้องการแจ้งเรื่อง ธุรกรรมที่ไม่ได้อนุญาต (UAT) ให้ใช้ QR UNAUTHORISED TRANSACTION (UAT)<br>สำหรับตรวจสอบข้อมูลเพิ่มเติม:<br><a href="https://transferwise.atlassian.net/wiki/x/IJ7Fmw">Fraud – Scams</a><br><a href="https://transferwise.atlassian.net/wiki/x/YAfbl">Wise Card Fraud Disputes (UAT)</a></div>
         <p>หากเชื่อว่าได้โอนเงินไปยังบัญชีของมิจฉาชีพ กรุณารายงานธุรกรรมดังกล่าวผ่านบัญชี Wise โดยเร็วที่สุด เพื่อให้ทีมที่เกี่ยวข้องสามารถตรวจสอบและให้ความช่วยเหลือเพิ่มเติม</p>
@@ -1216,7 +1378,7 @@
           <li>เข้าสู่ระบบบัญชี Wise และเลือกธุรกรรมที่ต้องการรายงานจากหน้าหลัก</li>
           <li>เลือกไอคอนเครื่องหมายคำถาม (?)</li>
           <li>เลือก "ฉันคิดว่าฉันถูกหลอกลวง (I think I've been scammed)"</li>
-          <li>เลือก รายงานการหลอกลวง (Report a scam)</li>
+          <li>เลือก "รายงานการหลอกลวง (Report a scam)"</li>
           <li>กรอกแบบฟอร์ม โดยให้รายละเอียดเกี่ยวกับเหตุการณ์ให้ครบถ้วนที่สุดเท่าที่จะเป็นไปได้</li>
         </ol>
         <p>หลังจากส่งรายงานเรียบร้อยแล้ว ทีมที่เกี่ยวข้องจะดำเนินการตรวจสอบ และติดต่อกลับภายใน 2 วันทำการ</p>
@@ -1225,6 +1387,7 @@
     },
     {
       title: "Fraud-Scam Information Request (Self-Service Didn't Work)",
+      categories: ["Fraud"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: ใช้ QR นี้ถ้าลูกค้าไม่สามารถส่งreportด้วยตนเองหรือปฏิเสธที่จะส่ง report ด้วยตนเอง<br>• แนะนำให้ลูกค้าส่ง report ด้วยตนเองก่อน ให้ใช้ QR Scam Report Self-Service<br>• หลังจากที่ลูกค้าให้ข้อมูลแล้ว ให้ยืนยันกับลูกค้าว่าทางเราได้รับข้อมูลแล้วและจะทำการส่งเรื่องไปยังทีมที่เกี่ยวข้อง<br>• ถ้าเห็นว่าลูกค้าได้ส่ง report ด้วยตนเองเรียบร้อยแล้ว ไม่ต้องส่งเรื่องต่อไปที่ทีม</div>
         <p>หากท่านเชื่อว่าได้โอนเงินไปยังบัญชีของมิจฉาชีพ กรุณารายงานธุรกรรมดังกล่าวผ่านบัญชี Wise โดยเร็วที่สุด เพื่อให้ทีมที่เกี่ยวข้องสามารถตรวจสอบและให้ความช่วยเหลือเพิ่มเติม</p>
@@ -1233,7 +1396,7 @@
           <li>เข้าสู่ระบบบัญชี Wise และเลือกธุรกรรมที่ต้องการรายงาน</li>
           <li>เลือกไอคอนเครื่องหมายคำถาม (?)</li>
           <li>เลือก "ฉันคิดว่าฉันถูกหลอกลวง (I think I've been scammed)"</li>
-          <li>เลือก รายงานการหลอกลวง (Report a scam)</li>
+          <li>เลือก "รายงานการหลอกลวง (Report a scam)"</li>
           <li>กรอกแบบฟอร์ม โดยให้รายละเอียดเกี่ยวกับเหตุการณ์ให้ครบถ้วนที่สุดเท่าที่จะเป็นไปได้</li>
         </ol>
         <p><strong>หากไม่สามารถรายงานธุรกรรมผ่านระบบได้</strong><br>กรุณาตอบกลับอีเมลฉบับนี้ พร้อมแจ้งข้อมูลต่อไปนี้</p>
@@ -1253,6 +1416,7 @@
     },
     {
       title: "Fraud-Scam Acknowledged",
+      categories: ["Fraud"],
       thai: `
         <p>ทางเราได้รับรายงานของท่านและได้ดำเนินการตรวจสอบเรียบร้อยแล้ว พร้อมทั้งใช้มาตรการที่เหมาะสมเพื่อช่วยป้องกันไม่ให้เกิดเหตุการณ์ลักษณะเดียวกันขึ้น โดยเมื่อมีการยืนยันว่าธุรกรรมเกี่ยวข้องกับการหลอกลวง ทางเราจะดำเนินการเพื่อป้องกันไม่ให้ผู้รับเงินใช้งานบัญชี Wise ในลักษณะดังกล่าวต่อไป</p>
         <p>นอกจากนี้ ทางเราแนะนำให้ท่านแจ้งความกับตำรวจหรือหน่วยงานที่เกี่ยวข้องโดยเร็วที่สุด เนื่องจากหน่วยงานดังกล่าวมีอำนาจในการสืบสวนและให้คำแนะนำเกี่ยวกับขั้นตอนทางกฎหมาย ทั้งนี้ หาก Wise ได้รับการติดต่อจากตำรวจหรือหน่วยงานที่เกี่ยวข้อง ทางเรายินดีให้ความร่วมมือและสนับสนุนข้อมูลตามกระบวนการที่เหมาะสม</p>
@@ -1263,6 +1427,7 @@
     },
     {
       title: "Fraud- ATO Hacked Email (Unsuccessful Call)",
+      categories: ["Fraud"],
       thai: `
         <p>วันนี้เราได้พยายามติดต่อท่านทางโทรศัพท์ แต่ไม่สามารถติดต่อได้</p>
         <p>เราได้ตรวจพบรายการหรือกิจกรรมที่ผิดปกติในบัญชีของท่าน ซึ่งอาจเกิดจากการที่ระบบรักษาความปลอดภัยของอีเมลหรือบัญชีคลาวด์ (เช่น Gmail, Hotmail หรือ iCloud) ถูกละเมิดการเข้าถึง</p>
@@ -1273,6 +1438,7 @@
     },
     {
       title: "Fraud-ATO Hacked Email (Email Changed)",
+      categories: ["Fraud"],
       thai: `
         <p>ขอบคุณที่ให้ความร่วมมือในการเปลี่ยนแปลงอีเมล</p>
         <p>เพื่อให้มั่นใจว่าบัญชีของท่านมีความปลอดภัย เราได้ดำเนินการตรวจสอบเพิ่มเติม และขอความร่วมมือจากท่านตามรายละเอียดด้านล่าง</p>
@@ -1292,6 +1458,7 @@
     },
     {
       title: "Fraud - ATO Hacked Email (Account Deactivated, Unsuccessful Call)",
+      categories: ["Fraud"],
       intro: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: เลือกข้อความที่เหมาะสม</div>
       `,
@@ -1333,6 +1500,7 @@
     },
 {
       title: "Fraud-ATO Hacked Email (Account Deactivated, Email Changed)",
+      categories: ["Fraud"],
       thai: `
         <p>ขอบคุณที่ให้ความร่วมมือในการเปลี่ยนแปลงอีเมล</p>
         <p>ขณะนี้เรากำลังดำเนินการตามขั้นตอนที่จำเป็น เพื่อให้มั่นใจว่าบัญชีของท่านมีความปลอดภัย</p>
@@ -1353,6 +1521,7 @@
     },
     {
       title: "Fraud-ATO Hacked Email (Wrong Closure 1)",
+      categories: ["Fraud"],
       thai: `
         <p>เราได้พยายามติดต่อท่านทางโทรศัพท์ แต่ไม่สามารถติดต่อได้ จึงขอแจ้งรายละเอียดผ่านอีเมลฉบับนี้แทน</p>
         <p>เราขอแจ้งให้ทราบเกี่ยวกับสถานะบัญชี Wise ของท่านที่ถูกปิดไปก่อนหน้านี้ และขออภัยในความไม่สะดวกหรือความสับสนที่อาจเกิดขึ้น</p>
@@ -1368,6 +1537,7 @@
     },
     {
       title: "Fraud-ATO Hacked Email (Wrong Closure 2)",
+      categories: ["Fraud"],
       thai: `
         <p>ขอบคุณที่ให้ความร่วมมือในการเปลี่ยนแปลงอีเมล</p>
         <p>ขณะนี้เรากำลังดำเนินการตามขั้นตอนที่จำเป็น เพื่อให้มั่นใจว่าบัญชีของท่านมีความปลอดภัย</p>
@@ -1385,6 +1555,7 @@
     },
     {
       title: "Fraud - Use The Same Internet Connection Error",
+      categories: ["Fraud"],
       thai: `
         <p>เราทราบว่าท่านกำลังประสบปัญหาในการยืนยันอุปกรณ์ใหม่ และเข้าใจถึงความไม่สะดวกที่อาจเกิดขึ้น เรายินดีให้ความช่วยเหลือในการแก้ไขปัญหาดังกล่าว</p>
         <p>การดำเนินการนี้เป็นส่วนหนึ่งของขั้นตอนมาตรฐานในการยืนยันตัวตน เพื่อให้มั่นใจว่าเรากำลังติดต่อกับเจ้าของบัญชีตัวจริง และเพื่อรักษาความปลอดภัยของบัญชีและข้อมูลของท่าน</p>
@@ -1413,6 +1584,7 @@
     },
     {
       title: "ATO Hacked Email Account Deactivated 1",
+      categories: ["Fraud"],
       thai: `
         <p>จากการตรวจสอบ เราพบการใช้งานที่ผิดปกติในบัญชีของท่าน ซึ่งอาจเกี่ยวข้องกับการละเมิดความปลอดภัยของบัญชีอีเมลหรือบริการคลาวด์ที่ท่านใช้งาน</p>
         <p>เพื่อความปลอดภัยของบัญชี เราจำเป็นต้องระงับการใช้งานบัญชีของท่านเป็นการชั่วคราว</p>
@@ -1420,7 +1592,7 @@
         <p>หากท่านประสงค์จะติดต่อเราทางอีเมล เราจำเป็นต้องขอข้อมูลเพิ่มเติมเพื่อยืนยันตัวตนและยืนยันว่ากำลังติดต่อกับเจ้าของบัญชีตัวจริง</p>
         <p>กรุณาตอบกลับอีเมลฉบับนี้ พร้อมข้อมูลดังต่อไปนี้</p>
         <ul>
-          <li>อีเมลใหม่ ที่ต้องการใช้กับบัญชี Wise โดยอีเมลดังกล่าวจะถูกเชื่อมโยงกับบัญชีของท่าน และใช้สำหรับการติดต่อสื่อสารกับเราในอนาคต</li>
+          <li>อีเมลใหม่ที่ต้องการใช้กับบัญชี Wise โดยอีเมลดังกล่าวจะถูกเชื่อมโยงกับบัญชีของท่าน และใช้สำหรับการติดต่อสื่อสารกับเราในอนาคต</li>
           <li>ภาพถ่ายเซลฟี่พร้อมเอกสารยืนยันตัวตน โดยถือบัตรประชาชนหรือหนังสือเดินทางไว้ข้างใบหน้า พร้อมกระดาษที่เขียนข้อความ "Wise [ระบุวันที่ปัจจุบัน]" ทั้งใบหน้า เอกสารยืนยันตัวตน และข้อความบนกระดาษจะต้องมองเห็นได้อย่างชัดเจน</li>
         </ul>
         <p>ขอขอบคุณสำหรับความเข้าใจและความร่วมมือของท่าน</p>
@@ -1428,6 +1600,7 @@
     },
     {
       title: "Phishing-Marketplace Scam",
+      categories: ["Fraud"],
       thai: `
         <p>ทางเรารู้สึกเสียใจเป็นอย่างยิ่งที่ท่านพบเหตุการณ์ลักษณะนี้</p>
         <p>อีเมลที่ท่านรายงานมานั้นไม่ได้เป็นของ Wise เราได้ตรวจสอบแล้วและได้ดำเนินการตามขั้นตอนอย่างสุดความสามารถเพื่อป้องกันไม่ให้เหตุการณ์นี้เกิดขึ้นอีก</p>
@@ -1454,6 +1627,7 @@
     },
     {
       title: "Phishing - Phishing / Smishing / Vishing",
+      categories: ["Fraud"],
       intro: ``,
       outro: `
         <p>Wise ให้ความสำคัญกับความปลอดภัยของบัญชีลูกค้า ท่านสามารถดูว่าเราปกป้องบัญชีของผู้ใช้งานอย่างไรได้ที่ Security in Wise และอ่านเพิ่มเติมได้จากหน้าช่วยเหลือที่เกี่ยวข้อง:</p>
@@ -1499,6 +1673,7 @@
     },
     {
       title: "Sanctions Cancellation Request",
+      categories: ["Transfer status", "Verification"],
       thai: `
         <p>เราได้รับคำขอยกเลิกการโอนเงินหมายเลข <strong>[XX]</strong> ของท่านเรียบร้อยแล้ว</p>
         <p>ก่อนดำเนินการยกเลิกการโอนเงินตามคำขอ เรายังจำเป็นต้องตรวจสอบรายละเอียดของรายการโอนดังกล่าวให้เสร็จสมบูรณ์ก่อน</p>
@@ -1509,6 +1684,7 @@
     },
     {
       title: "Sanctions - Information Request",
+      categories: ["Transfer status", "Verification"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Check the Knowledge Base for <a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2972747200">current backlogs</a>. Only escalate to Sanctions Urgent if time-frames have passed.</div>
         <p>ตอนนี้การชำระเงินหมายเลข <strong>[XX]</strong> ล่าช้า เนื่องจากเรากำลังตรวจสอบข้อมูลเกี่ยวกับมาตรการคว่ำบาตร (Sanctions) ขั้นตอนนี้ทำเพื่อให้แน่ใจว่ารายการดังกล่าวไม่ขัดต่อกฎหมายมาตรการคว่ำบาตรระหว่างประเทศ รวมถึงข้อตกลงต่าง ๆ ระหว่าง Wise กับหน่วยงานกำกับดูแลและพาร์ทเนอร์ของเรา</p>
@@ -1532,6 +1708,7 @@
     },
     {
       title: "Sanctions - Information Received, Review in Progress",
+      categories: ["Transfer status", "Verification"],
       thai: `
         <p>ขอบคุณสำหรับข้อมูลที่ท่านส่งให้เราก่อนหน้านี้</p>
         <p>ขณะนี้ เรากำลังดำเนินการตรวจสอบรายการโอนเงินของท่าน โดยขั้นตอนดังกล่าวอาจใช้เวลาสูงสุด <strong>[XX] วัน</strong> หากจำเป็นต้องใช้ข้อมูลเพิ่มเติม เราจะติดต่อท่านทางอีเมล</p>
@@ -1605,6 +1782,7 @@
     },
     {
       title: "General Transfer Fees and Rates",
+      categories: ["Guide"],
       intro: `
         <p>ค่าธรรมเนียมการโอนเงินของท่านขึ้นอยู่กับหลายปัจจัย เช่น <a href="https://wise.com/help/articles/2977942/how-much-does-it-cost-to-send-large-transfers">จำนวนเงินที่โอน</a> <a href="https://wise.com/help/articles/2932395/whats-the-real-exchange-rate">อัตราแลกเปลี่ยน</a> และวิธีการชำระเงิน</p>
         <p>ท่านสามารถคำนวณค่าธรรมเนียมได้ด้วยตนเองผ่าน <a href="https://wise.com/gb/pricing/">เครื่องมือคำนวณราคา</a> โดยระบบจะแสดงค่าธรรมเนียมของแต่ละวิธีการชำระเงินเมื่อท่านตั้งค่ารายการโอน</p>
@@ -1682,6 +1860,7 @@
     },
     {
       title: "ATM Transaction Fees",
+      categories: ["Wise card"],
       intro: ``,
       outro: `
         <p><a href="https://wise.com/help/articles/2935769/how-much-does-it-cost-to-withdraw-cash-with-my-wise-card">รายละเอียดเพิ่มเติมเกี่ยวกับค่าธรรมเนียมและข้อจำกัดในการถอนเงินสดด้วยบัตร Wise</a></p>
@@ -1725,6 +1904,7 @@
     },
 {
       title: "Guaranteed Rate — Basics",
+      categories: ["Guide"],
       thai: `
         <p>เหตุผลที่อัตราแลกเปลี่ยนที่เราใช้กับรายการโอนของท่านแตกต่างกัน เป็นเพราะท่านพลาดอัตราแลกเปลี่ยนที่การันตี (guaranteed rate)</p>
         <p>เรามอบอัตราแลกเปลี่ยนเริ่มต้นที่ <strong>[add original rate]</strong> ให้ท่านจนถึงเวลา <strong>[add exact expiration time]</strong></p>
@@ -1738,6 +1918,7 @@
     },
     {
       title: "Swift — We Received Less Money (Pay-In)",
+      categories: ["Pay-in"],
       thai: `
         <p>สาเหตุที่เราได้รับเงินฝากไม่ครบตามจำนวนที่ตั้งใจไว้ เป็นเพราะท่านส่งเงินเข้ามาผ่านระบบ Swift</p>
         <p>Swift มักใช้สำหรับการโอนเงินในสกุลเงินที่ไม่ใช่สกุลเงินท้องถิ่นของประเทศผู้ส่ง (เช่น โอนเงินสกุล USD จากบัญชีธนาคารที่อยู่นอกสหรัฐฯ) โดยเงินจะต้องผ่านธนาคารตัวกลางหลายแห่งก่อนจะมาถึงเรา ซึ่งธนาคารตัวกลางเหล่านี้จะหักค่าธรรมเนียมของตนเองแยกต่างหาก ทำให้จำนวนเงินที่เราได้รับอาจน้อยกว่าที่ท่านตั้งใจส่ง ทั้งนี้ เราไม่สามารถควบคุมได้ว่าค่าธรรมเนียมเหล่านี้จะถูกหักเมื่อไร หรือมีค่าใช้จ่ายเท่าไร</p>
@@ -1753,6 +1934,7 @@
     },
     {
       title: "Swift — Recipient Received Less Money (Pay-Out)",
+      categories: ["Pay-out"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Make sure you follow the process and assess whether the customer is eligible for compensation. If the scheme used with the transfer was SHA, customers might be eligible for compensation as a one time exception. If it was OUR, we need to compensate the customer. Read full process here: Swift — Basics</div>
         <p>ทางเราเสียใจที่ได้ทราบว่า ยอดเงินโอนของท่านไปไม่ถึงผู้รับครบตามจำนวนที่ตั้งใจไว้ เราเข้าใจว่าท่านต้องการทราบว่าเพราะเหตุใดจึงมีการหักเงินจำนวน <strong>[Amount]</strong> ออกจากยอดรวม</p>
@@ -1792,6 +1974,7 @@
     },
     {
       title: "How to Register and Sign Up with Wise",
+      categories: ["Account"],
       thai: `
         <p>ขอบคุณที่ให้ความสนใจบริการของ Wise</p>
         <p>หากท่านต้องการเริ่มใช้บริการโอนเงินกับ Wise ท่านจะต้องสมัครบัญชีกับเราก่อน โดยสามารถ<a href="https://wise.com/register">ลงทะเบียนได้จากลิงก์นี้</a></p>
@@ -1810,6 +1993,7 @@
     },
     {
       title: "Same Device Error",
+      categories: ["Account"],
       thai: `
         <p>ขออภัยในความไม่สะดวกที่ท่านพบขณะพยายามอนุมัติอุปกรณ์ใหม่</p>
         <p>ขั้นตอนนี้เป็นกระบวนการมาตรฐานที่เราใช้ในการยืนยันตัวตน เพื่อให้มั่นใจว่าเรากำลังติดต่อกับเจ้าของบัญชีตัวจริง และเพื่อให้ผ่านขั้นตอนการยืนยันนี้ได้สำเร็จ ท่านจะต้องเข้าสู่ระบบและเปิดอีเมลบนอุปกรณ์เดียวกัน</p>
@@ -1856,6 +2040,7 @@
     },
     {
       title: "Document Upload Issues and Troubleshooting",
+      categories: ["Guide", "Verification"],
       intro: `
         <p>เพื่อช่วยแก้ไขปัญหาการอัปโหลดเอกสาร กรุณาตรวจสอบดังต่อไปนี้</p>
         <ul>
@@ -1884,6 +2069,7 @@
     },
 {
       title: "Troubleshooting",
+      categories: ["Guide"],
       thai: `
         <p>ดูเหมือนว่าปัญหานี้อาจเกิดจากอุปกรณ์ที่ท่านกำลังใช้งานอยู่</p>
         <p>หากท่านกำลังใช้งานผ่านแอปพลิเคชัน ท่านสามารถลองดำเนินการตามวิธีดังต่อไปนี้ได้:</p>
@@ -1915,6 +2101,7 @@
     },
     {
       title: "Add Card to Mobile Wallet",
+      categories: ["Wise card", "Guide"],
       intro: ``,
       outro: `
         <p>หากท่านมีข้อสงสัยหรือต้องการสอบถามข้อมูลเพิ่มเติม สามารถตอบกลับอีเมลฉบับนี้ได้ เรายินดีให้ความช่วยเหลือ</p>
@@ -1955,6 +2142,7 @@
     },
     {
       title: "Activation and PIN — Activating Visa Card",
+      categories: ["Wise card", "Verification"],
       thai: `
         <p>ท่านไม่จำเป็นต้องทำขั้นตอน “เปิดใช้งานบัตร” แยกต่างหาก เพียงทำรายการครั้งแรกแบบ <strong>เสียบชิปและใส่รหัส PIN (chip and PIN)</strong> เพื่อเริ่มใช้งานการชำระเงินแบบแตะจ่าย (contactless) ได้</p>
         <p>หากวิธีนี้ยังใช้ไม่ได้ ท่านสามารถลองใช้บัตรที่ตู้ ATM แทน โดยการทำแค่เพียงรายการ ตรวจสอบยอดคงเหลือ (balance enquiry)</p>
@@ -1975,11 +2163,12 @@
     },
     {
       title: "Activation and PIN — PIN Blocked",
+      categories: ["Wise card", "Guide"],
       thai: `
         <p>ดูเหมือนว่าบัตรของท่านถูกบล็อก เนื่องจากท่านใส่รหัส PIN ไม่ถูกต้องครบ 3 ครั้ง ท่านสามารถปลดบล็อก PIN ได้ง่าย ๆ ผ่านแอปดังนี้:</p>
         <ol>
-          <li>ไปที่แท็บ Card</li>
-          <li>แตะ Unblock PIN</li>
+          <li>ไปที่แท็บบัตร (Card)</li>
+          <li>แตะที่ "ปลดล็อก PIN (Unblock PIN)"</li>
         </ol>
         <p>เพื่อให้แน่ใจว่าการปลดบล็อกเรียบร้อยแล้ว ท่านจะต้องทำรายการแบบเสียบชิปและใส่ PIN (Chip and PIN) หรือใส่ PIN ที่ตู้ ATM</p>
         <p><a href="https://wise.com/help/articles/2977978/how-do-i-view-or-change-my-pin">เรียนรู้เพิ่มเติมเกี่ยวกับสิ่งที่ควรทำ หากท่านลืมรหัส PIN</a></p>
@@ -1988,6 +2177,7 @@
     },
     {
       title: "Completed Transaction — Customer Charged in the Wrong Currency (DCC)",
+      categories: ["Wise card"],
       thai: `
         <p>ขออภัยที่ท่านพบการเรียกเก็บเงินที่ผิดพลาดจากธุรกรรมล่าสุดของท่าน ทางเราขออนุญาตอธิบายเพิ่มเติมและวิธีหลีกเลี่ยงเหตุการณ์นี้ในอนาคต</p>
         <p>บัตรของท่านถูกออกในประเทศ <strong>[country]</strong> และดูเหมือนว่าร้านค้า/ตู้ ATM ได้เรียกเก็บเงินท่านเป็นสกุลเงินของประเทศที่ออกบัตร สาเหตุอาจเป็นเพราะร้านค้าหรือตู้ ATM เสนอให้ “แปลงสกุลเงิน” ให้เป็นสกุลเงินที่คุ้นเคยโดยใช้อัตราแลกเปลี่ยนของตนเองซึ่งมักจะไม่คุ้มค่า กระบวนการนี้เรียกว่า Dynamic Currency Conversion (DCC)</p>
@@ -1999,6 +2189,7 @@
     },
     {
       title: "Completed Transaction — Merchant Refund",
+      categories: ["Wise card"],
       thai: `
         <p>โดยปกติการเงินคืน (refund) จากร้านค้า/ผู้ให้บริการจะใช้เวลา <strong>5–10 วันทำการ</strong> ทั้งนี้แต่ละร้านค้ามีนโยบายและระยะเวลาดำเนินการคืนเงินที่แตกต่างกัน ซึ่งขึ้นอยู่กับว่าร้านค้า/ผู้ให้บริการจะดำเนินการการคืนเงินเมื่อใด</p>
         <p>ทางเราไม่สามารถติดตามหรือเห็นรายการคืนเงินได้จนกว่าเงินจะเข้ามายังบัญชีของท่าน แต่เมื่อเราได้รับเงินคืนแล้ว ระบบจะเพิ่มยอดเงินเข้าบัญชีของท่านโดยอัตโนมัติ</p>
@@ -2020,6 +2211,7 @@
     },
 {
       title: "Declined Transaction — 3DS Error",
+      categories: ["Wise card"],
       thai: `
         <p>ขออภัยที่ท่านไม่สามารถทำรายการชำระเงินได้สำเร็จ</p>
         <p>สำหรับการชำระเงินออนไลน์บางรายการ ระบบอาจขอให้ท่านยืนยันการชำระเงินผ่านแอป Wise หรือด้วยรหัสที่ส่งทาง SMS หรือการโทร ขั้นตอนนี้เรียกว่า การชำระเงินออนไลน์แบบ 3D Secure (3DS) ซึ่งเป็นระบบความปลอดภัยเพิ่มเติมที่บางเว็บไซต์กำหนด เมื่อท่านยืนยันผ่านวิธี 3DS แล้ว การชำระเงินจะดำเนินการได้ตามปกติ</p>
@@ -2030,22 +2222,23 @@
     },
     {
       title: "Declined Transaction — Account Limits",
+      categories: ["Wise card"],
       thai: `
         <p>สาเหตุที่บัตรของท่านถูกปฏิเสธ (declined) เป็นเพราะรายการนี้จะทำให้ท่านใช้วงเงินเกิน <strong>[daily / monthly] [total account spending limit / ATM withdrawal limit]</strong> ขณะนี้ท่านเหลือวงเงินอีก <strong>[currency amount]</strong> และวงเงิน <strong>[daily/monthly]</strong> ของท่านจะนับใหม่อีกครั้งใน <strong>[time period]</strong></p>
         <p>ด้านล่างคือวิธีแก้ไขวงเงินการใช้จ่ายของบัญชี (Account spending limits)</p>
         <p><strong>บนเว็บ (Web):</strong></p>
         <ol>
-          <li>ไปที่แท็บ Cards</li>
-          <li>เลือก Your spending limits</li>
-          <li>ในส่วน Account limits เลือก Edit</li>
-          <li>กรอกวงเงินใหม่ แล้วกด Confirm</li>
+          <li>ไปที่แท็บบัตร (Cards)</li>
+          <li>เลือก "จำกัดวงเงินที่คุณใช้ได้ (Your spending limits)"</li>
+          <li>ในส่วน "จำกัดวงเงินในบัญชี (Account limits)" เลือก "แก้ไข (Edit)"</li>
+          <li>กรอกวงเงินใหม่ แล้วกด "ยืนยัน (Confirm)"</li>
         </ol>
         <p><strong>บนแอป (App):</strong></p>
         <ol>
-          <li>ไปที่แท็บ Cards</li>
-          <li>เลือก Spending limits</li>
-          <li>เลือก Account limits</li>
-          <li>เลือก Edit account limits</li>
+          <li>ไปที่แท็บบัตร (Cards)</li>
+          <li>เลือก "จำกัดวงเงินที่คุณใช้ได้ (Your spending limits)"</li>
+          <li>เลือก "จำกัดวงเงินในบัญชี (Account limits)"</li>
+          <li>เลือก "แก้ไขวงเงิน (Edit account limits)"</li>
         </ol>
         <p>ท่านยังสามารถดูและแก้ไขวงเงินได้จากโปรไฟล์ของท่าน ภายใต้เมนู Limits เช่นกัน นอกจากนี้ หากท่านเลือกบัตร Wise แล้วกด Manage payment methods ท่านจะสามารถเปิด/ปิดประเภทธุรกรรมต่าง ๆ ได้</p>
         <p><a href="https://wise.com/help/articles/2977986/how-do-i-change-my-wise-card-spending-limits">เรียนรู้เพิ่มเติมเกี่ยวกับการเปลี่ยนวงเงินการใช้จ่าย (changing your spending limits)</a></p>
@@ -2054,6 +2247,7 @@
     },
     {
       title: "Declined Transaction — ATM",
+      categories: ["Wise card"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Use this quick reply only if the customer can't use self-service</div>
         <p>ทางเราไม่พบเหตุผลการปฏิเสธรายการ (decline reason) จากในระบบของเรา โดยปกติเมื่อท่านถอนเงินด้วยบัตร Wise ผู้ให้บริการตู้ ATM จะส่งคำขออนุมัติ (authorisation request) มาที่เรา แต่ครั้งนี้ทางเราไม่ได้รับคำขอดังกล่าว</p>
@@ -2063,6 +2257,7 @@
     },
     {
       title: "Declined Transaction — Card Frozen",
+      categories: ["Wise card"],
       thai: `
         <p>รายการธุรกรรมของท่านถูกปฏิเสธ เนื่องจากบัตรของท่านถูกระงับการใช้งานอยู่ในขณะนี้</p>
         <p>ท่านสามารถยกเลิกการระงับบัตร (unfreeze) ได้ 2 วิธีดังนี้:</p>
@@ -2076,6 +2271,7 @@
     },
     {
       title: "Declined Transaction — Card Inactive",
+      categories: ["Wise card"],
       thai: `
         <p>รายการธุรกรรมถูกปฏิเสธ (declined) เนื่องจากบัตรของท่านยังไม่ได้เปิดใช้งาน (activated)</p>
         <p><strong>วิธีเปิดใช้งานบัตร:</strong> ท่านเพียงทำรายการชำระเงินครั้งแรกด้วยวิธีเสียบชิปและใส่รหัส PIN (Chip and PIN)</p>
@@ -2091,13 +2287,14 @@
     },
     {
       title: "Declined Transaction — Contactless Inactive",
+      categories: ["Wise card"],
       thai: `
         <p>ท่านเพียงต้องตั้งค่าการเริ่มใช้งานการแตะจ่าย (contactless) เพื่อแก้ไขปัญหานี้ โดยสามารถทำได้ด้วยการใช้บัตรที่ตู้ ATM หรือทำรายการชำระเงินแบบใส่รหัส PIN (PIN transaction)</p>
         <div class="internal-note">⚠️ OPTIONAL: CONTACTLESS SETUP</div>
         <p>หากท่านทำตามขั้นตอนข้างต้นแล้วแต่ยังใช้งานไม่ได้ โปรดตรวจสอบว่าได้เปิดใช้งานการชำระเงินแบบแตะจ่าย (contactless payments) ในบัญชีของท่านแล้วหรือไม่ โดยทำตามขั้นตอนดังนี้:</p>
         <ul>
-          <li>บนเว็บไซต์: ไปที่ Cards / บนแอป: ไปที่ Card</li>
-          <li>แตะ Manage payment methods</li>
+          <li>บนเว็บไซต์และแอป: ไปที่เมนู "บัตร (Cards)"</li>
+          <li>แตะที่ "จัดการวิธีชำระเงิน (Manage payment methods)"</li>
           <li>เปิด/ปิดวิธีการชำระเงินที่ต้องการ (Turn selected payment method on/off)</li>
         </ul>
         <p>หากท่านมีคำถามอื่น ๆ เพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
@@ -2105,6 +2302,7 @@
     },
     {
       title: "Declined Transaction — EFTPOS / NETS",
+      categories: ["Wise card"],
       intro: `
         <p>สาเหตุหนึ่งที่ทำให้การชำระเงินด้วยบัตรของท่านไม่สำเร็จ อาจเป็นเพราะมีการเลือก “บัญชีหรือประเภทการชำระเงิน” ไม่ถูกต้องตอนชำระเงิน</p>
       `,
@@ -2113,8 +2311,8 @@
         <p>นอกจากนี้ รายการชำระเงินอาจถูกปฏิเสธได้เช่นกัน หากปิดการทำรายการแบบ chip and PIN ไว้</p>
         <p>วิธีตรวจสอบว่าเปิดใช้งานอยู่หรือไม่:</p>
         <ol>
-          <li>บนเว็บไซต์: ไปที่ Cards / บนแอป: ไปที่ Card</li>
-          <li>แตะ Manage payment methods</li>
+          <li>บนเว็บไซต์และแอป: ไปที่เมนู "บัตร (Cards)"</li>
+          <li>แตะที่ "จัดการวิธีชำระเงิน (Manage payment methods)"</li>
           <li>เปิด/ปิดวิธีการชำระเงินที่ต้องการ (Turn selected payment method on/off)</li>
         </ol>
         <p>หากท่านมีคำถามอื่น ๆ เพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
@@ -2136,6 +2334,7 @@
     },
     {
       title: "Declined Transaction — Full Reversal",
+      categories: ["Wise card"],
       thai: `
         <p>รายการชำระเงินด้วยบัตรของท่านหมายเลข <strong>[transaction number]</strong> ได้รับการอนุมัติ (authorised) แล้วและมีการกันวงเงินไว้สำหรับ <strong>[merchant]</strong></p>
         <p>อย่างไรก็ตาม ดูเหมือนว่าทางร้านค้า/ผู้ให้บริการเป็นฝ่ายปฏิเสธรายการชำระเงินนี้ (declined) ทำให้วงเงินดังกล่าวถูกปล่อยคืนกลับเข้าบัญชีของท่านเรียบร้อยแล้ว ทางเราไม่ทราบสาเหตุที่ร้านค้าปฏิเสธรายการนี้ ดังนั้นแนะนำให้ตรวจสอบกับ <strong>[merchant]</strong> โดยตรง</p>
@@ -2147,6 +2346,7 @@
     },
     {
       title: "Declined Transaction — Incorrect Billing Address",
+      categories: ["Wise card"],
       thai: `
         <p>รายการของท่านได้รับการอนุมัติ (authorised) และมีการกันวงเงินไว้ให้กับ <strong>[merchant]</strong> แล้ว แต่จากข้อมูลที่เห็นรายการชำระเงินถูกปฏิเสธ (declined) และเงินได้ถูกปล่อยคืนกลับเข้าบัญชีของท่านเรียบร้อย</p>
         <p>สาเหตุที่รายการไม่สำเร็จเป็นเพราะที่อยู่สำหรับเรียกเก็บเงิน (billing address) ที่ท่านให้กับร้านค้า/ผู้ให้บริการ ไม่ตรงกับที่อยู่ในโปรไฟล์ Wise ของท่าน</p>
@@ -2156,6 +2356,7 @@
     },
     {
       title: "Declined Transaction — Invalid Transaction Type",
+      categories: ["Wise card"],
       thai: `
         <p>ต้องขออภัยในความไม่สะดวก บัตรของท่านไม่สามารถใช้ชำระเงินในการชำระประเภทนี้กับร้านค้า/ผู้ให้บริการได้ เนื่องจากเราไม่ได้รับข้อมูลรายการธุรกรรมในรูปแบบที่ระบบของเราสามารถประมวลผลได้</p>
         <p>อย่างไรก็ตาม บัตรของท่านยังใช้งานได้ตามปกติ โปรดใช้วิธีการชำระเงินอื่นหรือทดลองชำระเงินออนไลน์อีกครั้งในภายหลัง</p>
@@ -2164,6 +2365,7 @@
     },
     {
       title: "Declined Transaction — Insufficient Funds",
+      categories: ["Wise card"],
       thai: `
         <p>บัตร Wise ของท่านถูกปฏิเสธ (declined) เนื่องจากยอดเงินในบัญชีของท่านไม่เพียงพอ เพียงแค่ <a href="https://wise.com/help/articles/2596978/how-do-i-add-money-to-my-account">เติมเงินเพิ่มเข้ามาในบัญชีสกุลเงิน</a> ที่ต้องการใช้ เท่านี้ก็สามารถใช้งานได้ตามปกติ</p>
         <p>ท่านสามารถตรวจสอบสาเหตุที่บัตรถูกปฏิเสธได้ผ่านแอปหรือเว็บไซต์ โดยคลิกที่รายการธุรกรรมนั้นระบบจะแสดงเหตุผลที่ถูกปฏิเสธ</p>
@@ -2172,22 +2374,24 @@
     },
     {
       title: "Declined Transaction — Limit per Card",
+      categories: ["Wise card"],
       thai: `
         <p>สาเหตุที่บัตรของท่านถูกปฏิเสธ (declined) เป็นเพราะท่านใช้วงเงิน <strong>[รายวัน/รายเดือน]</strong> ของบัตรหมายเลขลงท้าย <strong>[Last 4 digits]</strong> ครบแล้ว</p>
         <p>ขณะนี้ท่านเหลือวงเงินอีก <strong>[currency amount]</strong> และวงเงิน <strong>[daily/monthly]</strong> ของท่านจะนับใหม่อีกครั้งใน <strong>[time period]</strong></p>
         <p>วิธีดูและเปลี่ยนวงเงินการใช้จ่ายของบัตร:</p>
         <ol>
-          <li>ไปที่เมนู บัตร (Cards) และเลือก Your spending limits</li>
-          <li>ในส่วน Limits per card ท่านจะเห็นรายการบัตรทั้งหมด กรุณาเลือกบัตรที่ต้องการดู/แก้ไข/ลบวงเงิน</li>
+          <li>ไปที่เมนู "บัตร (Cards)" และเลือก "จำกัดวงเงินที่คุณใช้ได้ (Your spending limits)"</li>
+          <li>ในส่วน "จำกัดวงเงินต่อบัตรหนึ่งใบ (Limits per card)" ท่านจะเห็นรายการบัตรทั้งหมด กรุณาเลือกบัตรที่ต้องการดู/แก้ไข/ลบวงเงิน</li>
           <li>ระบบจะแสดงวงเงินที่ตั้งไว้สำหรับบัตรใบนั้น</li>
         </ol>
-        <p>หากต้องการแก้ไขให้เลือก แก้ไข (Edit) และหากต้องการยกเลิกวงเงินให้เลือก Remove limit</p>
+        <p>หากต้องการแก้ไขให้เลือก "แก้ไข (Edit)" และหากต้องการยกเลิกวงเงินให้เลือก Remove limit</p>
         <p><a href="https://wise.com/help/articles/2977986/how-do-i-change-my-wise-card-spending-limits">เรียนรู้เพิ่มเติมเกี่ยวกับการเปลี่ยนวงเงินการใช้จ่าย</a></p>
         <p>หากท่านมีคำถามอื่น ๆ เพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
       `
     },
     {
       title: "Declined Transaction — MAS Limit Exceeded",
+      categories: ["Wise card"],
       thai: `
         <p>บัตรของท่านถูกปฏิเสธ เนื่องจากท่านใช้วงเงินใช้จ่ายรายปีครบตามกำหนดที่ 100,000 SGD แล้ว</p>
         <p>ลูกค้าที่อยู่ในสิงคโปร์จะไม่สามารถโอนเงินและ/หรือใช้จ่ายจากบัญชีเกิน 100,000 SGD ภายในระยะเวลา 1 ปีได้ เนื่องจากข้อกำหนดตาม <a href="https://wise.com/help/articles/2978043/holding-limits-if-you-live-in-singapore">Payment Services Act ของ Monetary Authority of Singapore (MAS)</a></p>
@@ -2206,6 +2410,7 @@
     },
     {
       title: "Declined Transaction — Suspected Fraud",
+      categories: ["Wise card"],
       thai: `
         <p>รายการชำระเงินด้วยบัตรของท่านถูกปฏิเสธด้วยเหตุผลด้านความปลอดภัย เนื่องจากเราต้องการรักษาความปลอดภัยให้กับเงินของท่านและรายการชำระเงินนี้อยู่นอกขอบเขตในความเสี่ยงที่เราสามารถรับได้ (not within our risk appetite)</p>
         <p>ท่านสามารถลองใช้บัตรใบอื่นหรือเปลี่ยนไปใช้วิธีการชำระเงินอื่นแทนได้</p>
@@ -2214,8 +2419,9 @@
     },
     {
       title: "Declined Transaction — Transaction Missing From Activity",
+      categories: ["Wise card"],
       thai: `
-        <p>ทางเราได้ตรวจสอบบัญชีของท่านแล้วและไม่พบปัญหาใดๆ - ท่านมียอดเงินเพียงพอในบัญชีและได้เปิดใช้งานตัวเลือกในการชำระเงินออนไลน์ (online payment) ไว้แล้ว</p>
+        <p>ทางเราได้ตรวจสอบบัญชีของท่านแล้วและไม่พบปัญหาใด ๆ เนื่องจากท่านมียอดเงินเพียงพอในบัญชีและได้เปิดใช้งานตัวเลือกในการชำระเงินออนไลน์ (online payment) ไว้แล้ว</p>
         <p>อย่างไรก็ตาม ทางเราไม่พบรายการชำระเงินที่ถูกปฏิเสธ (declined) ในระบบของเรา ซึ่งหมายความว่า ร้านค้า/ผู้ให้บริการไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ของเราได้ จึงทำให้รายการดังกล่าวไม่แสดงในหน้าการใช้งานของท่าน</p>
         <p>โดยปกติเมื่อท่านทำรายการชำระเงิน ร้านค้าจะส่งคำขออนุมัติ (authorisation request) มาที่เรา แต่ครั้งนี้เราไม่ได้รับคำขอดังกล่าว</p>
         <p>เราอาจไม่สามารถระบุได้เสมอว่าทำไมการชำระเงินด้วยบัตรจึงถูกปฏิเสธ แต่เรากำลังพยายามแก้ไขปัญหานี้อยู่ โดยเราจะขอให้ท่านเข้าสู่ระบบก่อน หากท่านยังไม่ได้เข้าสู่ระบบ <a href="https://wise.com/login?redirectUrl=%2Fdynamic-flow%3Fpath%3Dv1%252Fcard-transaction%252Fhidden-declines-feedback%252Fflow">ท่านสามารถช่วยเราได้โดยส่งรายละเอียดเกี่ยวกับรายการที่ถูกปฏิเสธ</a></p>
@@ -2234,6 +2440,7 @@
     },
 {
       title: "Delivery — Card Hasn't Arrived (Expedited Delivery)",
+      categories: ["Wise card"],
       intro: `
         <p>ขออภัยที่ท่านยังไม่ได้รับบัตรของท่านข้อมูลที่เราตรวจสอบได้จนถึงตอนนี้มีดังนี้:</p>
         <ul>
@@ -2275,6 +2482,7 @@
     },
     {
       title: "Delivery — Expedited Delivery",
+      categories: ["Wise card"],
       thai: `
         <p><a href="https://wise.com/help/articles/2935763/what-if-my-wise-card-hasnt-arrived">ระยะเวลาจัดส่งบัตร Wise</a> จะขึ้นอยู่กับภูมิภาคหรือประเทศที่ท่านสั่งจัดส่งไป</p>
         <p>หากท่านสั่งบัตร Wise ใน สหราชอาณาจักร (UK), เขตเศรษฐกิจยุโรป (EEA), ออสเตรเลีย, นิวซีแลนด์, มาเลเซีย, ฟิลิปปินส์, ญี่ปุ่น, สหรัฐอเมริกา, หรือแคนาดา ท่านสามารถเลือก การจัดส่งแบบเร่งด่วน (expedited delivery) เพื่อให้ได้รับบัตรเร็วขึ้นได้ และหากท่านสั่งบัตรในสิงคโปร์ ท่านจะสามารถเร่งการจัดส่งได้เฉพาะกรณีที่ ที่อยู่จัดส่งอยู่นอกสิงคโปร์</p>
@@ -2297,6 +2505,7 @@
     },
     {
       title: "Delivery — Wrong Address",
+      categories: ["Wise card"],
       intro: ``,
       outro: `
         <p>หากท่านมีคำถามอื่น ๆ เพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
@@ -2322,6 +2531,7 @@
     },
     {
       title: "Limits — ATM Withdrawal",
+      categories: ["Wise card"],
       thai: `
         <p>สำหรับวิธีการคิดค่าธรรมเนียมการถอนเงินที่ตู้ ATM ด้วยบัตร Wise ของท่าน โดยเรามีค่าธรรมเนียม 2 ประเภทได้แก่ ค่าธรรมเนียมแบบคงที่ (fixed) และ ค่าธรรมเนียมแบบแปรผัน (variable)</p>
         <ul>
@@ -2348,6 +2558,7 @@
     },
     {
       title: "Limits — How to Check",
+      categories: ["Wise card", "Guide"],
       thai: `
         <p>ขณะนี้ Wise ให้ท่านควบคุมวงเงินการใช้จ่ายได้มากขึ้น โดยท่านสามารถตั้งค่าวงเงินได้ 2 ระดับ:</p>
         <ul>
@@ -2373,6 +2584,7 @@
     },
     {
       title: "Non-Fraud — General disputes",
+      categories: ["Wise card"],
       intro: `<div class="internal-note">⚠️ INTERNAL INSTRUCTION: USE THIS QR FOR GENERAL NON-FRAUD DISPUTES</div>`,
       outro: `
         <p>การติดต่อกลับอาจใช้เวลาสูงสุดถึง <strong>[ETA — Check current backlogs]</strong> วันทำการ หากท่านไม่ได้ส่งข้อมูลมาครบถ้วน ทีมของเราจำเป็นต้องขอข้อมูลเพิ่มเติมทางอีเมล ซึ่งอาจจะทำให้การยื่นปฏิเสธการชำระเงิน (chargeback) ล่าช้า</p>
@@ -2397,6 +2609,7 @@
     },
     {
       title: "Non-Fraud — Subscriptions / Existing Transactions",
+      categories: ["Wise card"],
       thai: `
         <p>ทางเราเข้าใจว่าท่านต้องการรายงานธุรกรรมรายการนี้ อย่างไรก็ตามระบบแสดงว่าท่านเคยชำระเงินให้กับร้านค้า/ผู้ให้บริการ <strong>[merchant name]</strong> มาก่อนหน้านี้ ดังนั้นเป็นไปได้ว่าท่านอาจจะเคยสมัครบริการแบบสมาชิก (subscription) กับร้านค้านี้ไว้</p>
         <p>แนะนำให้ติดต่อร้านค้า/ผู้ให้บริการก่อนเพื่อขอคืนเงิน (refund) และ/หรือขอยกเลิกการสมัครสมาชิกของท่าน เนื่องจากท่านมีรายการทำธุรกรรมกับร้านค้านี้ก่อนหน้านี้เป็นจำนวนเงิน <strong>[amount]</strong> เมื่อวันที่ <strong>[date]</strong> — ข้อมูลนี้จะช่วยให้ร้านค้าค้นหารายการธุรกรรมของท่านได้</p>
@@ -2423,6 +2636,7 @@
     },
     {
       title: "Non-Fraud — ATM Didn’t Give Cash",
+      categories: ["Wise card"],
       thai: `
         <p>ในกรณีที่ตู้ ATM ไม่จ่ายเงินออกมา ผู้ให้บริการตู้ ATM มักจะคืนยอดเงินดังกล่าวกลับไปยังบัญชีของท่านภายในไม่กี่นาที หากยังไม่ได้รับเงินคืน ท่านจำเป็นต้องติดต่อผู้ให้บริการตู้ ATM โดยตรง โดยปกติจะมีหมายเลขติดต่อแสดงอยู่บนตู้ ATM</p>
         <p>หากท่านไม่สามารถแก้ไขปัญหากับผู้ให้บริการตู้ ATM ได้โดยตรง และ <a href="https://wise.com/help/articles/2935784/my-wise-card-transaction-is-still-pending">รายการชำระเงินยังคงอยู่ในสถานะรอดำเนินการ (pending)</a> แนะนำให้รอให้ระบบยกเลิกรายการดังกล่าวก่อน กระบวนการนี้โดยทั่วไปใช้เวลาสูงสุดประมาณ 1 สัปดาห์ แต่ในบางกรณีอาจนานถึง 2 สัปดาห์</p>
@@ -2432,6 +2646,7 @@
     },
     {
       title: "Non-Fraud — Goods / Services Not Received",
+      categories: ["Wise card"],
       intro: `
         <p>เบื้องต้น ทางเราแนะนำให้ติดต่อร้านค้า/ผู้ให้บริการโดยตรงก่อน เนื่องจากโดยปกติร้านค้าจะมีขั้นตอนการคืนเงิน (refund) สำหรับกรณีลักษณะนี้</p>
         <p>ท่านสามารถแจ้งร้านค้าได้ว่า หากไม่ได้รับความช่วยเหลือ <a href="https://wise.com/gb/blog/filing-chargeback-with-wise">ท่านจะดำเนินการยื่นเรื่องปฏิเสธการชำระเงิน (chargeback)</a> กับธนาคารของท่าน และหากร้านค้าไม่ให้ความร่วมมือ โปรดส่งเอกสารต่อไปนี้ให้เรา:</p>
@@ -2468,6 +2683,7 @@
     },
     {
       title: "Online Payment 3DS",
+      categories: ["Wise card"],
       thai: `
         <p>สำหรับการชำระเงินออนไลน์บางรายการ ระบบอาจขอให้ท่านยืนยันการชำระเงินผ่านแอป Wise หรือด้วยรหัสที่ส่งทาง SMS/การโทร</p>
         <p>ขั้นตอนนี้เรียกว่า การชำระเงินออนไลน์แบบ 3D Secure (3DS) ซึ่งเป็นระบบความปลอดภัยเพิ่มเติมที่บางเว็บไซต์กำหนด เมื่อท่านยืนยันแล้ว การชำระเงินจะดำเนินการได้ตามปกติ อย่างไรก็ตาม ร้านค้า/ผู้ให้บริการบางแห่งอาจไม่ใช้การชำระเงินแบบ 3DS และทางเราไม่สามารถบังคับร้านค้า/ผู้ให้บริการต้องใช้ 3DS ได้</p>
@@ -2479,6 +2695,7 @@
     },
     {
       title: "Ordering a Card — Ineligible Country",
+      categories: ["Wise card"],
       thai: `
         <p>ทางเราต้องขออภัยในความไม่สะดวก เนื่องจากขณะนี้เรายังไม่ให้บริการบัตร Wise ใน <strong>[customer's country]</strong> เรากำลังเร่งขยายการให้บริการบัตรไปยังภูมิภาค/ประเทศใหม่ ๆ และหวังว่าจะสามารถเปิดให้ใช้งานในประเทศของท่านได้ในอนาคต</p>
         <p>ระหว่างนี้ท่านสามารถ <a href="https://wise.com/gb/card/waitlist">ลงชื่อใน waitlist</a> ของเราได้และเราจะแจ้งให้ทราบทันทีเมื่อบัตร Wise พร้อมให้บริการในประเทศของท่าน</p>
@@ -2488,6 +2705,7 @@
     },
     {
       title: "Ordering a Card — How to Order a Physical Card",
+      categories: ["Wise card", "Guide"],
       thai: `
         <p>ท่านสามารถทำตามขั้นตอนดังนี้เพื่อสั่งบัตร Wise (Physical Wise Card):</p>
         <ol>
@@ -2509,6 +2727,7 @@
     },
 {
       title: "Ordering a Card — How to Get a Digital Card",
+      categories: ["Wise card", "Guide"],
       thai: `
         <p>บัตรดิจิทัล (Digital card) เปรียบเสมือนบัตร Wise แบบบัตรพลาสติกในเวอร์ชันออนไลน์และมีข้อดีเพิ่มเติมดังนี้:</p>
         <ul>
@@ -2531,6 +2750,7 @@
     },
     {
       title: "Ordering a Card — Irregular Card Order",
+      categories: ["Wise card"],
       thai: `
         <p>เนื่องจากข้อกำหนดตามกฎหมายในแต่ละประเทศ ท่านจะสามารถสั่งบัตร Wise ได้ก็ต่อเมื่อที่อยู่ที่พักอาศัยของท่านอยู่ในหนึ่งใน<a href="https://wise.com/help/articles/2968915/can-i-get-the-wise-card-in-my-country">ประเทศหรือภูมิภาคที่ให้บริการบัตรเท่านั้น</a></p>
         <p>การสั่งบัตร Wise ไปยังประเทศที่เรายังไม่สามารถให้บริการในขณะนี้ ถือว่าไม่เป็นไปตาม<a href="https://wise.com/gb/legal/acceptable-use-policy">นโยบายการใช้งาน (Acceptable Use Policy)</a> และอาจส่งผลให้บัญชีของท่านถูกระงับการใช้งาน</p>
@@ -2545,6 +2765,7 @@
     },
     {
       title: "Ordering a Card — Verification",
+      categories: ["Wise card", "Verification"],
       thai: `
         <p>คำสั่งซื้อบัตรของท่านยังอยู่ในสถานะรอดำเนินการ (pending) เนื่องจากเรายังต้องยืนยันบัญชีของท่านก่อน เพื่อดำเนินการยืนยันให้เสร็จสิ้น กรุณาส่งเอกสาร <strong><a href="https://wise.com/user/verify/id">[proof of ID</a>/other documents — <a href="https://transferwise.atlassian.net/wiki/spaces/WISGN/pages/2488140314">check Ninjas</a>]</strong>.</p>
         <p><a href="https://wise.com/help/articles/2949801/how-does-wise-verify-my-identity">เรียนรู้เพิ่มเติมเกี่ยวกับการยืนยันตัวตน</a></p>
@@ -2554,6 +2775,7 @@
     },
     {
       title: "Pending Transaction",
+      categories: ["Wise card"],
       intro: `
         <p>ขณะนี้รายการของท่านหมายเลข <strong>[transaction number]</strong> อยู่ในสถานะรอดำเนินการ (pending) ซึ่งหมายความว่าเงินจำนวนดังกล่าวถูกกันวงเงินไว้และยังไม่สามารถใช้งานได้ในบัญชีของท่าน โดย Wise ได้อนุมัติรายการชำระเงินนี้เรียบร้อยแล้ว แต่ร้านค้า/ผู้ให้บริการยังไม่ได้เรียกเก็บเงินดังกล่าว</p>
         <p>ขั้นตอนถัดไปขึ้นอยู่กับร้านค้า/ผู้ให้บริการ ซึ่งมีได้ 3 ทางเลือก:</p>
@@ -2598,6 +2820,7 @@
     },
 {
       title: "Replacing a Card — Card Lost / Damaged / Stolen",
+      categories: ["Wise card", "Guide"],
       intro: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: อย่าลืมตรวจสอบว่า เราได้ระงับบัตรลูกค้าหรือยัง หากไม่ได้ระงับ ให้ลบข้อความที่ไม่จำเป็นออก</div>
         <p>[ลบออก หากไม่ได้ระงับบัตรลูกค้า] ทางเราได้ทำการระงับการใช้งานบัตรของท่าน (freeze) ไว้แล้วเพื่อความปลอดภัย ท่านสามารถยกเลิกการระงับ (unfreeze) ได้เสมอผ่านเว็บไซต์หรือแอป นอกจากนี้โปรดตรวจสอบรายการทำธุรกรรมที่ไม่ได้รับอนุญาตและสามารถยื่นปฏิเสธรายการธุรกรรม (dispute) ได้ โดยกดที่เครื่องหมายคำถาม (?) ในหน้ารายละเอียดธุรกรรมนั้น</p>
@@ -2643,6 +2866,7 @@
     },
     {
       title: "Replacing a Card — Expired",
+      categories: ["Wise card", "Guide"],
       thai: `
         <p>ด้านล่างคือคำอธิบายเกี่ยวกับวันหมดอายุบัตรและวิธีขอรับบัตรใหม่ทดแทน (replacement)</p>
         <p>หากต้องการตรวจสอบวันหมดอายุบนบัตรแบบพลาสติก ให้ดูวันที่ที่แสดงในรูปแบบ เดือน/ปี (MM/YY) ที่ด้านหลังบัตร หรือท่านสามารถตรวจสอบได้ในแอป Wise หรือบนเว็บไซต์ โดยไปที่แท็บ Cards แล้วดูรายละเอียดของบัตร</p>
@@ -2656,6 +2880,7 @@
     },
     {
       title: "Smart Conversion",
+      categories: ["Wise card", "Guide"],
       intro: ``,
       outro: `
         <p>หากท่านมีคำถามอื่น ๆ เพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
@@ -2683,6 +2908,7 @@
     },
     {
       title: "Supported / Unsupported Countries",
+      categories: ["Wise card", "Guide"],
       thai: `
         <p>ท่านสามารถใช้บัตร Wise ได้ในทุกสถานที่ส่วนใหญ่ทั่วโลกที่รับบัตรเดบิต (debit card) รวมถึงร้านค้าปลีก ร้านอาหาร และร้านค้าออนไลน์</p>
         <p>หากท่านกำลังวางแผนเดินทางไปต่างประเทศ แนะนำให้ตรวจสอบล่วงหน้าว่าท่านสามารถใช้บัตรได้ที่ใดบ้าง โดยท่านสามารถ<a href="https://wise.com/help/articles/2935771/where-will-my-wise-card-work">ดูข้อมูลรายละเอียดเกี่ยวกับการใช้งานบัตรในต่างประเทศได้</a> (ทั้งนี้ขึ้นอยู่กับประเทศ/ภูมิภาคที่ออกบัตรของท่าน)</p>
@@ -2692,6 +2918,7 @@
     },
     {
       title: "Unauthorised Transaction (UAT)",
+      categories: ["Wise card", "Fraud"],
       thai: `
         <p>ขอบคุณที่ติดต่อเข้ามา และขออภัยเป็นอย่างยิ่งที่มีรายการธุรกรรมที่ท่านไม่ได้เป็นผู้ดำเนินการเกิดขึ้น</p>
         <p>เพื่อความปลอดภัยของบัญชีของท่าน ทางเราได้ทำการระงับการใช้งานบัตรของท่าน (freeze) ไว้เรียบร้อยแล้ว</p>
@@ -2714,6 +2941,7 @@
     },
     {
       title: "Withdrawal From Gambling Sites",
+      categories: ["Wise card", "Receive"],
       thai: `
         <p>ขออภัยในความไม่สะดวก ขณะนี้เรายังไม่รองรับการถอนเงินจากเว็บไซต์การพนัน (gambling sites) เข้ามายังบัญชี Wise ของท่าน</p>
         <p>ท่านอาจสามารถส่งเงินไปยังเว็บไซต์การพนันได้ แต่เราไม่อนุญาตให้ถอนเงินกลับเข้าบัญชี Wise หรือเข้าบัตรของท่าน</p>
@@ -2723,6 +2951,7 @@
     },
     {
       title: "Credit Transaction — Receiving Money to Wise Card",
+      categories: ["Wise card", "Receive"],
       thai: `
         <p>ขอบคุณสำหรับการติดต่อเข้ามาและขอบคุณที่สนใจการรับเงินผ่านบัตร Wise ของท่าน</p>
         <p>บัตร Wise ทุกใบ (ยกเว้นบัตรที่ออกใน <strong>สหรัฐอเมริกา และ ญี่ปุ่น</strong>) สามารถรับเงินได้โดยใช้ หมายเลขบัตร 16 หลัก โดยเงินจะเข้าบัญชี Wise ของท่านโดยตรง</p>
@@ -2734,6 +2963,7 @@
     },
     {
       title: "Cancellation and Refunds — Customer Can’t Cancel Transfer",
+      categories: ["Transfer status", "Pay-out"],
       thai: `
         <p>ทางเราต้องขออภัย เราไม่สามารถยกเลิกหรือแก้ไขการโอนเงินได้ <a href="https://wise.com/help/articles/2565014/i-want-to-cancel-a-transfer-thats-completed">เนื่องจากยอดเงินได้ถูกส่งออกไปแล้ว</a></p>
         <ul>
@@ -2748,6 +2978,7 @@
     },
     {
       title: "Cancellation and Refunds — Cancellation Request In Progress",
+      categories: ["Transfer status"],
       thai: `
         <p>ทางเราได้ทราบความประสงค์ในการยกเลิกรายการธุรกรรมหมายเลข <strong>[transfer number]</strong> ของท่านแล้ว และได้ประสานงานทีมที่เกี่ยวข้องให้เริ่มดำเนินการยกเลิกธุรกรรมของท่าน เมื่อรายการยกเลิกสำเร็จทางเราจะดำเนินการคืนเงินและแจ้งให้ท่านทราบโดยทันที</p>
         <p><a href="https://wise.com/help/articles/2971476/how-long-do-refunds-take">เรียนรู้เพิ่มเติมเกี่ยวกับการคืนเงิน</a></p>
@@ -2756,6 +2987,7 @@
     },
     {
       title: "Cancellation and Refunds — Cancelled Transfer with ACH Pay-in",
+      categories: ["Transfer status", "Pay-in"],
       thai: `
         <p>รายการธุรกรรมหมายเลข <strong>[transfer number]</strong> ของท่านได้ถูกยกเลิกแต่เงินของท่านจะยังคงถูกส่งมาที่เรา นี่เป็น<a href="https://wise.com/help/articles/2932150/guide-to-usd-transfers">วิธีการทำงานของ ACH Debits</a></p>
         <p>เมื่อเราได้รับเงินของท่านแล้ว ทางเราจะทำการคืนเงินโดยอัตโนมัติ ยอดเงินจะถูกคืนไปยังบัญชีของท่านภายใน 0-3 วันทำการหลังจากที่เราได้ดำเนินการคืนเงิน</p>
@@ -2765,6 +2997,7 @@
     },
     {
       title: "Cancellation and Refunds — Refund Status",
+      categories: ["Transfer status"],
       intro: ``,
       outro: `
         <p><a href="https://wise.com/help/articles/2971476/how-long-do-refunds-take">เรียนรู้เพิ่มเติมเกี่ยวกับระยะเวลาในการดำเนินการคืนเงิน</a></p>
@@ -2817,6 +3050,7 @@
     },
     {
       title: "Cancellation and Refunds — Missing Refund Details",
+      categories: ["Transfer status"],
       thai: `
         <p>เพื่อดำเนินการคืนเงิน เราจำเป็นต้องให้ท่านกรอกรายละเอียดบัญชีธนาคารของท่าน โดยควรเป็นรายละเอียดของ <strong>บัญชีธนาคารที่ท่านใช้ส่งเงินเข้ามา</strong></p>
         <p>โปรดดำเนินการตามขั้นตอนด้านล่างเพื่อเพิ่มรายละเอียดสำหรับการคืนเงิน:</p>
@@ -2834,6 +3068,7 @@
     },
     {
       title: "Cancellation and Refunds — Transfer Cancelled",
+      categories: ["Transfer status"],
       thai: `
         <p>เราได้ยกเลิกการโอนเงินของท่านแล้ว <strong>[number]</strong></p>
         <p><a href="https://wise.com/help/articles/2971476/how-long-do-refunds-take">อ่านเพิ่มเติมเกี่ยวกับการคืนเงิน</a></p>
@@ -2842,8 +3077,9 @@
     },
     {
       title: "Cancellation and Refunds — Waiting For Deposit",
+      categories: ["Transfer status", "Pay-in"],
       thai: `
-        <p>ขณะนี้ ทางเรายังไม่ได้รับเงินจากท่าน — หากชำระการโอนเงินผ่านธนาคาร โดยปกติเงินจะมาถึงเราภายใน 1–2 วันทำการ</p>
+        <p>ขณะนี้ ทางเรายังไม่ได้รับเงินจากท่าน หากชำระการโอนเงินผ่านธนาคาร โดยปกติเงินจะมาถึงเราภายใน 1–2 วันทำการ</p>
         <p>เรา <strong>ไม่สามารถคืนเงินให้ท่านได้จนกว่าเราจะได้รับเงิน</strong> แต่เนื่องจากรายการธุรกรรมของท่านถูกยกเลิกแล้ว เราจะคืนเงินให้ท่านทันทีเมื่อเราได้รับเงินแล้ว</p>
         <p>หากเงินไม่มาถึงเราภายในระยะเวลาดังกล่าว โปรดส่ง <strong>หลักฐานการชำระเงิน (proof of payment)</strong> ให้เรา โดยท่านสามารถ<a href="http://wise.com/document-upload">อัปโหลดได้ที่นี่</a></p>
         <p><a href="https://wise.com/help/articles/2932689/what-is-a-proof-of-payment">อ่านเพิ่มเติมเกี่ยวกับเอกสารหลักฐานการชำระเงิน</a></p>
@@ -2853,6 +3089,7 @@
     },
     {
       title: "How to Set Up a Transfer",
+      categories: ["Guide"],
       thai: `
         <p>การสร้างรายการธุรกรรมโอนเงินกับทาง Wise สามารถดำเนินการได้ดังนี้</p>
         <ol>
@@ -2871,6 +3108,7 @@
     },
 {
       title: "How to Set Up a High Volume (HV) Transfer",
+      categories: ["Guide"],
       intro: ``,
       outro: `
         <p><a href="https://wise.com/help/articles/2961856/tips-for-getting-started-with-large-transfers">ข้อมูลเพิ่มเติมเกี่ยวกับการโอนเงินมูลค่าสูง</a></p>
@@ -2931,6 +3169,7 @@
     },
     {
       title: "Setting up a transfer — Transfer cost and timelines",
+      categories: ["Guide"],
       intro: ``,
       outro: `
         <p>หากท่านมีคำถามอื่น ๆ เพิ่มเติมสามารถตอบกลับได้ที่อีเมลนี้ ทางเรายินดีให้บริการ</p>
@@ -2971,6 +3210,7 @@
     },
     {
       title: "Pay-in — USD ACH Name Mismatch",
+      categories: ["Pay-in"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Use this quick reply only if the customer can't use self-service</div>
         <p>เราพบว่าเงินถูกส่งมาจากบัญชีธนาคารที่ <strong>ชื่อเจ้าของบัญชีไม่ตรงกับชื่อในโปรไฟล์ Wise ของท่าน</strong></p>
@@ -2988,6 +3228,7 @@
     },
 {
       title: "Pay-in — USD ACH Pay-In Exposure Limits",
+      categories: ["Pay-in"],
       thai: `
         <p>หากท่านได้รับข้อความแจ้งว่าเงินในบัญชีไม่เพียงพอ ไม่ต้องกังวล</p>
         <p>ระบบของเราจะติดต่อกับธนาคารของท่านเพื่อตรวจสอบว่า บัญชีของท่านมียอดเงินเพียงพอสำหรับครอบคลุมรายการหักบัญชีธนาคารทั้งหมดที่เกิดขึ้นในช่วง 4 วันทำการที่ผ่านมา หรือไม่ ซึ่งรวมถึงรายการหักบัญชีจากธุรกรรมที่ดำเนินการเสร็จสิ้นแล้วด้วยเช่นกัน</p>
@@ -2998,6 +3239,7 @@
     },
     {
       title: "Pay-in — USD ACH General",
+      categories: ["Pay-in", "Guide"],
       intro: `
         <p>ขอบคุณที่ติดต่อเรา และขอขอบคุณที่สนใจใช้วิธีชำระเงินผ่าน ACH Bank Debit</p>
         <p>เมื่อท่านเลือกชำระเงินด้วย ACH Bank Debit เราจะดำเนินการหักเงินจากบัญชีธนาคารของท่านก็ต่อเมื่อท่านได้อนุมัติการชำระเงินผ่านเว็บไซต์ของเราเรียบร้อยแล้ว</p>
@@ -3025,6 +3267,7 @@
     },
     {
       title: "Pay-in — USD ACH Speed / ETA",
+      categories: ["Pay-in"],
       thai: `
         <p>ขอบคุณที่ติดต่อเข้ามา ทางเราเข้าใจว่าคุณต้องการข้อมูลเกี่ยวกับการชำระเงินสำหรับรายการโอนผ่าน ACH</p>
         <p>หากท่านพบปัญหาในการชำระเงินผ่าน ACH สามารถ<a href="https://wise.com/help/articles/2978039/problems-paying-with-your-connected-bank-account-ach-in-the-us">ศึกษาปัญหาที่พบบ่อยและวิธีการแก้ไขได้จากบทความนี้</a></p>
@@ -3036,6 +3279,7 @@
     },
     {
       title: "Pay-in — Card Payment Charged Twice",
+      categories: ["Pay-in"],
       thai: `
         <p>จากการตรวจสอบ เราได้รับเงินจำนวน <strong>[amount]</strong> สำหรับรายการโอน <strong>[number]</strong> เพียงหนึ่งรายการเท่านั้น อย่างไรก็ตาม มีความเป็นไปได้ว่ายังคงมีรายการธุรกรรมที่อยู่ระหว่างดำเนินการ (Pending) กับธนาคารของท่าน</p>
         <p>โดยทั่วไป สถานะดังกล่าวหมายความว่าธนาคารได้กันวงเงินไว้แล้ว แต่ยังไม่ได้ตัดยอดเงินจริง ซึ่งธนาคารมักจะปลดวงเงินดังกล่าวกลับคืนภายใน 24 ชั่วโมง ดังนั้น เราขอแนะนำให้ท่านติดต่อธนาคารของท่านโดยตรง เพื่อสอบถามและขอให้ตรวจสอบการคืนวงเงินดังกล่าว</p>
@@ -3047,6 +3291,7 @@
     },
     {
       title: "Pay-in — Card Pay-In Disabled",
+      categories: ["Pay-in"],
       thai: `
         <p>ขออภัย ขณะนี้ท่านไม่สามารถชำระเงินด้วยบัตรสำหรับรายการโอนได้</p>
         <p>การเปิดให้ใช้งานการชำระเงินด้วยบัตรขึ้นอยู่กับหลายปัจจัย และทางเราไม่สามารถตรวจสอบสาเหตุที่แน่ชัดได้ว่าเหตุใดตัวเลือกดังกล่าวจึงไม่พร้อมใช้งานสำหรับบัญชีของท่านในขณะนี้</p>
@@ -3055,6 +3300,7 @@
     },
     {
       title: "Pay-in — Chargeback",
+      categories: ["Pay-in"],
       thai: `
         <p>รายการโอน <strong>[number]</strong> ของท่านถูกระงับไว้ชั่วคราว เนื่องจากเกิดรายการ Chargeback โดยมีรหัสข้อผิดพลาด <strong>[error code and description]</strong></p>
         <p>นั่นหมายความว่า เราได้รับการปฏิเสธรายการหักเงินจากธนาคารของท่านในขณะที่พยายามเรียกเก็บเงินสำหรับรายการโอนนี้</p>
@@ -3069,6 +3315,7 @@
     },
     {
       title: "Pay-in — Customer Meant to Pay From Currency",
+      categories: ["Pay-in"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Use this Quick Reply if the customer:<br>- Has a transfer in ‘New’ status on their profile<br>- Chose a different payment method (check the ‘Quote’ section on the transfer page)<br>- Hasn't paid for the transfer because they want to pay from a currency on their Wise account.</div>
         <p>ทางเราเข้าใจว่าท่านต้องการใช้ยอดเงินคงเหลือในบัญชี Wise เพื่อชำระเงินสำหรับรายการโอน</p>
@@ -3085,6 +3332,7 @@
     },
     {
       title: "Pay-in — Deposit Linking Logic",
+      categories: ["Pay-in"],
       intro: ``,
       outro: `
         <p>เมื่อท่านชำระเงินสำหรับรายการโอนจากบัญชีธนาคาร (manual bank transfer) ระบบของเราจะทำการผูกเงินที่ได้รับเข้ากับ <strong>รายการโอนที่เก่าที่สุดที่ท่านสร้างไว้</strong> ก่อนเสมอ</p>
@@ -3114,6 +3362,7 @@
     },
     {
       title: "Pay-in — Card Pay-In Failing",
+      categories: ["Pay-in"],
       thai: `
         <p>การชำระเงินด้วยบัตรอาจได้รับผลกระทบจากหลายปัจจัย และทางเราไม่สามารถตรวจสอบสาเหตุที่แน่ชัดได้ว่าทำไมการชำระเงินด้วยบัตรของท่านจึงไม่สำเร็จ</p>
         <p>ท่านสามารถศึกษาสาเหตุที่พบบ่อยของปัญหาการชำระเงินด้วยบัตรได้จาก<a href="https://wise.com/help/articles/2452280/problems-paying-with-my-bank-card">บทความนี้</a></p>
@@ -3122,6 +3371,7 @@
     },
     {
       title: "Pay-in — Failed Card Payment (3DS Troubleshooting)",
+      categories: ["Pay-in"],
       thai: `
         <p>ดูเหมือนว่าการชำระเงินจะล้มเหลวเนื่องจากขั้นตอนการยืนยันตัวตนแบบ 3D Secure (3DS) ซึ่งอาจเกิดจากเบราว์เซอร์ที่ใช้งานอยู่ หรือการตั้งค่าฝั่งธนาคารของท่าน</p>
         <p>เพื่อช่วยแก้ไขปัญหา กรุณาลองดำเนินการตามขั้นตอนดังต่อไปนี้:</p>
@@ -3139,6 +3389,7 @@
     },
     {
       title: "Pay-in — Failed Card Payment (Fraud)",
+      categories: ["Pay-in"],
       thai: `
         <p>ปัญหานี้เกิดจากข้อผิดพลาดในการประมวลผลรายการชำระเงินด้วยบัตร จึงทำให้ไม่สามารถชำระเงินด้วยบัตรใบดังกล่าวได้ ทั้งนี้ ทางเราไม่สามารถแก้ไขหรือเปลี่ยนแปลงสถานะดังกล่าวได้จากฝั่งของเรา</p>
         <p>ท่านสามารถรอประมาณ 24 ชั่วโมงแล้วลองทำรายการอีกครั้ง หรือติดต่อธนาคารผู้ออกบัตรของท่านเพื่อขอให้ตรวจสอบและเปิดใช้งาน<a href="https://wise.com/help/articles/2452280/problems-paying-by-card">การยืนยันตัวตนแบบ 3D Secure (3DS)</a></p>
@@ -3148,6 +3399,7 @@
     },
 {
       title: "Pay-in — Failed Card Payment (Do Not Honor)",
+      categories: ["Pay-in"],
       intro: `
         <p>สาเหตุที่การชำระเงินด้วยบัตรของท่านไม่สำเร็จ อาจเกี่ยวข้องกับข้อจำกัดภายในของธนาคารผู้ออกบัตร</p>
       `,
@@ -3176,6 +3428,7 @@
     },
     {
       title: "Pay-in — How to Pay Using Bank Transfer",
+      categories: ["Pay-in"],
       thai: `
         <p>หากท่านต้องการชำระเงินด้วย การโอนผ่านธนาคาร (bank transfer) ท่านจะต้องตั้งค่ารายการโอนบน Wise ให้เสร็จก่อน เมื่อทำเสร็จแล้ว ให้ออกจากระบบ (log out) บัญชี Wise และชำระเงินผ่านธนาคารของท่านโดยตรง ซึ่งมีตัวเลือกดังนี้:</p>
         <ul>
@@ -3193,6 +3446,7 @@
     },
     {
       title: "Pay-in — Missing Membership Number (P-ref)",
+      categories: ["Pay-in"],
       thai: `
         <p>หากท่านลืมกรอกหมายเลขสมาชิก (membership number) หรือกรอกไม่ถูกต้อง เราจำเป็นต้องใช้ <strong>หลักฐานการชำระเงิน (Proof of payment)</strong> เพื่อช่วยติดตามเงินที่ท่านชำระเข้ามา</p>
         <p><a href="https://wise.com/help/articles/2932689/what-is-a-proof-of-payment">หลักฐานการชำระเงิน</a> อาจเป็นใบเสร็จ (ไฟล์สแกน/รูปถ่าย/ไฟล์ .PDF) หรือภาพหน้าจอจากธนาคารออนไลน์ของท่าน โดยต้องแสดงข้อมูลต่อไปนี้อย่างชัดเจน:</p>
@@ -3211,6 +3465,7 @@
     },
     {
       title: "Pay-in — Partial / Excess Deposit",
+      categories: ["Pay-in"],
       intro: `
         <p>เราเข้าใจว่าการโอนเงินผิดจำนวนอาจทำให้ท่านรู้สึกกังวล ซึ่งหากเกิดกรณีนี้ เราจะทำการพัก/หยุดรายการโอน ของท่านไว้ก่อน</p>
       `,
@@ -3248,15 +3503,16 @@
     },
     {
       title: "Pay-in — Paying for a Transfer",
+      categories: ["Pay-in"],
       thai: `
         <p>ตอนนี้ท่านได้ตั้งค่าการโอนเงินเรียบร้อยแล้ว แต่ยังไม่ได้ชำระเงินสำหรับรายการนี้ หรือเรายังไม่ได้รับเงินฝากจากธนาคารของท่าน ท่านสามารถตรวจสอบสถานะของรายการโอนเงินได้ที่หน้าหลัก (Home) ของแอป</p>
         <p>หากยังมีขั้นตอนที่ต้องทำเกี่ยวกับการชำระเงิน ระบบจะแสดงเป็นเมนูจัดการรายการธุรกรรม (Task) บนหน้าหลัก แต่ถ้าชำระแล้ว รายการจะไปแสดงในเมนูรายการธุรกรรม (Transactions)</p>
         <p>หากท่านยังไม่ได้ชำระเงินสำหรับรายการโอน:</p>
         <ol>
-          <li>ไปที่หน้า Activity</li>
+          <li>ไปที่หน้า "รายการธุรกรรม (Activity)"</li>
           <li>เลือกรายการโอนที่ท่านต้องการเติมเงิน/ชำระเงิน (fund)</li>
-          <li>คลิก ฉันยังไม่ได้ชำระเงิน (I’ve not paid)</li>
-          <li>เลือกวิธีชำระเงินที่ต้องการ แล้วกด ดำเนินการต่อ (Continue)</li>
+          <li>คลิก "ฉันยังไม่ได้ชำระเงิน (I’ve not paid)"</li>
+          <li>เลือกวิธีชำระเงินที่ต้องการ แล้วกด "ดำเนินการต่อ (Continue)"</li>
         </ol>
         <p>หากเลือก <strong>Online banking</strong> ระบบจะแสดงรายละเอียดเพื่อให้ท่านโอนเงินจากธนาคาด้วยตัวเอง กรุณาเข้าสู่ระบบธนาคารออนไลน์ของท่าน แล้วโอนเงินฝากสำหรับรายการโอนนี้มาให้เรา</p>
         <p>เมื่อท่านทำเสร็จแล้ว เราจะต้องรอให้เงินโอนมาถึงเราก่อน และเราจะส่งอีเมลแจ้งให้ท่านทราบเมื่อเงินเข้ามาแล้วพร้อมข้อมูลอื่น ๆ</p>
@@ -3266,6 +3522,7 @@
     },
     {
       title: "Pay-in — Payment Hasn't Reached Us / Missing Pay-in",
+      categories: ["Pay-in"],
       intro: `
         <p>จากการตรวจสอบรายการ [XX] ดูเหมือนว่า<strong>เรายังไม่ได้รับเงินของท่าน</strong>ในขณะนี้</p>
       `,
@@ -3314,6 +3571,7 @@
     },
     {
       title: "Pay-in — Request Proof of Payment (POP)",
+      categories: ["Pay-in"],
       intro: ``,
       outro: `
         <p>หากท่านมีคำถามเพิ่มเติม สามารถติดต่อเราได้เสมอ เรายินดีช่วยเหลือ</p>
@@ -3354,6 +3612,7 @@
     },
     {
       title: "Transfer – Invalid Swift account",
+      categories: ["Transfer status"],
       thai: `
         <p>เราได้ปรับเปลี่ยนวิธีการจัดการโอนเงินผ่าน Swift เมื่อไม่นานมานี้ เพื่อให้การโอน Swift รวดเร็วขึ้น ค่าธรรมเนียมถูกลง และปลอดภัยยิ่งขึ้น อย่างไรก็ตาม บางครั้งระบบอาจไม่สามารถจดจำเลขบัญชีใหม่ได้</p>
         <p>หากพบข้อผิดพลาดว่าเลขบัญชีไม่ถูกต้อง (invalid account number) สามารถลองทำตามนี้ได้:</p>
@@ -3368,6 +3627,7 @@
     },
     {
       title: "Transfer Status — Bank Rejection Document",
+      categories: ["Transfer status"],
       thai: `
         <p>หากธนาคารของผู้รับปฏิเสธรายการโอนของท่าน กรุณาส่งเอกสารยืนยันการปฏิเสธรายการจากธนาคารของผู้รับมาให้เรา</p>
         <p>โดยเอกสารดังกล่าวจะต้องยืนยันว่าเงินได้ถูกส่งคืนมายังบัญชีของ Wise เรียบร้อยแล้ว</p>
@@ -3385,6 +3645,7 @@
     },
 {
       title: "Transfer Status — CAD Interac PIN",
+      categories: ["Transfer status"],
       intro: ``,
       outro: ``,
       options: [
@@ -3410,6 +3671,7 @@
     },
     {
       title: "Transfer Status — Compensation for Technical Delay",
+      categories: ["Transfer status"],
       intro: `
         <p>ขออภัยสำหรับความล่าช้าในการโอนเงินของท่าน</p>
         <p>ก่อนหน้านี้มีปัญหาทางเทคนิคจากฝั่งเราที่ทำให้การโอนหมายเลข <strong>[หมายเลขการโอน]</strong> เกิดการล่าช้า</p>
@@ -3439,6 +3701,7 @@
     },
 {
       title: "Transfer Status — Delayed by Checks",
+      categories: ["Transfer status", "Verification"],
       intro: `
         <p>ในฐานะสถาบันทางการเงินที่ได้รับการควบคุมดูแล เราจำเป็นต้องดำเนินการตรวจสอบบางรายการก่อนที่จะประมวลผลการโอนเงิน</p>
       `,
@@ -3465,6 +3728,7 @@
     },
     {
       title: "Transfer Status — Expecting Transfer to Bounce Back",
+      categories: ["Transfer status"],
       intro: ``,
       outro: `
         <p>หากท่านมีคำถามเพิ่มเติม สามารถติดต่อเราได้เสมอ ทางเรายินดีช่วยเหลือ</p>
@@ -3507,13 +3771,14 @@
     },
     {
       title: "Transfer Status — General Status",
+      categories: ["Transfer status"],
       thai: `
         <p>เราได้ตรวจสอบบัญชีของท่านและพบว่าสถานะการโอนเงิน <strong>[หมายเลข]</strong> คือ <strong>[ใส่สถานะ]</strong></p>
         <p>[ปรับใช้ตามความเหมาะสม: เราได้แนบการหลักฐานการโอนเงินมาในอีเมลฉบับนี้]</p>
         <p>ท่านสามารถตรวจสอบสถานะการโอนเงินในบัญชีของตนเองได้ดังนี้:</p>
         <ol>
           <li>เข้าสู่ระบบ Wise</li>
-          <li>ดูในส่วน รายการธุรกรรม เพื่อค้นหาการโอนเงิน</li>
+          <li>ดูในส่วน "รายการธุรกรรม" เพื่อค้นหาการโอนเงิน</li>
           <li>คลิกที่การโอนที่ท่านต้องการทราบ และระบบจะแสดงสถานะการโอน</li>
         </ol>
         <p><a href="https://wise.com/help/articles/2452305/how-can-i-check-the-status-of-my-transfer">เรียนรู้เพิ่มเติมเกี่ยวกับการติดตามสถานะการโอนของท่าน</a></p>
@@ -3522,6 +3787,7 @@
     },
     {
       title: "Transfer Status — Incorrect Recipient Details / Bounce-back",
+      categories: ["Transfer status"],
       intro: `
         <p>เราได้ตรวจสอบสถานะการโอน พบว่าการโอนของท่านเสร็จสิ้นเป็นที่เรียบร้อย หากรายละเอียดผู้รับเงินไม่ถูกต้อง เงินจะถูกส่งกลับมาให้กับทาง Wise</p>
       `,
@@ -3549,6 +3815,7 @@
     },
     {
       title: "Transfer Status — Recipient Asking About Transfer",
+      categories: ["Transfer status"],
       thai: `
         <p>เราทราบว่าท่านกำลังรอการโอนจากผู้ใช้ Wise และต้องการทราบระยะเวลาในการรอรับเงิน</p>
         <p>วิธีที่เร็วที่สุดในการทราบข้อมูลนั้นคือติดต่อผู้ส่งเงินโดยตรง เนื่องจากมีเพียงผู้ส่งเงินเท่านั้นที่สามารถตรวจสอบสถานะของการโอนเงินในบัญชีของตนเอง และส่งใบเสร็จรับเงินแก่ท่านได้เพื่อยืนยัน (หากจำเป็น)</p>
@@ -3558,6 +3825,7 @@
     },
     {
       title: "Transfer Status — Transfer Processing / Converting",
+      categories: ["Transfer status"],
       thai: `
         <p>เราได้รับยอดชำระของท่านแล้ว และกำลังดำเนินการอยู่ในขณะนี้</p>
         <p>เมื่อดำเนินการเสร็จแล้ว เราถึงจะส่งเงินออกไปได้</p>
@@ -3568,6 +3836,7 @@
     },
     {
       title: "Transfer Status — Transfer Confirmation",
+      categories: ["Transfer status"],
       thai: `
         <p>หากการโอนเงินของท่านยังไม่ถึงผู้รับ กรุณาส่ง <strong>ใบเสร็จ/หลักฐานการโอน (receipt)</strong> ให้ผู้รับ เพื่อนำไปให้ธนาคารปลายทางตรวจสอบ</p>
         <p>นอกจากนี้ โปรดตรวจสอบให้แน่ใจว่าท่านกรอก<strong>รายละเอียดผู้รับ</strong> และ<strong>สกุลเงินที่ส่ง</strong>ถูกต้อง หากรายละเอียดไม่ถูกต้องหรือส่งผิดสกุลเงิน อาจทำให้ธนาคารปฏิเสธรายการและส่งเงินกลับมาหาเราได้ (ในกรณีนี้ เราจะแจ้งให้ท่านทราบ)</p>
@@ -3585,6 +3854,7 @@
     },
 {
       title: "Transfer Status — Swift",
+      categories: ["Transfer status"],
       intro: `
         <p>เมื่อท่านส่งการชำระเงินระหว่างประเทศ (เช่น โอนเงิน EUR ไปยังประเทศที่ “EUR” ไม่ใช่สกุลเงินท้องถิ่น) เราจะใช้เครือข่ายการชำระเงิน SWIFT</p>
         <p>การโอนผ่าน SWIFT ไม่เหมือนกับการโอนแบบปกติของ Wise และอาจใช้เวลาสูงสุด 5 วันทำการ นอกจากนี้ ค่าใช้จ่ายอาจสูงขึ้นเล็กน้อย เนื่องจากการโอนผ่าน ธนาคารตัวกลาง (intermediary banks)</p>
@@ -3611,6 +3881,7 @@
     },
     {
       title: "Account Purpose",
+      categories: ["Account", "Verification"],
       intro: `
         <p>โปรดแจ้งเหตุผลการเปิดบัญชีของท่านกับเรา</p>
         <p>เนื่องจาก Wise เป็นผู้ให้บริการที่ปลอดภัยและมีการกำกับดูแลในการส่งเงิน ใช้จ่าย และรับเงิน เราจึงขอให้ท่านยืนยันเหตุผลการเปิดบัญชีของท่าน</p>
@@ -3637,6 +3908,7 @@
     },
     {
       title: "Adding an Account Helper",
+      categories: ["Account"],
       thai: `
         <p>เราสามารถเพิ่ม <strong>[name]</strong> ให้เป็นผู้ช่วยบัญชี (Account helper) ในบัญชีของท่านด้</p>
         <p>ผู้ช่วยบัญชี คือสมาชิกในครอบครัวหรือเพื่อนที่ท่านไว้ใจ ซึ่งสามารถช่วยท่านในเรื่องต่าง ๆ เช่น</p>
@@ -3684,6 +3956,7 @@
     },
     {
       title: "CDD — Acceptable Source of Wealth (SOW) Documents",
+      categories: ["Verification"],
       thai: `
         <p>ในฐานะสถาบันทางการเงินที่ได้รับการควบคุมดูแล บางครั้ง เราจำเป็นต้องขอเอกสารเพิ่มเติมเพื่อยืนยันที่มาของรายได้ของท่าน เพื่อช่วยให้เราสามารถยับยั้งอาชญากรรมทางการเงิน และรักษาเงินของทุกคนให้ปลอดภัย</p>
         <p>เพื่อยืนยันที่มาของรายได้ของท่าน โปรดส่งเอกสารอย่างใดอย่างหนึ่งดังต่อไปนี้ โดยขึ้นอยู่กับสถานการณ์ของท่าน:</p>
@@ -3701,6 +3974,7 @@
     },
     {
       title: "CDD — Cancelled Transfer",
+      categories: ["Transfer status", "Verification"],
       thai: `
         <p>ขณะนี้เราได้ยกเลิกและคืนเงินสำหรับรายการโอน <strong>[หมายเลขรายการโอน]</strong> เรียบร้อยแล้ว โดยเงินควรจะถูกโอนกลับเข้าบัญชีของท่านภายใน <strong>[XX]</strong> วันทำการ</p>
         <p><a href="https://wise.com/help/articles/2971476/how-long-do-refunds-take?origin=search-cancellation+and+refunds">ดูข้อมูลเพิ่มเติมเกี่ยวกับการยกเลิกและการคืนเงิน</a></p>
@@ -3711,6 +3985,7 @@
     },
     {
       title: "CDD — Source of Wealth (SOW) Rejected",
+      categories: ["Verification"],
       thai: `
         <p>เราเห็นว่าท่านได้อัปโหลดเอกสารแล้ว แต่เราไม่สามารถรับเอกสารดังกล่าวได้ เนื่องจากเอกสารไม่ได้แสดงข้อมูลครบถ้วนตามที่เราต้องใช้เพื่อดำเนินการตรวจสอบให้เสร็จสิ้น</p>
         <p><strong>[ใส่คำแนะนำที่เฉพาะเจาะจงมากขึ้นตาม Watson comments หากทำได้]</strong></p>
@@ -3728,6 +4003,7 @@
     },
     {
       title: "Date of Birth (DOB) — Change Completed",
+      categories: ["Account", "Verification"],
       thai: `
         <p>เราได้อัปเดตวัน/เดือน/ปีเกิด (Date of birth) ในบัญชีของท่านเรียบร้อยแล้ว โปรดออกจากระบบ (log out) และเข้าสู่ระบบอีกครั้ง (log in) เพื่อตรวจสอบข้อมูล</p>
         <p>และหากท่านลืมรหัสผ่าน ท่านสามารถ<a href="https://wise.com/login#/forgotPassword">รีเซ็ตรหัสผ่านได้ที่นี่</a></p>
@@ -3736,6 +4012,7 @@
     },
     {
       title: "Date of Birth (DOB) — Mismatch",
+      categories: ["Account", "Verification"],
       intro: ``,
       outro: `
         <p>เมื่อเราได้รับการตอบกลับจากท่านแล้ว เราจะดำเนินการอัปเดตวันเดือนปีเกิดของท่านโดยเร็วที่สุด</p>
@@ -3769,6 +4046,7 @@
     },
 {
       title: "Deceased Customer — Customer Death Reported",
+      categories: ["Account"],
       thai: `
         <p>ขอบคุณที่ติดต่อเรา และเราขอแสดงความเสียใจอย่างยิ่งต่อการจากไปของลูกค้าท่านนั้น</p>
         <p>เพื่อให้เราสามารถช่วยท่านได้อย่างเหมาะสมที่สุด กรุณาไปที่ศูนย์ช่วยเหลือของเรา: <a href="https://wise.com/help/articles/72O0jJOzvZsd2DOy9gV6na/how-we-can-help-you-when-someone-with-a-wise-account-dies">เราสามารถช่วยได้อย่างไรเมื่อผู้ที่มีบัญชี Wise เสียชีวิต</a></p>
@@ -3778,6 +4056,7 @@
     },
     {
       title: "Deceased Customer — Beneficiary Inquiry",
+      categories: ["Account"],
       thai: `
         <p>ขออภัย ขณะนี้ Wise ยังไม่มีตัวเลือกให้ตั้ง “ผู้รับผลประโยชน์” (beneficiary)</p>
         <p>ในกรณีที่ท่านเสียชีวิต เราจะขอให้ครอบครัวหรือผู้แทนทางกฎหมายของท่านส่งเอกสารทางกฎหมายที่เหมาะสมเพื่อแสดงว่ามีสิทธิ์ได้รับเงินดังกล่าว โดยเอกสารที่ต้องใช้จะขึ้นอยู่กับถิ่นที่อยู่ของท่านและปัจจัยอื่น ๆ</p>
@@ -3786,6 +4065,7 @@
     },
     {
       title: "Document Sent for Verification",
+      categories: ["Verification"],
       thai: `
         <p>ขอบคุณสำหรับเอกสารที่ท่านส่งมา</p>
         <p>เราได้ส่งต่อให้ทีมผู้เชี่ยวชาญตรวจสอบเรียบร้อยแล้ว โดยปกติจะใช้เวลาประมาณ <strong>[XX]</strong> วันทำการ</p>
@@ -3794,6 +4074,7 @@
     },
     {
       title: "Proof Of Address (POA) — Missing",
+      categories: ["Verification"],
       thai: `
         <p>เพื่อแก้ไขเรื่องนี้ เราจำเป็นต้องยืนยันที่อยู่ของท่าน ลูกค้าทุกท่านจำเป็นต้องผ่านการยืนยันข้อมูล เพื่อความปลอดภัยสำหรับเงินของท่านเอง</p>
         <p>ดังนั้นรบกวนส่งเอกสารยืนยันที่อยู่ (Proof of address) ที่ยังใช้ได้ และโปรดตรวจสอบให้แน่ใจว่าข้อมูลบนเอกสารครบถ้วน</p>
@@ -3804,6 +4085,7 @@
     },
     {
       title: "Proof Of Address (POA) — Rejected",
+      categories: ["Verification"],
       thai: `
         <p>เราไม่สามารถรับเอกสารของท่านได้ เนื่องจาก <strong>[ระบุเหตุผล]</strong></p>
         <p>กรุณา<a href="https://transferwise.com/user/verify/other">คลิกที่นี่เพื่ออัปโหลดเอกสารฉบับใหม่</a> และหลังจากอัปโหลดแล้ว รบกวนตอบกลับอีเมลนี้เพื่อแจ้งให้เราทราบ</p>
@@ -3813,6 +4095,7 @@
     },
     {
       title: "ID With Liveness (IDWL) — Missing",
+      categories: ["Verification"],
       intro: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: สำหรับลูกค้าคนไทยที่อยู่ในประเทศไทย ทางเรารับเฉพาะบัตรประชาชนเท่านั้น</div>
         <p>เราจำเป็นต้องยืนยันตัวตนของลูกค้าทุกคน เพื่อช่วยปกป้องเงินและความปลอดภัยของบัญชีของท่าน</p>
@@ -3848,6 +4131,7 @@
     },
     {
       title: "ID With Liveness (IDWL) — ILS",
+      categories: ["Verification"],
       intro: `
         <p>เพื่อการส่งเงินจากสกุลเงิน ILS เราจำเป็นต้องขอ รูปถ่ายของท่านขณะถือบัตรประชาชนอิสราเอล (Israeli ID) แนะนำให้ถ่ายด้วยโทรศัพท์มือถือเพื่อให้ภาพคมชัด ท่านสามารถ <a href="https://wise.com/flows/verification#/finish">อัปโหลดรูปได้ที่นี่</a></p>
       `,
@@ -3875,6 +4159,7 @@
     },
     {
       title: "ILS — Video Verification",
+      categories: ["Verification"],
       intro: `
         <p>หากท่านพบปัญหาเกี่ยวกับการยืนยันตัวตนด้วยวิดีโอ (video verification) กรุณาตรวจสอบว่าท่านเปิดลิงก์ที่ถูกต้อง</p>
         <p>เมื่อกดปุ่ม “record video” ในอีเมลที่เราส่งให้ ระบบจะพาท่านไปยังเบราว์เซอร์บนมือถือ (ขึ้นอยู่กับประเภทอุปกรณ์และ/หรือการตั้งค่าของท่าน) หากเป็นกรณีนี้ ให้กดไอคอนที่มุมขวาบนของหน้าจอ ระบบจะพาท่านไปยังแอป Wise ซึ่งท่านสามารถอัดวิดีโอได้</p>
@@ -3903,6 +4188,7 @@
     },
     {
       title: "ID With Liveness (IDWL) — Troubleshooting",
+      categories: ["Guide", "Verification"],
       intro: ``,
       outro: ``,
       options: [
@@ -3945,6 +4231,7 @@
     },
     {
       title: "Identity Document (ID) — Missing",
+      categories: ["Verification"],
       thai: `
         <p>ก่อนที่เราจะสามารถดำเนินการรายการโอน [XX] ต่อได้ ทางเราจำเป็นต้องยืนยันตัวตนของท่านก่อน โดยทางเราจำเป็นต้องใช้เอกสารประจำตัวในการดำเนินการต่อ</p>
         <p>เอกสารที่เรารับ ได้แก่:</p>
@@ -3960,6 +4247,7 @@
     },
 {
       title: "Identity Document (ID) — Rejected Due to Quality",
+      categories: ["Verification"],
       thai: `
         <p>จากการตรวจสอบ เอกสารของท่านถูกปฏิเสธ เพราะ <strong>[เราไม่สามารถเห็นรายละเอียดทั้งหมดได้ / รูปถ่ายมีคุณภาพไม่ชัดเจนเพียงพอ / มองไม่เห็นลายน้ำ]</strong></p>
         <p>ท่านสามารถ<a href="https://wise.com/user/verify/other">ถ่ายรูปใหม่แล้วอัปโหลดไฟล์ที่นี่</a></p>
@@ -3970,6 +4258,7 @@
     },
     {
       title: "Selfie with ID (SWID) — Request",
+      categories: ["Verification"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Use the English QR from Support Base to add the photo</div>
         <p>เราเข้าใจว่าตอนนี้ท่านไม่สามารถเข้าสู่ระบบ Wise ได้ เนื่องจากไม่สามารถเข้าถึงอีเมลที่ลงทะเบียนไว้ และท่านต้องการเปลี่ยนอีเมลที่ใช้กับบัญชี Wise</p>
@@ -3988,6 +4277,7 @@
     },
     {
       title: "Verification Complete",
+      categories: ["Verification"],
       thai: `
         <p>ตอนนี้บัญชีของท่านได้รับการยืนยันตัวตนเรียบร้อยแล้ว</p>
         <p>หากในอนาคตทางเราจำเป็นต้องใช้เอกสารหรือข้อมูลใด ๆ เพิ่มเติม เราจะติดต่อหาท่านโดยตรง</p>
@@ -3996,6 +4286,7 @@
     },
     {
       title: "Transfer Delay — Verification Link",
+      categories: ["Transfer status", "Verification"],
       thai: `
         <p>ตอนนี้รายการโอนเงินหมายเลข <strong>[ระบุหมายเลขการโอนเงิน]</strong> ของท่านถูกหยุดพักไว้ชั่วคราว เนื่องจากยังมีขั้นตอนการยืนยันข้อมูลบางส่วนที่ต้องดำเนินการให้เสร็จสมบูรณ์</p>
         <p>เพื่อให้รายการโอนเงินดำเนินการต่อได้ รบกวนส่งเอกสารหรือข้อมูลที่ขาดหายไป โดยคลิกที่ลิงก์นี้: <strong>[ใส่ลิงก์ Recovery URL]</strong> เมื่อส่งข้อมูลเรียบร้อยแล้ว ทีมงานของเราจะทำการตรวจสอบภายใน <strong>[ระบุจำนวน]</strong> วันทำการ</p>
@@ -4010,6 +4301,7 @@
     },
     {
       title: "Hold — Adding Money to your Account",
+      categories: ["Hold", "Guide"],
       intro: `
         <p>ทางเรายินดีที่จะช่วยอธิบายวิธีการเติมเงินให้กับท่าน</p>
         <p>วิธีเริ่มต้นเติมเงินมีดังนี้:</p>
@@ -4053,6 +4345,7 @@
     },
     {
       title: "Hold — How to Convert",
+      categories: ["Hold", "Guide"],
       thai: `
         <p>ท่านสามารถทำการแลกเปลี่ยนสกุลเงินได้ โดยทำตามขั้นตอนนี้</p>
         <ol>
@@ -4068,6 +4361,7 @@
     },
     {
       title: "Hold — How to Download a Statement",
+      categories: ["Hold", "Guide"],
       thai: `
         <p>ท่านสามารถดาวน์โหลด Statement/รายการเดินบัญชี สำหรับทุกสกุลเงินได้จากบัญชี Wise โดยในรายการเดินบัญชีจะมีข้อมูล เช่น เลขบัญชี ยอดคงเหลือปัจจุบัน รายการธุรกรรม และรายละเอียดอื่น ๆ</p>
         <p><a href="https://transferwise.com/help/articles/2736049/how-do-i-download-a-statement-of-my-balances">ดูวิธีการดาวน์โหลดรายการเดินบัญชีได้ที่นี่</a></p>
@@ -4076,6 +4370,7 @@
     },
     {
       title: "Hold — Jars Basics",
+      categories: ["Hold", "Guide"],
       thai: `
         <p>ท่านสามารถเก็บเงินไว้ในกระปุกเงิน (Jar) โดยแยกจากยอดเงินในสกุลเงินต่าง ๆ ได้ โดยกระปุกเงิน (Jar) นั้นจะคล้ายคลึงกับบัญชีออมทรัพย์ทั่วไป นอกจากนี้ ท่านยังสามารถส่งเงินให้ผู้อื่นได้โดยตรงจากกระปุก (Jar) ผ่านหน้าเว็บหรือแอป Android ได้ด้วย</p>
         <p>เงินในกระปุก (Jar) จะไม่ถูกนำไปใช้จ่ายกับบัตรเดบิตของท่านโดยไม่ได้ตั้งใจ และไม่สามารถใช้จ่ายเพื่อชำระแบบการหักบัญชีอัตโนมัติ (Direct Debit) ได้</p>
@@ -4100,6 +4395,7 @@
     },
     {
       title: "Receive — Currency Unavailable",
+      categories: ["Receive"],
       thai: `
         <p>ขอเรียนแจ้งให้ทราบว่า ตอนนี้เรายังไม่มีบริการ “รายละเอียดบัญชี” (account details) สำหรับบัญชีสกุลเงิน <strong>[currency]</strong> ทั้งนี้ เรากำลังพยายามเพิ่มสกุลเงินใหม่ ๆ อยู่เสมอ</p>
         <p>อย่างไรก็ตาม ตอนนี้ท่านสามารถขอรับรายละเอียดบัญชีสำหรับบัญชีสกุลเงินต่อไปนี้ได้: <a href="https://transferwise.com/help/articles/2897238/which-currencies-can-i-have-balances-in">EUR, AUD, NZD, GBP, HUF, RON, CAD, TRY, MYR และ SGD</a></p>
@@ -4108,6 +4404,7 @@
     },
     {
       title: "Receive — Customer Received Less Money Due to Swift / USD wire",
+      categories: ["Receive"],
       intro: ``,
       outro: `
         <p><a href="https://wise.com/gb/pricing/receive?targetAmount=1000&payInMethod=BANK_TRANSFER&track=false">อ่านเพิ่มเติมเกี่ยวกับค่าธรรมเนียมในการรับเงินของเราได้ที่นี่</a></p>
@@ -4133,6 +4430,7 @@
     },
 {
       title: "Receive — How to Get Account Details",
+      categories: ["Receive"],
       thai: `
         <p>หากท่านต้องการให้ผู้อื่นโอนเงินเข้าบัญชี Wise ของท่าน กรุณาตามขั้นตอนดังนี้:</p>
         <ol>
@@ -4164,6 +4462,7 @@
     },
     {
       title: "Receive — HKD LAD Account Details Update",
+      categories: ["Receive"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: Only use this QR if the customer’s waited for more than 60 working days for an update — Handling HKD Local Account Details Cases.</div>
         <p>ขอบคุณที่ติดต่อเราสอบถามเกี่ยวกับรายละเอียดบัญชีท้องถิ่น (Local Account Details) สำหรับฮ่องกง</p>
@@ -4175,6 +4474,7 @@
     },
     {
       title: "Receive — The customer requested HKD LAD",
+      categories: ["Receive"],
       thai: `
         <p>ทางเราเข้าใจว่าท่านได้ยื่นคำขอเพื่อรับข้อมูลบัญชีท้องถิ่นสกุลเงิน HKD</p>
         <p>ขณะนี้คำขอของท่านอยู่ระหว่างการตรวจสอบโดยพันธมิตรด้านธนาคารของเรา (DBS) โดยกระบวนการตรวจสอบอาจใช้เวลาสูงสุด 60 วันทำการ เมื่อข้อมูลบัญชีของท่านพร้อมใช้งานแล้ว ทางเราจะส่งอีเมลแจ้งให้ท่านทราบทันที</p>
@@ -4184,6 +4484,7 @@
     },
     {
       title: "Receive — The customer is ineligible to get HKD LAD",
+      categories: ["Receive"],
       thai: `
         <p>หลังจากตรวจสอบคำขอของท่านแล้ว ขออภัยที่ในขณะนี้ทางเราไม่สามารถให้ข้อมูลบัญชีท้องถิ่นสกุลเงิน HKD สำหรับบัญชีของท่านได้ ทั้งนี้ ความพร้อมใช้งานของข้อมูลบัญชีท้องถิ่นในแต่ละสกุลเงินอาจแตกต่างกันไปในแต่ละภูมิภาค เนื่องจากข้อกำหนดด้านการดำเนินงานและข้อกำหนดทางกฎหมายที่เกี่ยวข้อง</p>
         <p>ท่านยังสามารถใช้ Wise เพื่อเก็บเงิน โอนเงิน ใช้จ่าย และรับเงินในหลากหลายสกุลเงิน รวมถึงขอรับข้อมูลบัญชีท้องถิ่นสำหรับสกุลเงินที่รองรับได้ตามปกติ</p>
@@ -4192,6 +4493,7 @@
     },
     {
       title: "Receive — Sender Needs to Trace Missing Deposit",
+      categories: ["Receive"],
       thai: `
         <p>เมื่อมีผู้โอนเงินมายังบัญชีของท่าน ทางเราจะสามารถตรวจสอบรายการได้ก็ต่อเมื่อเงินมาถึง Wise แล้วเท่านั้น โดยเมื่อรายการมาถึง ท่านจะเห็นการอัปเดตในบัญชี Wise เช่นกัน</p>
         <p>หลังจากตรวจสอบข้อมูลที่ท่านแจ้งมาแล้ว ขออภัยที่ทางเรายังไม่สามารถค้นพบรายการรับเงินดังกล่าวได้</p>
@@ -4202,6 +4504,7 @@
     },
 {
       title: "Receive  — Proof of Account Details (POAO) Document",
+      categories: ["Receive"],
       thai: `
         <p>หากท่านจำเป็นต้องยืนยันหลักฐานรายละเอียดบัญชี Wise ของท่านกับผู้โอน บริษัท หรือธนาคาร ท่านสามารถดาวน์โหลดเอกสาร PDF แสดงความเป็นเจ้าของบัญชีได้ โดยเอกสารนี้จะรองรับรายละเอียดบัญชีที่เปิดใช้งานอยู่ทั้งหมดของท่าน</p>
         <p><strong>ผ่านทางเว็บไซต์:</strong></p>
@@ -4230,6 +4533,7 @@
     },
     {
       title: "Receive — Missing Deposit (POP)",
+      categories: ["Receive"],
       thai: `
         <p>ทางเราเข้าใจว่าท่านกำลังรอรับเงินเข้าบัญชี Wise และต้องการตรวจสอบสถานะของรายการดังกล่าว</p>
         <p>โดยปกติ การโอนเงินอาจใช้เวลาสองสามวันกว่าจะเข้าบัญชี ทั้งนี้ ระยะเวลาดังกล่าวจะแตกต่างกันไปตามสกุลเงินที่ผู้โอนใช้ในการส่งเงิน</p>
@@ -4260,6 +4564,7 @@
     },
 {
       title: "Receive — USD Deposit Status",
+      categories: ["Receive"],
       thai: `
         <p>ระยะเวลาที่เงินโอนสกุล USD จะเข้าบัญชี Wise ขึ้นอยู่กับหลายปัจจัย เช่น วิธีการโอนเงินที่ผู้โอนเลือกใช้ วันที่ทำรายการ และประเทศต้นทางที่โอนเงินมา</p>
         <p><a href="https://wise.com/help/articles/2932150/guide-to-usd-transfers">ท่านสามารถศึกษาข้อมูลเพิ่มเติมเกี่ยวกับการรับเงินสกุล USD ได้จากบทความนี้</a></p>
@@ -4304,6 +4609,7 @@
     },
     {
       title: "Receive — Wrong Currency",
+      categories: ["Receive"],
       thai: `
         <p>ข้อมูลบัญชีแต่ละสกุลเงินในบัญชี Wise สามารถใช้รับเงินได้เฉพาะสกุลเงินที่ตรงกับข้อมูลบัญชีนั้นเท่านั้น โดยทางเราไม่สามารถแปลงสกุลเงินสำหรับรายการรับเงินได้</p>
         <p>หากเงินที่ส่งมายัง Wise เป็นคนละสกุลเงินกับข้อมูลบัญชีที่ใช้รับเงิน รายการจะถูกปฏิเสธและส่งเงินกลับไปยังธนาคารต้นทางโดยอัตโนมัติ</p>
@@ -4315,6 +4621,7 @@
     },
     {
       title: "Receive — How to Manage Direct Debits",
+      categories: ["Receive", "Guide"],
       thai: `
         <p>หากท่านต้องการตั้งค่า Direct Debit ผ่านระบบออนไลน์ เพียงแจ้งข้อมูลบัญชีของท่านให้กับร้านค้าหรือผู้ให้บริการ โดยทั่วไป ร้านค้าจะใช้เวลาประมาณ 1–2 วัน ในการดำเนินการตั้งค่า และทางเราจะส่งอีเมลแจ้งยืนยันทันทีเมื่อดำเนินการเสร็จสิ้น</p>
         <p>สำหรับสกุลเงิน GBP ท่านสามารถตั้งค่า Direct Debit ได้ทั้งผ่านระบบออนไลน์และการส่งคำขอทางไปรษณีย์ อย่างไรก็ตาม เราแนะนำให้ดำเนินการผ่านระบบออนไลน์ เนื่องจากโดยปกติจะใช้เวลาดำเนินการเพียง 1–2 วัน</p>
@@ -4331,6 +4638,7 @@
     },
     {
       title: "Receive — How to Receive USD",
+      categories: ["Receive", "Guide"],
       intro: ``,
       outro: `
         <p><a href="https://wise.com/help/17/borderless-account/2827506/how-do-i-use-my-usd-bank-details">ท่านสามารถศึกษาข้อมูลเพิ่มเติมเกี่ยวกับการใช้งานข้อมูลบัญชี USD ได้จากบทความนี้</a></p>
@@ -4372,6 +4680,7 @@
     },
     {
       title: "Receive — How to Receive GBP",
+      categories: ["Receive", "Guide"],
       thai: `
         <p>ท่านสามารถรับเงินสกุล GBP ได้โดยใช้ข้อมูลบัญชี GBP ของท่าน โดยการโอนเงินภายในประเทศจะใช้เวลาสูงสุด 1 วันทำการ ส่วนการโอนผ่าน Swift อาจใช้เวลานานกว่า โดยใช้เวลาสูงสุด 5 วันทำการ</p>
         <p>หากผู้โอนส่งเงินมาจากนอกสหราชอาณาจักร กรุณาแจ้งข้อมูลต่อไปนี้ให้ผู้โอน</p>
@@ -4395,6 +4704,7 @@
     },
     {
       title: "Receive — EUR Deposit Status",
+      categories: ["Receive"],
       thai: `
         <p>ระยะเวลาที่เงินสกุล EUR จะเข้าบัญชีของท่านขึ้นอยู่กับหลายปัจจัย เช่น วิธีการโอนเงินที่ผู้โอนเลือกใช้ วันที่ทำรายการ และประเทศต้นทาง</p>
         <p>โดยทั่วไป <a href="https://wise.com/help/articles/2956754/what-are-sepa-transfers">การโอนเงินผ่าน SEPA</a> จะใช้เวลาประมาณ 0–2 วันทำการ ส่วน<a href="https://wise.com/help/15/paying-for-your-transfer/2553074/what-are-swift-payments">การโอนผ่าน Swift</a> อาจใช้เวลาสูงสุด 5 วันทำการ เนื่องจากความแตกต่างของเขตเวลาและการดำเนินการผ่านธนาคารตัวกลาง</p>
@@ -4417,6 +4727,7 @@
     },
     {
       title: "Receive — Customer Received Less Money Due to Swift / USD wire",
+      categories: ["Receive"],
       intro: ``,
       outro: `
         <p><a href="https://wise.com/gb/pricing/receive?targetAmount=1000&payInMethod=BANK_TRANSFER&track=false">ท่านสามารถศึกษาข้อมูลเพิ่มเติมเกี่ยวกับค่าธรรมเนียมการรับเงินได้จากบทความนี้</a></p>
@@ -4444,6 +4755,7 @@
     },
     {
       title: "Receive — Connecting to PayPal",
+      categories: ["Receive"],
       thai: `
         <p>หากท่านต้องการ<a href="https://www.paypal.com/us/smarthelp/article/how-do-i-link-a-bank-account-to-my-paypal-account-faq686">เชื่อมบัญชี Wise กับ PayPal</a> สามารถดำเนินการได้ตามขั้นตอนดังนี้</p>
         <ol>
@@ -4462,6 +4774,7 @@
     },
     {
       title: "Hold — Not Eligible to Open Currencies",
+      categories: ["Hold"],
       thai: `
         <div class="internal-note">⚠️ INTERNAL INSTRUCTION: FOR MORE INFORMATION, CONSULT THE FOLLOWING WIKI: Wise Account Basics</div>
         <p>ขณะนี้ Wise ยังไม่รองรับการใช้งานบัญชีสกุลเงินใน <strong>[country]</strong> อย่างไรก็ตาม หากมีการเพิ่มการรองรับในอนาคต ทางเราจะแจ้งให้ท่านทราบเมื่อมีความคืบหน้า</p>
@@ -4471,6 +4784,7 @@
     },
     {
       title: "Hold — Negative Balance",
+      categories: ["Hold"],
       thai: `
         <p>บัญชี Wise ของท่านอาจมียอดคงเหลือติดลบได้ในบางกรณี เช่น การตัดบัญชีแบบ Direct Debit ไม่สำเร็จ หรือร้านค้าดำเนินการเรียกเก็บเงินจากบัตรล่าช้า</p>
         <p><a href="https://wise.com/help/articles/1mP764ZaFvXqvweDdmL8sZ/how-do-i-cover-the-negative-balance">ท่านสามารถศึกษาข้อมูลเพิ่มเติมเกี่ยวกับยอดคงเหลือติดลบได้จากบทความนี้</a></p>
@@ -4499,95 +4813,223 @@
     // Combine intro + selected option text + outro
     let combinedHTML = (reply.intro || '') + reply.options[selectedOptionIndex].text + (reply.outro || '');
     textBox.innerHTML = combinedHTML;
-  }
+function renderCards(filterText = '') {
+  resultsDiv.innerHTML = '';
 
-  function renderCards(filterText = '') {
-    resultsDiv.innerHTML = '';
-    const lowerFilter = filterText.toLowerCase();
+  const lowerFilter = filterText.trim().toLowerCase();
+  const selectedTopic = document.getElementById('topicFilter').value;
 
-const matchedReplies = quickReplies
-  .map((reply, index) => {
-    const titleText = reply.title.toLowerCase();
+  const matchedReplies = quickReplies
+    .map((reply, index) => {
 
-    let messageText =
-      (reply.thai || '') + " " +
-      (reply.intro || '') + " " +
-      (reply.outro || '');
+      // -----------------------------
+      // CATEGORY FILTER
+      // -----------------------------
+      const matchesTopic =
+        selectedTopic === 'all' ||
+        (
+          Array.isArray(reply.categories) &&
+          reply.categories.includes(selectedTopic)
+        );
 
-    if (reply.options) {
-      reply.options.forEach(opt => {
-        messageText += " " + opt.text + " " + opt.label;
-      });
-    }
+      if (!matchesTopic) {
+        return null;
+      }
 
-    messageText = messageText.toLowerCase();
+      // -----------------------------
+      // SEARCH TEXT
+      // -----------------------------
+      const titleText = (reply.title || '').toLowerCase();
 
-    let matchPriority = 999;
+      let messageText =
+        (reply.thai || '') + " " +
+        (reply.intro || '') + " " +
+        (reply.outro || '');
 
-    if (titleText.startsWith(lowerFilter)) {
-      matchPriority = 1;
-    } else if (titleText.includes(lowerFilter)) {
-      matchPriority = 2;
-    } else if (messageText.includes(lowerFilter)) {
-      matchPriority = 3;
-    }
+      if (reply.options) {
+        reply.options.forEach(opt => {
+          messageText += " " + (opt.text || '') + " " + (opt.label || '');
+        });
+      }
 
-    return {
-      reply,
-      index,
-      matchPriority
-    };
-  })
-  .filter(item => item.matchPriority !== 999)
-  .sort((a, b) => {
-    if (a.matchPriority !== b.matchPriority) {
-      return a.matchPriority - b.matchPriority;
-    }
+      messageText = messageText.toLowerCase();
 
-    return a.reply.title.localeCompare(b.reply.title);
-  });
+      // -----------------------------
+      // SEARCH PRIORITY
+      // -----------------------------
+      let matchPriority = 999;
 
-matchedReplies.forEach(({ reply, index }) => {
-        
-        const card = document.createElement('details');
-        card.className = 'reply-card';
-        
-        let contentHtml = '';
+      // Empty search = show everything in selected category
+      if (lowerFilter === '') {
+        matchPriority = 0;
 
-        // Build radio buttons if the reply has options
-        if (reply.options && reply.options.length > 0) {
-          let radioButtons = '<div class="options-container">';
-          reply.options.forEach((opt, optIdx) => {
-            const isChecked = optIdx === 0 ? 'checked' : '';
-            radioButtons += `<label><input type="radio" name="opt-${index}" value="${optIdx}" ${isChecked} onchange="updateDynamicText(${index})"> ${opt.label}</label>`;
-          });
-          radioButtons += '</div>';
+      } else if (titleText.startsWith(lowerFilter)) {
+        matchPriority = 1;
 
-          // Set initial content to Intro + Option 0 + Outro
-          let initialContent = (reply.intro || '') + reply.options[0].text + (reply.outro || '');
-          
-          contentHtml = `
-            ${radioButtons}
-            <div class="text-box" id="text-box-${index}">${initialContent}</div>
-          `;
-        } else {
-          // Standard single-reply template
-          contentHtml = `
-            <div class="text-box" id="text-box-${index}">${reply.thai}</div>
-          `;
-        }
-        
-        card.innerHTML = `
-          <summary class="reply-title">
-            <span class="title-text">${reply.title}</span>
-            <button class="copy-btn" id="btn-${index}" onclick="copyRichText(event, ${index}, 'btn-${index}')">Copy</button>
-          </summary>
-          <div class="reply-content">
-            ${contentHtml}
-          </div>
-        `;
-        resultsDiv.appendChild(card);
+      } else if (titleText.includes(lowerFilter)) {
+        matchPriority = 2;
+
+      } else if (messageText.includes(lowerFilter)) {
+        matchPriority = 3;
+      }
+
+      return {
+        reply,
+        index,
+        matchPriority
+      };
+    })
+    .filter(item =>
+      item !== null &&
+      item.matchPriority !== 999
+    )
+    .sort((a, b) => {
+
+      // Stronger matches first
+      if (a.matchPriority !== b.matchPriority) {
+        return a.matchPriority - b.matchPriority;
+      }
+
+      // Then alphabetical
+      return a.reply.title.localeCompare(b.reply.title);
     });
+
+
+  // -----------------------------
+  // RENDER MATCHED CARDS
+  // -----------------------------
+  matchedReplies.forEach(({ reply, index }) => {
+
+    const card = document.createElement('details');
+    card.className = 'reply-card';
+
+    let contentHtml = '';
+
+    // -----------------------------
+    // OPTIONS / SCENARIOS
+    // -----------------------------
+    if (reply.options && reply.options.length > 0) {
+
+      let radioButtons =
+        '<div class="options-container">';
+
+      reply.options.forEach((opt, optIdx) => {
+
+        const isChecked =
+          optIdx === 0 ? 'checked' : '';
+
+        radioButtons += `
+          <label>
+            <input
+              type="radio"
+              name="opt-${index}"
+              value="${optIdx}"
+              ${isChecked}
+              onchange="updateDynamicText(${index})"
+            >
+            ${opt.label}
+          </label>
+        `;
+      });
+
+      radioButtons += '</div>';
+
+      const initialContent =
+        (reply.intro || '') +
+        reply.options[0].text +
+        (reply.outro || '');
+
+      contentHtml = `
+        ${radioButtons}
+        <div
+          class="text-box"
+          id="text-box-${index}"
+        >
+          ${initialContent}
+        </div>
+      `;
+
+    } else {
+
+      // Standard single-response template
+      contentHtml = `
+        <div
+          class="text-box"
+          id="text-box-${index}"
+        >
+          ${reply.thai || ''}
+        </div>
+      `;
+    }
+
+
+    // -----------------------------
+    // CATEGORY TAGS
+    // -----------------------------
+    let categoryHtml = '';
+
+    if (
+      Array.isArray(reply.categories) &&
+      reply.categories.length > 0
+    ) {
+
+      categoryHtml =
+        '<div class="category-tags">';
+
+      reply.categories.forEach(category => {
+
+        const categoryClass = category
+          .toLowerCase()
+          .replace(/\s+/g, '-');
+
+        categoryHtml += `
+          <span
+            class="category-tag category-${categoryClass}"
+          >
+            ${category}
+          </span>
+        `;
+      });
+
+      categoryHtml += '</div>';
+    }
+
+
+    // -----------------------------
+    // CARD
+    // -----------------------------
+    card.innerHTML = `
+      <summary class="reply-title">
+
+        <div class="title-area">
+          <span class="title-text">
+            ${reply.title}
+          </span>
+
+          ${categoryHtml}
+        </div>
+
+        <button
+          class="copy-btn"
+          id="btn-${index}"
+          onclick="copyRichText(
+            event,
+            ${index},
+            'btn-${index}'
+          )"
+        >
+          Copy
+        </button>
+
+      </summary>
+
+      <div class="reply-content">
+        ${contentHtml}
+      </div>
+    `;
+
+    resultsDiv.appendChild(card);
+  });
 }
 
 // 1. Session Memory Vault (Bypasses all browser security blocks!)
@@ -4675,11 +5117,26 @@ function getUserName() {
   searchBar.addEventListener('input', (e) => {
     renderCards(e.target.value);
   });
-  document.getElementById('clearSearch').addEventListener('click', () => {
-  searchBar.value = '';
-  renderCards();
-  searchBar.focus();
-});
+    // Category dropdown
+document
+  .getElementById('topicFilter')
+  .addEventListener('change', () => {
+    renderCards(searchBar.value);
+  });
+document
+  .getElementById('clearSearch')
+  .addEventListener('click', () => {
+
+    searchBar.value = '';
+
+    document
+      .getElementById('topicFilter')
+      .value = 'all';
+
+    renderCards();
+
+    searchBar.focus();
+  });
 
   // 3. Fire the prompt and load the cards immediately
   getUserName();
