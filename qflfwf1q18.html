@@ -4805,14 +4805,16 @@
   const searchBar = document.getElementById('searchBar');
 
   // Updates the text box dynamically when a new radio button is selected
-  window.updateDynamicText = function(index) {
-    const reply = quickReplies[index];
-    const selectedOptionIndex = document.querySelector(`input[name="opt-${index}"]:checked`).value;
-    const textBox = document.getElementById(`text-box-${index}`);
-    
-    // Combine intro + selected option text + outro
-    let combinedHTML = (reply.intro || '') + reply.options[selectedOptionIndex].text + (reply.outro || '');
-    textBox.innerHTML = combinedHTML;
+window.updateDynamicText = function(index) {
+  const reply = quickReplies[index];
+  const selectedOptionIndex = document.querySelector(`input[name="opt-${index}"]:checked`).value;
+  const textBox = document.getElementById(`text-box-${index}`);
+  
+  // Combine intro + selected option text + outro
+  let combinedHTML = (reply.intro || '') + reply.options[selectedOptionIndex].text + (reply.outro || '');
+  textBox.innerHTML = combinedHTML;
+};
+  
 function renderCards(filterText = '') {
   resultsDiv.innerHTML = '';
 
