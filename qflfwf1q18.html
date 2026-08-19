@@ -5000,35 +5000,33 @@ function renderCards(filterText = '') {
     // -----------------------------
     // CARD
     // -----------------------------
-    card.innerHTML = `
-      <summary class="reply-title">
+card.innerHTML = `
+  <summary class="reply-title">
 
-        <div class="title-area">
-          <span class="title-text">
-            ${reply.title}
-          </span>
+    <span class="title-text">
+      ${reply.title}
+    </span>
 
-          ${categoryHtml}
-        </div>
+    ${categoryHtml}
 
-        <button
-          class="copy-btn"
-          id="btn-${index}"
-          onclick="copyRichText(
-            event,
-            ${index},
-            'btn-${index}'
-          )"
-        >
-          Copy
-        </button>
+    <button
+      class="copy-btn"
+      id="btn-${index}"
+      onclick="copyRichText(
+        event,
+        ${index},
+        'btn-${index}'
+      )"
+    >
+      Copy
+    </button>
 
-      </summary>
+  </summary>
 
-      <div class="reply-content">
-        ${contentHtml}
-      </div>
-    `;
+  <div class="reply-content">
+    ${contentHtml}
+  </div>
+`;
 
     resultsDiv.appendChild(card);
   });
